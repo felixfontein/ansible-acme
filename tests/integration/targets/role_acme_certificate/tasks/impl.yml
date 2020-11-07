@@ -1,0 +1,98 @@
+---
+- name: Create account keys
+  community.crypto.openssl_privatekey:
+    path: "{{ output_dir }}/account-{{ item.name }}.pem"
+    type: "{{ item.type }}"
+    curve: "{{ item.curve | default(omit) }}"
+    size: "{{ item.size | default(omit) }}"
+    state: present
+  loop:
+    - name: ec256
+      type: ECC
+      curve: secp256r1
+    - name: ec384
+      type: ECC
+      curve: secp384r1
+    - name: rsa2048
+      type: RSA
+      size: 2048
+
+- name: Create ACME accounts
+  community.crypto.acme_account:
+    account_key: "{{ output_dir }}/account-{{ item }}.pem"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    allow_creation: true
+    state: present
+    terms_agreed: true
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  loop:
+    - ec256
+    - ec384
+    - rsa2048
+  register: accounts
+
+- name: Store account URIs
+  set_fact:
+    account_uris:
+      ec265: "{{ accounts.results[0].account_uri }}"
+      ec384: "{{ accounts.results[1].account_uri }}"
+      rsa2048: "{{ accounts.results[2].account_uri }}"
+
+###############################################################################
+
+- include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - 'example.org'
+    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+
+- name: Retrieve certificate information
+  community.crypto.x509_certificate_info:
+    path: "{{ acme_certificate_keys_path }}example.org.pem"
+  register: cert
+
+- name: Validate certificate information
+  assert:
+    that:
+      - cert.subject_alt_name | length == 1
+      - "'DNS:example.org' in cert.subject_alt_name"
+
+- name: Validate certificate
+  ansible.builtin.command: >-
+    openssl verify
+    -CAfile "{{ output_dir }}/acme-root-0.pem"
+    -untrusted "{{ acme_certificate_keys_path }}example.org-chain.pem"
+    "{{ acme_certificate_keys_path }}example.org.pem"
+
+- include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - '*.example.com'
+      - 'example.com'
+    acme_certificate_challenge: dns-01
+    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+
+- name: Retrieve certificate information
+  community.crypto.x509_certificate_info:
+    path: "{{ acme_certificate_keys_path }}_.example.com.pem"
+  register: cert
+
+- name: Validate certificate information
+  assert:
+    that:
+      - cert.subject_alt_name | length == 2
+      - "'DNS:*.example.com' in cert.subject_alt_name"
+      - "'DNS:example.com' in cert.subject_alt_name"
+
+- name: Validate certificate
+  ansible.builtin.command: >-
+    openssl verify
+    -no-CAfile -no-CApath
+    -CAfile "{{ output_dir }}/acme-root-0.pem"
+    -untrusted "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
+    "{{ acme_certificate_keys_path }}_.example.com.pem"

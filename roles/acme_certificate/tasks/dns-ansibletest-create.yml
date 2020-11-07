@@ -1,0 +1,12 @@
+---
+# Create DNS challenges for ansible-test's ACME test container
+- name: Creating challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via Route53
+  ansible.builtin.uri:
+    url: "http://{{ acme_host }}:5000/dns/{{ item.key }}"
+    method: PUT
+    body_format: json
+    body: "{{ item.value }}"
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  tags:
+  - issue-tls-certs-newkey
+  - issue-tls-certs

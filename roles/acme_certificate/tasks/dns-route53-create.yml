@@ -1,0 +1,20 @@
+---
+# Create DNS challenges for DNS provider Amazon Route53
+- name: Creating challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via Route53
+  community.aws.route53:
+    state: present
+    zone: "{{ item.key | felixfontein.tools.dns_zone }}"
+    record: "{{ item.key }}"
+    type: TXT
+    ttl: 60
+    value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"' ) | list }}"
+    overwrite: true
+    aws_access_key: "{{ acme_certificate_aws_access_key }}"
+    aws_secret_key: "{{ acme_certificate_aws_secret_key }}"
+    wait: true
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  tags:
+  - issue-tls-certs-newkey
+  - issue-tls-certs

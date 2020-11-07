@@ -1,0 +1,27 @@
+---
+- name: Creating challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via NS1 DNS
+  ns1_record:
+    apiKey: "{{ acme_certificate_ns1_secret_key }}"
+    name: "{{ item.key }}"
+    zone: "{{ item.key | felixfontein.tools.dns_zone }}"
+    state: present
+    type: TXT
+    answers:
+      - answer:
+          - "{{ item.value[0] }}"
+        meta:
+          up: true
+  delegate_to: localhost
+  when: "'_acme-challenge' in item.key"
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+
+- name: Check if DNS changes propagated at dns1.p01.nsone.net with 10-seconds intervals
+  ansible.builtin.command: "dig TXT '{{ item.key }}' +short @dns1.p01.nsone.net"
+  register: acme_certificate_INTERNAL_dig
+  until: "item.value[0] in acme_certificate_INTERNAL_dig.stdout"
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  retries: 6
+  delay: 10
+  changed_when: false
+  ignore_errors: yes

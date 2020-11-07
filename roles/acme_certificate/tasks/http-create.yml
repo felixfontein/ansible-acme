@@ -1,0 +1,31 @@
+---
+# Create up challenge files directory on server.
+- name: Creating challenge destination directory
+  ansible.builtin.file:
+    dest: "{{ acme_certificate_server_location }}"
+    state: directory
+    owner: "{{ acme_certificate_http_challenge_user }}"
+    group: "{{ acme_certificate_http_challenge_group }}"
+    mode: "{{ acme_certificate_http_challenge_folder_mode }}"
+  become: "{{ acme_certificate_http_become }}"
+  tags:
+  - issue-tls-certs-newkey
+  - issue-tls-certs
+
+# Create challenge files on server.
+- name: "Copying challenge files for domains {{ ', '.join(acme_certificate_domains) }}"
+  ansible.builtin.copy:
+    dest: >-
+      {{ [
+        acme_certificate_server_location,
+        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/'|length):]
+      ] | felixfontein.tools.path_join }}
+    content: "{{ item.value[acme_certificate_challenge].resource_value }}"
+    owner: "{{ acme_certificate_http_challenge_user }}"
+    group: "{{ acme_certificate_http_challenge_group }}"
+    mode: "{{ acme_certificate_http_challenge_file_mode }}"
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data }}"
+  become: "{{ acme_certificate_http_become }}"
+  tags:
+  - issue-tls-certs-newkey
+  - issue-tls-certs

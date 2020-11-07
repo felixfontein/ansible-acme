@@ -1,0 +1,19 @@
+---
+# Clean up DNS challenges for DNS provider HostTech
+- name: Cleaning up challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via HostTech API
+  felixfontein.hosttech_dns.hosttech_dns_record:
+    state: absent
+    zone: "{{ item.key | felixfontein.tools.dns_zone }}"
+    record: "{{ item.key }}"
+    type: TXT
+    ttl: 300
+    value: "{{ item.value }}"
+    overwrite: true
+    hosttech_username: "{{ acme_certificate_hosttech_username }}"
+    hosttech_password: "{{ acme_certificate_hosttech_password }}"
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) }}"
+  tags:
+  - issue-tls-certs-newkey
+  - issue-tls-certs

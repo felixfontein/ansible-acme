@@ -1,0 +1,6 @@
+*.pyc
+/changelogs/.plugin-cache.yaml
+/felixfontein-acme-*.tar.gz
+/tests/output
+
+__pycache__

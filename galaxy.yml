@@ -1,0 +1,32 @@
+namespace: felixfontein
+name: acme
+version: 0.1.0
+readme: README.md
+authors:
+  - Felix Fontein (https://github.com/felixfontein)
+description: Roles for ACME
+license_file: COPYING
+tags:
+  - acme
+  - letsencrypt
+  - buypass
+  - ssl
+  - tls
+  - https
+  - encryption
+  - security
+  - web
+dependencies:
+  - community.crpyto
+  - community.aws
+  - felixfontein.hosttech_dns
+  - felixfontein.tools
+repository: https://github.com/felixfontein/ansible-acme
+documentation: https://github.com/felixfontein/ansible-acme/tree/main/README.md#included-content
+homepage: https://github.com/felixfontein/ansible-acme
+issues: https://github.com/felixfontein/ansible-acme/issues
+build_ignore:
+  - .gitignore
+  - felixfontein-acme-*.tar.gz
+  - changelogs/.plugin-cache.yaml
+  - tests/output
