@@ -54,58 +54,6 @@ jobs:
         working-directory: ./ansible_collections/felixfontein/acme
 
 ###
-# Unit tests (OPTIONAL)
-#
-# https://docs.ansible.com/ansible/latest/dev_guide/testing_units.html
-
-  units:
-    runs-on: ubuntu-latest
-    name: Units (Ⓐ${{ matrix.ansible }})
-    strategy:
-      # As soon as the first unit test fails, cancel the others to free up the CI queue
-      fail-fast: true
-      matrix:
-        ansible:
-          - stable-2.9
-          - stable-2.10
-          - devel
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-        with:
-          path: ansible_collections/felixfontein/acme
-
-      - name: Set up Python ${{ matrix.ansible }}
-        uses: actions/setup-python@v2
-        with:
-          # it is just required to run that once as "ansible-test units" in the docker image
-          # will run on all python versions it supports.
-          python-version: 3.8
-
-      - name: Install ansible-base (${{ matrix.ansible }})
-        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
-
-      # Install dependencies
-      - name: Install collection dependencies
-        run: ansible-galaxy collection install community.crypto -p .
-
-      # Run the unit tests
-      - name: Run unit test
-        run: ansible-test units -v --color --docker --coverage
-        working-directory: ./ansible_collections/felixfontein/acme
-
-        # ansible-test support producing code coverage date
-      - name: Generate coverage report
-        run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-        working-directory: ./ansible_collections/felixfontein/acme
-
-      # See the reports at https://codecov.io/gh/felixfontein/acme
-      - uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: false
-
-###
 # Integration tests (RECOMMENDED)
 #
 # https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
@@ -155,7 +103,9 @@ jobs:
 
       # Install dependencies
       - name: Install collection dependencies
-        run: ansible-galaxy collection install community.crypto -p .
+        run: |
+          ansible-galaxy collection install community.crypto -p .
+          ansible-galaxy collection install felixfontein.tools -p .
 
       # Run the integration tests
       - name: Run integration test

@@ -1,4 +1,6 @@
 # Tools for ACME
+[![CI](https://github.com/felixfontein/ansible-acme/workflows/CI/badge.svg?event=push)](https://github.com/felixfontein/ansible-acme/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/felixfontein/ansible-acme)](https://codecov.io/gh/felixfontein/ansible-acme)
 
 This collection provides some useful roles for retrieving ACME certificates.
 
