@@ -41,7 +41,7 @@ For ACME servers that need External Account Binding, for example for ZeroSSL or 
 ```
 The values for `kid` and `key` will be provided by the ACME server operator, for example in the ZeroSSL account interface. The value for `alg` is usually `HS256` if not explicitly mentioned.
 
-## Account Key Setup
+## Account key setup
 
 You can create an account key using the `openssl` binary as follows:
 ```.sh
@@ -56,23 +56,46 @@ openssl ecparam -name secp384r1 -genkey -out keys/acme-account.key
 With Ansible, you can use the `openssl_privatekey` module as follows:
 ```.yaml
 - name: Generate RSA 4096 key
-  openssl_privatekey:
+  community.crypto.openssl_privatekey:
     path: keys/acme-account.key
     type: RSA
     size: 4096
 - name: Generate ECC 256 bit key (P-256)
-  openssl_privatekey:
+  community.crypto.openssl_privatekey:
     path: keys/acme-account.key
     type: ECC
     curve: secp256r1
 - name: Generate ECC 384 bit key (P-384)
-  openssl_privatekey:
+  community.crypto.openssl_privatekey:
     path: keys/acme-account.key
     type: ECC
     curve: secp384r1
 ```
 
 Make sure you store the account key safely. As opposed to certificate private keys, there is no need to regenerate it frequently, and it makes recovation of certificates issued with it very simple if you no longer have the certificate's private key.
+
+## Account key setup with sops-encrypted account key
+
+For this, you need [Mozilla sops](https://github.com/mozilla/sops) installed and a `.sops.yaml` file present in the key directory, or somewhere up the directory hierarchy.
+
+With Ansible, you can use the `openssl_privatekey` module as follows:
+```.yaml
+- block:
+    - name: Generate RSA 4096 key
+      community.crypto.openssl_privatekey_pipe:
+        type: RSA
+        size: 4096
+      register: account_key_data
+
+    - community.sops.sops_encrypt:
+        path: keys/acme-account.key.sops
+        content_text: "{{ account_key_data.privatekey }}"
+
+  always:
+    # Make sure to wipe the account_key_data variable
+    - set_fact:
+        account_key_data: ''
+```
 
 ## Account key conversion
 

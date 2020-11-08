@@ -2,7 +2,7 @@
 - block:
   - name: Read the old key
     set_fact:
-      acme_certificate_INTERNAL_old_account_key: '{{ lookup("file", acme_certificate_acme_account) }}'
+      acme_certificate_INTERNAL_old_account_key: "{{ lookup('community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file', acme_certificate_acme_account) }}"
 
   - name: Create copy of old key
     ansible.builtin.copy:
@@ -27,11 +27,37 @@
       force: yes
     run_once: true
     delegate_to: localhost
+    when: not acme_certificate_account_key_sops_encrypted
+
+  - when: acme_certificate_account_key_sops_encrypted
+    block:
+    - name: Creating new private account key (sops encrypted)
+      community.crypto.openssl_privatekey_pipe:
+        type: "{{ 'RSA' if acme_certificate_account_algorithm == 'rsa' else 'ECC' }}"
+        size: "{{ acme_certificate_account_key_length if acme_certificate_account_algorithm == 'rsa' else omit }}"
+        curve: >-
+          {{ omit if acme_certificate_account_algorithm == 'rsa' else
+             'secp256r1' if acme_certificate_account_algorithm == 'p-256' else
+             'secp384r1' if acme_certificate_account_algorithm == 'p-384' else
+             'secp521r1' if acme_certificate_account_algorithm == 'p-521' else
+             'invalid value for acme_certificate_account_algorithm!' }}
+      run_once: true
+      delegate_to: localhost
+      register: acme_certificate_INTERNAL_new_account_key
+
+    - name: Stored sops-encrypted private account key
+      community.sops.sops_encrypt:
+        path: "{{ acme_certificate_acme_account }}"
+        content_text: "{{ acme_certificate_INTERNAL_new_account_key.privatekey }}"
 
   - name: Do account key changeover
     community.crypto.acme_account:
       account_key_content: "{{ acme_certificate_INTERNAL_old_account_key }}"
-      new_account_key_src: "{{ acme_certificate_acme_account }}"
+      new_account_key_src: "{{ acme_certificate_acme_account if not acme_certificate_account_key_sops_encrypted else omit }}"
+      new_account_key_content: "{{ lookup('community.sops.sops', acme_certificate_acme_account) if acme_certificate_account_key_sops_encrypted else omit }}"
+      # We could use acme_certificate_INTERNAL_new_account_key.privatekey directly instead of lookup('community.sops.sops', ...),
+      # but the latter makes sure that the stored private key actually works. If for some reason it does not, the key will not
+      # be changed and we decrease likelihood of key loss.
       account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
       state: changed_key
       acme_directory: "{{ acme_certificate_acme_directory }}"
@@ -41,6 +67,7 @@
     delegate_to: localhost
 
   always:
-  - name: Remove old key from facts
+  - name: Remove keys from facts
     set_fact:
       acme_certificate_INTERNAL_old_account_key: ''
+      acme_certificate_INTERNAL_new_account_key: ''

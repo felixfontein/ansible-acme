@@ -20,7 +20,7 @@ These are the main variables used by the `felixfontein.acme.acme_certificate` ro
 - `acme_certificate_keys_old_path`: Where old keys and certificates should be copied to; used in case `acme_certificate_keys_old_store` is true. Default value is `"keys/old/"`.
 - `acme_certificate_keys_old_store`: If set to `true`, will make copies of old keys and certificates. The copies will be stored in the directory specified by `acme_certificate_keys_old_store`. Default value is `false`.
 - `acme_certificate_keys_old_prepend_timestamp`: Whether copies of old keys and certificates should be prepended by the current date and time. Default value is `false`.
-- `acme_certificate_use_sops_for_key`: Use [Mozilla sops](https://github.com/mozilla/sops) to encrypt private key. Needs `.sops.yaml` file inside the keys directory or somewhere up the directory chain.
+- `acme_certificate_use_sops_for_key`: Use [Mozilla sops](https://github.com/mozilla/sops) to encrypt private key. Needs `.sops.yaml` file inside the keys directory or somewhere up the directory chain. Default value is `false`.
 - `acme_certificate_ocsp_must_staple`: Whether a certificate with the OCSP Must Staple extension is requested. Default value is `false`.
 - `acme_certificate_terms_agreed`: Whether the terms of services are accepted or not. Default value is `false`, usually needs to be set explicitly to `true` to allow creating an ACME account. This is only used for ACME v2.
 - `acme_certificate_challenge`: The challenge type to use. Should be `http-01` for HTTP challenges (needs access to web server) or `dns-01` for DNS challenges (needs access to DNS provider).

@@ -96,3 +96,4 @@
 
 - name: Running tests
   import_tasks: impl.yml
+  when: sops_installed

@@ -8,3 +8,4 @@ acme_certificate_validate_certs: true
 acme_certificate_account_algorithm: rsa
 acme_certificate_account_key_length: 4096
 acme_certificate_account_key_backup: true
+acme_certificate_account_key_sops_encrypted: false

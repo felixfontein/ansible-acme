@@ -1,0 +1,15 @@
+---
+####################################################################
+# WARNING: These are designed specifically for Ansible tests       #
+# and should not be used as examples of how to write Ansible roles #
+####################################################################
+
+- name: Set global parameters
+  set_fact:
+    acme_certificate_acme_directory: https://{{ acme_host }}:14000/dir
+    acme_certificate_acme_version: 2
+    acme_certificate_validate_certs: false
+
+- name: Running tests
+  import_tasks: impl.yml
+  when: sops_installed
