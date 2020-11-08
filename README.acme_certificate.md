@@ -57,7 +57,6 @@ Let's assume you created TLS keys for `www.example.com`. You have to copy the re
   * `keys/www.example.com.key`: this is the private key for the certificate. Ensure nobody can access it.
   * `keys/www.example.com.pem`: this is the certificate itself.
   * `keys/www.example.com-chain.pem`: this is the intermediate certificate(s) needed for a trust path.
-  * `keys/www.example.com.csr`: this is the Certificate Signing Request used to obtain the certificate. You can safely delete it.
   * `keys/www.example.com-fullchain.pem`: this is the certificate combined with the intermediate certificate(s).
   * `keys/www.example.com-rootchain.pem`: this is the intermediate certificate(s) combined with the root certificate. You might need this for OCSP stapling.
   * `keys/www.example.com-root.pem`: this is the root certificate of Let's Encrypt.
@@ -181,7 +180,6 @@ This role can be used as follows. Note that it obtains several certificates, and
       acme_certificate_challenge: dns-01
       # The certificate files will be stored at:
       #    keys/example.com.key  (private key)
-      #    keys/example.com.csr  (certificate signing request)
       #    keys/example.com.pem  (certificate)
       #    keys/example.com-chain.pem  (intermediate certificate)
       #    keys/example.com-fullchain.pem  (certificate with intermediate certificate)
@@ -195,7 +193,6 @@ This role can be used as follows. Note that it obtains several certificates, and
       acme_certificate_challenge: http-01
       # The certificate files will be stored at:
       #    keys/another.example.com-rsa.key  (private key)
-      #    keys/another.example.com-rsa.csr  (certificate signing request)
       #    keys/another.example.com-rsa.pem  (certificate)
       #    keys/another.example.com-rsa-chain.pem  (intermediate certificate)
       #    keys/another.example.com-rsa-fullchain.pem  (certificate with intermediate certificate)
@@ -208,7 +205,6 @@ This role can be used as follows. Note that it obtains several certificates, and
       # Use HTTP challenges (default for challenge is http-01).
       # The certificate files will be stored at:
       #    keys/another.example.com-ecc.key  (private key)
-      #    keys/another.example.com-ecc.csr  (certificate signing request)
       #    keys/another.example.com-ecc.pem  (certificate)
       #    keys/another.example.com-ecc-chain.pem  (intermediate certificate)
       #    keys/another.example.com-ecc-fullchain.pem  (certificate with intermediate certificate)

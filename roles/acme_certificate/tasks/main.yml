@@ -68,14 +68,13 @@
     run_once: true
 
   - name: "Creating CSR for domains {{ ', '.join(acme_certificate_domains) }}"
-    community.crypto.openssl_csr:
-      path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.csr'] | felixfontein.tools.path_join }}"
+    community.crypto.openssl_csr_pipe:
       privatekey_path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
       subject_alt_name: |
           {{ acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list }}
       ocsp_must_staple: "{{ acme_certificate_ocsp_must_staple }}"
       use_common_name_for_san: false
-      force: true
+    register: acme_certificate_INTERNAL_csr
     delegate_to: localhost
     run_once: true
 
@@ -95,7 +94,7 @@
         account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
         account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
         modify_account: "{{ acme_certificate_modify_account }}"
-        csr: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.csr'] | felixfontein.tools.path_join }}"
+        csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
         dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
         fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | felixfontein.tools.path_join }}"
         chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join }}"
@@ -132,7 +131,7 @@
         account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
         account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
         modify_account: "{{ acme_certificate_modify_account }}"
-        csr: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.csr'] | felixfontein.tools.path_join }}"
+        csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
         dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
         fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | felixfontein.tools.path_join }}"
         chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join }}"
