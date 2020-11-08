@@ -74,7 +74,7 @@
       - '*.example.com'
       - 'example.com'
     acme_certificate_challenge: dns-01
-    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_acme_account_content: "{{ lookup('file', output_dir ~ '/account-rsa2048.pem') }}"
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
 
 - name: Retrieve certificate information

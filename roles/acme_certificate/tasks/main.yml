@@ -97,7 +97,8 @@
   - block:
     - name: "Preparing challenges for domains {{ ', '.join(acme_certificate_domains) }}"
       community.crypto.acme_certificate:
-        account_key: "{{ acme_certificate_acme_account }}"
+        account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+        account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
         modify_account: "{{ acme_certificate_modify_account }}"
         csr: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.csr'] | felixfontein.tools.path_join }}"
         dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
@@ -132,7 +133,8 @@
 
     - name: "Getting certificates for domains {{ ', '.join(acme_certificate_domains) }}"
       community.crypto.acme_certificate:
-        account_key: "{{ acme_certificate_acme_account }}"
+        account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+        account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
         modify_account: "{{ acme_certificate_modify_account }}"
         csr: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.csr'] | felixfontein.tools.path_join }}"
         dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"

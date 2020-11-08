@@ -1,6 +1,6 @@
 # ACME Accounts
 
-To work with ACME servers, you need an account. For an account, you always need a private key. We always assume it is stored at a place where the `acme_certificate_acme_account` variable points to ([more information on general parameters](./README.general-parameters.md)). The next subsections describe how to create or convert one.
+To work with ACME servers, you need an account. For an account, you always need a private key. We always assume it is stored at a place where the `acme_certificate_acme_account` variable points to, or it is provided with the `acme_certificate_acme_account_content` variable ([more information on general parameters](./README.general-parameters.md)). The next subsections describe how to create or convert one.
 
 For some ACME servers such as the ones by Let's Encrypt and Buypass, an account can be created on-the-fly while using for example the `felixfontein.acme.acme_certificate` role. The following options are of interest:
 - `acme_certificate_acme_email`: Your email address which shall be associated to the ACME account.
@@ -13,7 +13,8 @@ The following shows how to create an account manually with two contact email add
   community.crypto.acme_account:
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
-    account_key: "{{ acme_certificate_acme_account }}"
+    account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+    account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
     state: present
     contact:
     - "mailto:me@example.com"
@@ -26,7 +27,8 @@ For ACME servers that need External Account Binding, for example for ZeroSSL or 
 - acme_account:
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
-    account_key: "{{ acme_certificate_acme_account }}"
+    account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+    account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
     state: present
     contact:
     - "mailto:me@example.com"
