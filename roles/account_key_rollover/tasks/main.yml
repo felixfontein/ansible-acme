@@ -32,6 +32,7 @@
     community.crypto.acme_account:
       account_key_content: "{{ acme_certificate_INTERNAL_old_account_key }}"
       new_account_key_src: "{{ acme_certificate_acme_account }}"
+      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
       state: changed_key
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"

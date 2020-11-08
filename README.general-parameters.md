@@ -4,6 +4,7 @@ These are the main variables used by the roles:
 
 - `acme_certificate_acme_account`: Path to the private ACME account key. Either this or `acme_certificate_acme_account_content` must always be specified. See [here](./README.acme-account.md) for information on creating one.
 - `acme_certificate_acme_account_content`: Content of the private ACME account key. Either this or `acme_certificate_acme_account` must always be specified.
+- `acme_certificate_acme_account_uri`: Instead of determining the account URI from the account key, assumes the given account URI. Optional.
 - `acme_certificate_acme_directory`: The ACME directory to use. Default is `https://acme-v02.api.letsencrypt.org/directory`, which is the current production ACME v2 endpoint of Let's Encrypt.
 - `acme_certificate_acme_version`: The ACME directory's version. Default is 2.
 
