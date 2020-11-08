@@ -11,3 +11,16 @@
   run_once: true
   with_fileglob:
     - "{{ acme_certificate_keys_old_path }}/*.key"
+
+- name: "Revoke old certificates (sops encrypted keys)"
+  community.crypto.acme_certificate_revoke:
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    revoke_reason: "{{ acme_certificate_revoke_reason }}"
+    certificate: "{{ item[:-9] }}.pem"
+    private_key_content: "{{ lookup('community.sops.sops', item) }}"
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  delegate_to: localhost
+  run_once: true
+  with_fileglob:
+    - "{{ acme_certificate_keys_old_path }}/*.key.sops"

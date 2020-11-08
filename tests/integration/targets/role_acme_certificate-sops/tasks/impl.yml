@@ -1,0 +1,52 @@
+---
+- name: Place .sops.yaml
+  ansible.builtin.copy:
+    src: ".sops.yaml"
+    dest: "{{ output_dir }}/.sops.yaml"
+
+- name: Create account key
+  community.crypto.openssl_privatekey_pipe:
+    type: ECC
+    curve: secp256r1
+  register: account_key
+
+- name: Store encrypted account key
+  community.sops.sops_encrypt:
+    path: "{{ output_dir }}/account.key.sops"
+    content_text: "{{ account_key.privatekey }}"
+
+- name: Create ACME account
+  community.crypto.acme_account:
+    account_key_content: "{{ lookup('community.sops.sops', output_dir ~ '/account.key.sops') }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    allow_creation: true
+    state: present
+    terms_agreed: true
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  register: account
+
+- name: Store account URI
+  set_fact:
+    account_uri: "{{ account.account_uri }}"
+
+###############################################################################
+
+- include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - 'example.org'
+    acme_certificate_acme_account_content: "{{ lookup('community.sops.sops', output_dir ~ '/account.key.sops') }}"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+    acme_certificate_use_sops_for_key: true
+
+- include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - 'example.org'
+    acme_certificate_challenge: dns-01
+    acme_certificate_acme_account_content: "{{ lookup('community.sops.sops', output_dir ~ '/account.key.sops') }}"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+    acme_certificate_use_sops_for_key: true

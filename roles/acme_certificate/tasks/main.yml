@@ -41,7 +41,7 @@
     - "-fullchain.pem"
     - "-rootchain.pem"
     - "-root.pem"
-    - ".key"
+    - "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
     - ".pem"
     when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
     run_once: true
@@ -51,7 +51,7 @@
   - issue-tls-certs
 
 - block:
-  - name: "Creating private key for domains {{ ', '.join(acme_certificate_domains) }} (RSA)"
+  - name: "Creating private key for domains {{ ', '.join(acme_certificate_domains) }}"
     community.crypto.openssl_privatekey:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
       mode: "{{ acme_certificate_privatekey_mode }}"
@@ -64,12 +64,50 @@
            'secp521r1' if acme_certificate_algorithm == 'p-521' else
            'invalid value for acme_certificate_algorithm!' }}
       force: "{{ acme_certificate_INTERNAL_force_regenerate_private_key }}"
+    when: not acme_certificate_use_sops_for_key
+    delegate_to: localhost
+    run_once: true
+
+  - block:
+    - name: "Creating private key for domains {{ ', '.join(acme_certificate_domains) }} (sops encrypted)"
+      community.crypto.openssl_privatekey_pipe:
+        content: >-
+          {{
+            lookup(
+                'community.sops.sops',
+                [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join,
+                empty_on_not_exist=true
+            ) | default(omit, true)
+            if not acme_certificate_INTERNAL_force_regenerate_private_key else omit }}
+        type: "{{ 'RSA' if acme_certificate_algorithm == 'rsa' else 'ECC' }}"
+        size: "{{ acme_certificate_key_length if acme_certificate_algorithm == 'rsa' else omit }}"
+        curve: >-
+          {{ omit if acme_certificate_algorithm == 'rsa' else
+             'secp256r1' if acme_certificate_algorithm == 'p-256' else
+             'secp384r1' if acme_certificate_algorithm == 'p-384' else
+             'secp521r1' if acme_certificate_algorithm == 'p-521' else
+             'invalid value for acme_certificate_algorithm!' }}
+      no_log: true
+      register: acme_certificate_INTERNAL_private_key
+
+    - name: "Store sops-encrypted private key for domains {{ ', '.join(acme_certificate_domains) }}"
+      community.sops.sops_encrypt:
+        path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join }}"
+        content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
+      when: acme_certificate_INTERNAL_private_key.changed
+
+    always:
+    - set_fact:
+        acme_certificate_INTERNAL_private_key: ''
+
+    when: acme_certificate_use_sops_for_key
     delegate_to: localhost
     run_once: true
 
   - name: "Creating CSR for domains {{ ', '.join(acme_certificate_domains) }}"
     community.crypto.openssl_csr_pipe:
-      privatekey_path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
+      privatekey_content: "{{ lookup('community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join) if acme_certificate_use_sops_for_key else omit }}"
+      privatekey_path: "{{ omit if acme_certificate_use_sops_for_key else [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
       subject_alt_name: |
           {{ acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list }}
       ocsp_must_staple: "{{ acme_certificate_ocsp_must_staple }}"
