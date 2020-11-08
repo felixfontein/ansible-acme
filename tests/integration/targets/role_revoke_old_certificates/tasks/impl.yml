@@ -1,0 +1,49 @@
+---
+- name: Create account keys
+  community.crypto.openssl_privatekey:
+    path: "{{ output_dir }}/account-{{ item.name }}.pem"
+    type: "{{ item.type }}"
+    curve: "{{ item.curve | default(omit) }}"
+    size: "{{ item.size | default(omit) }}"
+    state: present
+  loop:
+    - name: ec256
+      type: ECC
+      curve: secp256r1
+
+- name: Create ACME accounts
+  community.crypto.acme_account:
+    account_key: "{{ output_dir }}/account-{{ item }}.pem"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    allow_creation: true
+    state: present
+    terms_agreed: true
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  loop:
+    - ec256
+  register: accounts
+
+- name: Store account URIs
+  set_fact:
+    account_uris:
+      ec265: "{{ accounts.results[0].account_uri }}"
+
+###############################################################################
+
+- name: Create certificate
+  include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - 'example.org'
+    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+
+- name: Revoke certificate
+  include_role:
+    name: felixfontein.acme.revoke_old_certificates
+
+- name: Revoke certificate (second time)
+  include_role:
+    name: felixfontein.acme.revoke_old_certificates

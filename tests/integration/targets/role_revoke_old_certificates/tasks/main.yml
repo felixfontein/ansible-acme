@@ -11,7 +11,7 @@
     acme_certificate_validate_certs: false
     acme_certificate_key_length: 2048
     acme_certificate_keys_path: "{{ output_dir }}/keys/"
-    acme_certificate_keys_old_path: "{{ output_dir }}/keys/old/"
+    acme_certificate_keys_old_path: "{{ output_dir }}/keys/"
     acme_certificate_INTERNAL_ansibletest: true
     acme_certificate_dns_provider: ansibletest
 
