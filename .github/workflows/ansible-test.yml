@@ -105,6 +105,7 @@ jobs:
       - name: Install collection dependencies
         run: |
           ansible-galaxy collection install community.crypto -p .
+          ansible-galaxy collection install community.sops -p .
           ansible-galaxy collection install felixfontein.tools -p .
 
       # Run the integration tests
