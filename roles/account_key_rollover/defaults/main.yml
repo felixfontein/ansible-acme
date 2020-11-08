@@ -1,0 +1,10 @@
+---
+acme_certificate_keys_old_path: keys/old/
+acme_certificate_acme_directory: https://acme-v02.api.letsencrypt.org/directory
+acme_certificate_acme_version: 2
+# For staging, use:
+#   acme_certificate_acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory  (ACME v2)
+acme_certificate_validate_certs: true
+acme_certificate_account_algorithm: rsa
+acme_certificate_account_key_length: 4096
+acme_certificate_account_key_backup: true

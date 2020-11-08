@@ -1,0 +1,45 @@
+---
+- block:
+  - name: Read the old key
+    set_fact:
+      acme_certificate_INTERNAL_old_account_key: '{{ lookup("file", acme_certificate_acme_account) }}'
+
+  - name: Create copy of old key
+    ansible.builtin.copy:
+      src: "{{ acme_certificate_acme_account }}"
+      dest: "{{ acme_certificate_acme_account }}.bak"
+    run_once: true
+    delegate_to: localhost
+    when: acme_certificate_account_key_backup
+
+  - name: Creating new private account key
+    community.crypto.openssl_privatekey:
+      path: "{{ acme_certificate_acme_account }}"
+      mode: "0600"
+      type: "{{ 'RSA' if acme_certificate_account_algorithm == 'rsa' else 'ECC' }}"
+      size: "{{ acme_certificate_account_key_length if acme_certificate_account_algorithm == 'rsa' else omit }}"
+      curve: >-
+        {{ omit if acme_certificate_account_algorithm == 'rsa' else
+           'secp256r1' if acme_certificate_account_algorithm == 'p-256' else
+           'secp384r1' if acme_certificate_account_algorithm == 'p-384' else
+           'secp521r1' if acme_certificate_account_algorithm == 'p-521' else
+           'invalid value for acme_certificate_account_algorithm!' }}
+      force: yes
+    run_once: true
+    delegate_to: localhost
+
+  - name: Do account key changeover
+    community.crypto.acme_account:
+      account_key_content: "{{ acme_certificate_INTERNAL_old_account_key }}"
+      new_account_key_src: "{{ acme_certificate_acme_account }}"
+      state: changed_key
+      acme_directory: "{{ acme_certificate_acme_directory }}"
+      acme_version: "{{ acme_certificate_acme_version }}"
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+    run_once: true
+    delegate_to: localhost
+
+  always:
+  - name: Remove old key from facts
+    set_fact:
+      acme_certificate_INTERNAL_old_account_key: ''

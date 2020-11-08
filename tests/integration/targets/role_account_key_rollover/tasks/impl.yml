@@ -1,0 +1,67 @@
+---
+- name: Create account keys
+  community.crypto.openssl_privatekey:
+    path: "{{ output_dir }}/account-{{ item.name }}.pem"
+    type: "{{ item.type }}"
+    curve: "{{ item.curve | default(omit) }}"
+    size: "{{ item.size | default(omit) }}"
+    state: present
+  loop:
+    - name: ec256
+      type: ECC
+      curve: secp256r1
+
+- name: Create ACME accounts
+  community.crypto.acme_account:
+    account_key: "{{ output_dir }}/account-{{ item }}.pem"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    allow_creation: true
+    state: present
+    terms_agreed: true
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  loop:
+    - ec256
+  register: accounts
+
+- name: Store account URIs
+  set_fact:
+    account_uris:
+      ec265: "{{ accounts.results[0].account_uri }}"
+
+###############################################################################
+
+- include_role:
+    name: felixfontein.acme.account_key_rollover
+  vars:
+    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_account_algorithm: rsa
+    acme_certificate_account_key_length: 2048
+    acme_certificate_account_key_backup: false
+
+- name: Retrieve account key information
+  community.crypto.openssl_privatekey_info:
+    path: "{{ output_dir }}/account-ec256.pem"
+  register: account_key
+
+- name: Validate account key information
+  assert:
+    that:
+      - account_key.type == 'RSA'
+
+- include_role:
+    name: felixfontein.acme.account_key_rollover
+  vars:
+    acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
+    acme_certificate_account_algorithm: p-384
+    acme_certificate_account_key_backup: true
+
+- name: Retrieve account key information
+  community.crypto.openssl_privatekey_info:
+    path: "{{ output_dir }}/account-ec256.pem"
+  register: account_key
+
+- name: Validate account key information
+  assert:
+    that:
+      - account_key.type == 'ECC'

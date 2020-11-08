@@ -20,6 +20,7 @@ If DNS challenges are used, there can be other requirements depending on the DNS
 
 - Role [felixfontein.acme.acme_certificate](https://github.com/felixfontein/ansible-acme/tree/main/README.acme_certificate.md).
 - Role [felixfontein.acme.revoke_old_certificates](https://github.com/felixfontein/ansible-acme/tree/main/README.revoke_old_certificates.md).
+- Role [felixfontein.acme.account_key_rollover](https://github.com/felixfontein/ansible-acme/tree/main/README.account_key_rollover.md).
 
 ## Using this collection
 
