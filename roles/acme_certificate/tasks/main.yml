@@ -1,26 +1,20 @@
 ---
 - name: Determine whether to force private key regeneration (1/2)
   set_fact:
-    acme_certificate_INTERNAL_force_regenerate_private_key: no
+    acme_certificate_INTERNAL_force_regenerate_private_key: false
 
 - name: Determine whether to force private key regeneration (2/2)
   set_fact:
-    acme_certificate_INTERNAL_force_regenerate_private_key: yes
+    acme_certificate_INTERNAL_force_regenerate_private_key: true
   tags:
   - issue-tls-certs-newkey
 
 - block:
-  - name: Ansible version check
-    ansible.builtin.assert:
-      that: "ansible_version.string is version('2.8.3', '>=')"
-      msg: "This version of the acme-certificate role must be used with Ansible 2.8.3 or later."
-    run_once: yes
-
   - name: Sanity checks
     ansible.builtin.assert:
       that: "acme_certificate_challenge != 'dns-01' or acme_certificate_dns_provider is not undefined"
       msg: "acme_certificate_dns_provider must be defined for dns-01 DNS challenge"
-    run_once: yes
+    run_once: true
 
   - name: "Test whether old certificate files for domains {{ ', '.join(acme_certificate_domains) }} exist"
     ansible.builtin.stat:
@@ -28,7 +22,7 @@
     delegate_to: localhost
     register: acme_certificate_INTERNAL_old_certificate_exists
     when: "acme_certificate_keys_old_store"
-    run_once: yes
+    run_once: true
 
   - name: "Copying old certificate files for domains {{ ', '.join(acme_certificate_domains) }}"
     ansible.builtin.copy:
@@ -50,7 +44,7 @@
     - ".key"
     - ".pem"
     when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
-    run_once: yes
+    run_once: true
 
   tags:
   - issue-tls-certs-newkey
@@ -71,7 +65,7 @@
            'invalid value for acme_certificate_algorithm!' }}
       force: "{{ acme_certificate_INTERNAL_force_regenerate_private_key }}"
     delegate_to: localhost
-    run_once: yes
+    run_once: true
 
   - name: "Creating CSR for domains {{ ', '.join(acme_certificate_domains) }}"
     community.crypto.openssl_csr:
@@ -80,19 +74,19 @@
       subject_alt_name: |
           {{ acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list }}
       ocsp_must_staple: "{{ acme_certificate_ocsp_must_staple }}"
-      use_common_name_for_san: no
-      force: yes
+      use_common_name_for_san: false
+      force: true
     delegate_to: localhost
-    run_once: yes
+    run_once: true
 
   - name: "Get root certificate for domains {{ ', '.join(acme_certificate_domains) }}"
     ansible.builtin.get_url:
       url: "{{ acme_certificate_root_certificate }}"
       dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join }}"
-      force: yes
+      force: true
       validate_certs: "{{ acme_certificate_validate_certs }}"
     delegate_to: localhost
-    run_once: yes
+    run_once: true
 
   - block:
     - name: "Preparing challenges for domains {{ ', '.join(acme_certificate_domains) }}"
@@ -109,10 +103,10 @@
         challenge: "{{ acme_certificate_challenge }}"
         acme_directory: "{{ acme_certificate_acme_directory }}"
         acme_version: "{{ acme_certificate_acme_version }}"
-        force: yes
+        force: true
         validate_certs: "{{ acme_certificate_validate_certs }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
       register: acme_certificate_INTERNAL_challenge
 
     always:
@@ -120,7 +114,7 @@
         msg: >-
           account URI: {{ acme_certificate_INTERNAL_challenge.get('account_uri') }};
           order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
-      run_once: yes
+      run_once: true
 
   - block:
     # Set up HTTP challenges
@@ -145,13 +139,13 @@
         challenge: "{{ acme_certificate_challenge }}"
         acme_directory: "{{ acme_certificate_acme_directory }}"
         acme_version: "{{ acme_certificate_acme_version }}"
-        force: yes
+        force: true
         data: "{{ acme_certificate_INTERNAL_challenge }}"
         deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
         validate_certs: "{{ acme_certificate_validate_certs }}"
         select_chain: "{{ acme_certificate_select_chain | default(omit) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: "Form root chain for domains {{ ', '.join(acme_certificate_domains) }}"
       ansible.builtin.copy:
@@ -160,7 +154,7 @@
           {{ lookup('file', [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join) }}
           {{ lookup('file', [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join) }}
       delegate_to: localhost
-      run_once: yes
+      run_once: true
     always:
     # Clean up HTTP challenges
     - include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
@@ -183,9 +177,9 @@
     -CAfile "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join }}"
     -untrusted "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join }}"
     "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
-  changed_when: no
+  changed_when: false
   delegate_to: localhost
-  run_once: yes
+  run_once: true
   ignore_errors: "{{ not acme_certificate_verify_certs }}"
   tags:
   - issue-tls-certs-newkey
