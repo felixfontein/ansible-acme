@@ -2,7 +2,7 @@
 
 This is an [Ansible](https://github.com/ansible/ansible) role which can use any CA supporting the ACME protocol, such as [Let's Encrypt](https://letsencrypt.org/), [Buypass](https://www.buypass.com/ssl/products/acme) or [ZeroSSL](https://zerossl.com/features/acme/), to revoke issued TLS/SSL certificates for your server.
 
-This role assumes that `felixfontein.acme.acme_certificate` has been used with `acme_certificate_keys_old_store` set to `true`. It copies the old certificate into `keys/old/` (or the path configured by `acme_certificate_keys_old_path`) before renewal. This role iterates over all certificates (resp. their private keys) in this directory and revokes them all with the given reason.
+This role assumes that `felixfontein.acme.acme_certificate` has been used with `acme_certificate_keys_old_store` set to `true`. It copies the old certificate into `keys/old/` (or the path configured by `acme_certificate_keys_old_path`) before renewal. This role iterates over all certificates (resp. their private keys) in this directory and revokes them all with the given reason. This role supports both plaintext private keys and sops-encrypted private keys (see `acme_certificate_use_sops_for_key` option of `felixfontein.acme.acme_certificate`).
 
 Make sure that you first replace all usages of the old certificates by the new ones before revokation!
 
