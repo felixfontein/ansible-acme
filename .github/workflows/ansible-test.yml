@@ -70,8 +70,8 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          - stable-2.9
-          - stable-2.10
+          #- stable-2.9   <-- https://github.com/ansible/ansible/pull/72458
+          #- stable-2.10  <-- https://github.com/ansible/ansible/pull/72457
           - devel
         python:
           - 2.6
