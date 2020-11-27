@@ -210,6 +210,10 @@
   - issue-tls-certs
 
 - name: "Verifying certificate for domains {{ ', '.join(acme_certificate_domains) }}"
+  # If you get strange failures here, upgrade to later versions of Ansible 2.9 / ansible-base 2.10.
+  # You need a version which includes the following backports:
+  #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9
+  #  - https://github.com/ansible/ansible/pull/72457 for stable-2.10
   ansible.builtin.command: >-
     openssl verify
     -no-CAfile -no-CApath
