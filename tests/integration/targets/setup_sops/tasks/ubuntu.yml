@@ -1,22 +1,17 @@
 ---
 # Copyright 2018-2020 Edoardo Tenani <e.tenani@arduino.cc> [@endorama]
 
-- name: download sops apt package
+- name: download sops executable
   get_url:
-    url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops_{{ sops_version }}_amd64.deb
-    dest: /tmp/sops.deb
+    url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
+    dest: /usr/bin/sops
 
-- name: install sops release
-  command: dpkg -i /tmp/sops.deb
-  ignore_errors: yes
-
-#- name: install sops release
-#  apt:
-#    deb: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops_{{ sops_version }}_amd64.deb
+- name: make sops executable executable
+  file:
+    path: /usr/bin/sops
+    mode: "0755"
 
 - name: install gnupg2
-  #apt:
-  #  package: gnupg2
   command: apt-get install gnupg2
 
 - name: download sops test GPG key
