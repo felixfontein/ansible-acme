@@ -8,6 +8,8 @@
     body: "{{ item.value[acme_certificate_challenge].resource_value }}"
     headers:
       content-type: "application/octet-stream"
+  delegate_to: localhost
+  run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data }}"
   tags:
   - issue-tls-certs-newkey

@@ -36,7 +36,7 @@
           ) ~ acme_certificate_key_name ~ item
         ] | felixfontein.tools.path_join }}
     delegate_to: localhost
-    with_items:
+    loop:
     - "-chain.pem"
     - "-fullchain.pem"
     - "-rootchain.pem"
