@@ -1,7 +1,9 @@
 ---
 acme_certificate_algorithm: rsa
+acme_certificate_domains: []
+acme_certificate_ips: []
 acme_certificate_key_length: 4096
-acme_certificate_key_name: "{{ acme_certificate_domains[0].replace('*', '_') }}"
+acme_certificate_key_name: "{{ (acme_certificate_domains + acme_certificate_ips)[0].replace('*', '_') }}"
 acme_certificate_keys_path: keys/
 acme_certificate_keys_old_path: keys/old/
 acme_certificate_keys_old_store: false

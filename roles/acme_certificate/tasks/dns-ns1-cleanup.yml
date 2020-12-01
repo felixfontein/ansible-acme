@@ -1,5 +1,5 @@
 ---
-- name: Cleaning up challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via NS1 API
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via NS1 API
   ns1_record:
     apiKey: "{{ acme_certificate_ns1_secret_key }}"
     name: "{{ item.key }}"

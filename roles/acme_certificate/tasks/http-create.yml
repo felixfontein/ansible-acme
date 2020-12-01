@@ -13,7 +13,7 @@
   - issue-tls-certs
 
 # Create challenge files on server.
-- name: "Copying challenge files for domains {{ ', '.join(acme_certificate_domains) }}"
+- name: "Copying challenge files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   ansible.builtin.copy:
     dest: >-
       {{ [

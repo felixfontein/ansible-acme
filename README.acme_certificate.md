@@ -12,6 +12,8 @@ See [here](./README.general-parameters.md) for general parameters, and for chall
 
 These are the main variables used by the `felixfontein.acme.acme_certificate` role:
 
+- `acme_certificate_domains`: The domain names you want to get a certificate for. Wildcards are only allowed as the first component, i.e. `*.example.com` is ok, while `*.*.example.com` and `www.*.example.com` are not ok. Also, when wildcards are used, not every challenge type is allowed. Let's Encrypt only allows wildcard domains with the `dns-01` challenge. At least one of `acme_certificate_domains` and `acme_certificate_ips` must be specified.
+- `acme_certificate_ips`: The IP addresses you want to get a certificate for. Note that this is not supported by every CA! At least one of `acme_certificate_domains` and `acme_certificate_ips` must be specified.
 - `acme_certificate_acme_email`: Your email address which shall be associated to the ACME account.
 - `acme_certificate_algorithm`: The algorithm used for creating private keys. The default is `"rsa"`; other choices are `"p-256"`, `"p-384"` or `"p-521"` for the NIST elliptic curves `prime256v1`, `secp384r1` and `secp521r1`, respectively.
 - `acme_certificate_key_length`: The bitlength to use for RSA private keys. The default is 4096.
@@ -188,6 +190,7 @@ This role can be used as follows. Note that it obtains several certificates, and
       #    keys/example.com-rootchain.pem  (intermediate certificate with root certificate)
     - role: felixfontein.acme.acme_certificate
       acme_certificate_domains: ['another.example.com']
+      acme_certificate_ips: ['1.2.3.4']
       acme_certificate_key_name: 'another.example.com-rsa'
       acme_certificate_key_length: 4096
       # Use HTTP challenges:

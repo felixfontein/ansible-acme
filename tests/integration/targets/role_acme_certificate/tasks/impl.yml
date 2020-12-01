@@ -96,3 +96,30 @@
     -CAfile "{{ output_dir }}/acme-root-0.pem"
     -untrusted "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
     "{{ acme_certificate_keys_path }}_.example.com.pem"
+
+- include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_ips:
+      - 127.0.0.1
+    acme_certificate_acme_account_content: "{{ lookup('file', output_dir ~ '/account-rsa2048.pem') }}"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+
+- name: Retrieve certificate information
+  community.crypto.x509_certificate_info:
+    path: "{{ acme_certificate_keys_path }}127.0.0.1.pem"
+  register: cert
+
+- name: Validate certificate information
+  assert:
+    that:
+      - cert.subject_alt_name | length == 1
+      - "'IP:127.0.0.1' in cert.subject_alt_name"
+
+- name: Validate certificate
+  ansible.builtin.command: >-
+    openssl verify
+    -no-CAfile -no-CApath
+    -CAfile "{{ output_dir }}/acme-root-0.pem"
+    -untrusted "{{ acme_certificate_keys_path }}127.0.0.1-chain.pem"
+    "{{ acme_certificate_keys_path }}127.0.0.1.pem"
