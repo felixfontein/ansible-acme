@@ -12,8 +12,8 @@
   - issue-tls-certs-newkey
 
 - block:
-  - name: Sanity checks
-    ansible.builtin.assert: (1/2)
+  - name: Sanity checks (1/2)
+    ansible.builtin.assert:
       that: "acme_certificate_challenge != 'dns-01' or acme_certificate_dns_provider is not undefined"
       msg: "acme_certificate_dns_provider must be defined for dns-01 DNS challenge"
     run_once: true
