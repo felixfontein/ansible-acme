@@ -1,6 +1,6 @@
 ---
 # Create HTTP challenges for ansible-test's ACME test container
-- name: "Copying challenge files for domains {{ ', '.join(acme_certificate_domains) }} (ansible-test internal)"
+- name: "Copying challenge files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (ansible-test internal)"
   ansible.builtin.uri:
     url: "http://{{ acme_host }}:5000/http/{{ item.key }}/{{ item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/'|length):] }}"
     method: PUT

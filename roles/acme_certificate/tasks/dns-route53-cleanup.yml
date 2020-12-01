@@ -1,6 +1,6 @@
 ---
 # Clean up DNS challenges for DNS provider Amazon Route53
-- name: Cleaning up challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via Route53
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
   community.aws.route53:
     state: absent
     zone: "{{ item.key | felixfontein.tools.dns_zone }}"

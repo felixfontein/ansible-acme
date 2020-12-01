@@ -73,6 +73,8 @@
     acme_certificate_domains:
       - '*.example.com'
       - 'example.com'
+    acme_certificate_ips:
+      - 127.0.0.1
     acme_certificate_challenge: dns-01
     acme_certificate_acme_account_content: "{{ lookup('file', output_dir ~ '/account-rsa2048.pem') }}"
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
@@ -85,9 +87,10 @@
 - name: Validate certificate information
   assert:
     that:
-      - cert.subject_alt_name | length == 2
+      - cert.subject_alt_name | length == 3
       - "'DNS:*.example.com' in cert.subject_alt_name"
       - "'DNS:example.com' in cert.subject_alt_name"
+      - "'IP:127.0.0.1' in cert.subject_alt_name"
 
 - name: Validate certificate
   ansible.builtin.command: >-

@@ -1,6 +1,6 @@
 ---
 # Clean up DNS challenges for DNS provider HostTech
-- name: Cleaning up challenge DNS entries for domains {{ ', '.join(acme_certificate_domains) }} via HostTech API
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via HostTech API
   felixfontein.hosttech_dns.hosttech_dns_record:
     state: absent
     zone: "{{ item.key | felixfontein.tools.dns_zone }}"

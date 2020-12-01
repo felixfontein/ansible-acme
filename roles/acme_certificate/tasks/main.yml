@@ -2,6 +2,8 @@
 - name: Determine whether to force private key regeneration (1/2)
   set_fact:
     acme_certificate_INTERNAL_force_regenerate_private_key: false
+  tags:
+  - always
 
 - name: Determine whether to force private key regeneration (2/2)
   set_fact:
@@ -11,12 +13,18 @@
 
 - block:
   - name: Sanity checks
-    ansible.builtin.assert:
+    ansible.builtin.assert: (1/2)
       that: "acme_certificate_challenge != 'dns-01' or acme_certificate_dns_provider is not undefined"
       msg: "acme_certificate_dns_provider must be defined for dns-01 DNS challenge"
     run_once: true
 
-  - name: "Test whether old certificate files for domains {{ ', '.join(acme_certificate_domains) }} exist"
+  - name: Sanity checks (2/2)
+    ansible.builtin.assert:
+      that: "acme_certificate_domains or acme_certificate_ips"
+      msg: "acme_certificate_domains or acme_certificate_ips must be specified"
+    run_once: true
+
+  - name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
     ansible.builtin.stat:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | felixfontein.tools.path_join }}.pem"
     delegate_to: localhost
@@ -24,7 +32,7 @@
     when: "acme_certificate_keys_old_store"
     run_once: true
 
-  - name: "Copying old certificate files for domains {{ ', '.join(acme_certificate_domains) }}"
+  - name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     ansible.builtin.copy:
       src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | felixfontein.tools.path_join }}{{ item }}"
       dest: >-
@@ -51,7 +59,7 @@
   - issue-tls-certs
 
 - block:
-  - name: "Creating private key for domains {{ ', '.join(acme_certificate_domains) }}"
+  - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     community.crypto.openssl_privatekey:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
       mode: "{{ acme_certificate_privatekey_mode }}"
@@ -69,7 +77,7 @@
     run_once: true
 
   - block:
-    - name: "Creating private key for domains {{ ', '.join(acme_certificate_domains) }} (sops encrypted)"
+    - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
       community.crypto.openssl_privatekey_pipe:
         content: >-
           {{
@@ -90,7 +98,7 @@
       no_log: true
       register: acme_certificate_INTERNAL_private_key
 
-    - name: "Store sops-encrypted private key for domains {{ ', '.join(acme_certificate_domains) }}"
+    - name: "Store sops-encrypted private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       community.sops.sops_encrypt:
         path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join }}"
         content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
@@ -104,19 +112,22 @@
     delegate_to: localhost
     run_once: true
 
-  - name: "Creating CSR for domains {{ ', '.join(acme_certificate_domains) }}"
+  - name: "Creating CSR for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     community.crypto.openssl_csr_pipe:
       privatekey_content: "{{ lookup('community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join) if acme_certificate_use_sops_for_key else omit }}"
       privatekey_path: "{{ omit if acme_certificate_use_sops_for_key else [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
       subject_alt_name: |
-          {{ acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list }}
+          {{
+            (acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list)
+            + (acme_certificate_ips | map('regex_replace', '^(.*)$', 'IP:\1' ) | list)
+          }}
       ocsp_must_staple: "{{ acme_certificate_ocsp_must_staple }}"
       use_common_name_for_san: false
     register: acme_certificate_INTERNAL_csr
     delegate_to: localhost
     run_once: true
 
-  - name: "Get root certificate for domains {{ ', '.join(acme_certificate_domains) }}"
+  - name: "Get root certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     ansible.builtin.get_url:
       url: "{{ acme_certificate_root_certificate }}"
       dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join }}"
@@ -126,7 +137,7 @@
     run_once: true
 
   - block:
-    - name: "Preparing challenges for domains {{ ', '.join(acme_certificate_domains) }}"
+    - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       community.crypto.acme_certificate:
         account_key: "{{ acme_certificate_acme_account | default(omit) }}"
         account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
@@ -163,7 +174,7 @@
     - include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
       when: "acme_certificate_challenge == 'dns-01'"
 
-    - name: "Getting certificates for domains {{ ', '.join(acme_certificate_domains) }}"
+    - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       community.crypto.acme_certificate:
         account_key: "{{ acme_certificate_acme_account | default(omit) }}"
         account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
@@ -186,7 +197,7 @@
       delegate_to: localhost
       run_once: true
 
-    - name: "Form root chain for domains {{ ', '.join(acme_certificate_domains) }}"
+    - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       ansible.builtin.copy:
         dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | felixfontein.tools.path_join }}"
         content: |
@@ -209,7 +220,7 @@
   - issue-tls-certs-newkey
   - issue-tls-certs
 
-- name: "Verifying certificate for domains {{ ', '.join(acme_certificate_domains) }}"
+- name: "Verifying certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   # If you get strange failures here, upgrade to later versions of Ansible 2.9 / ansible-base 2.10.
   # You need a version which includes the following backports:
   #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9
