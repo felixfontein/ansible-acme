@@ -223,14 +223,19 @@
 - name: "Verifying certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   # If you get strange failures here, upgrade to later versions of Ansible 2.9 / ansible-base 2.10.
   # You need a version which includes the following backports:
-  #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9
-  #  - https://github.com/ansible/ansible/pull/72457 for stable-2.10
-  ansible.builtin.command: >-
-    openssl verify
-    -no-CAfile -no-CApath
-    -CAfile "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join }}"
-    -untrusted "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join }}"
-    "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
+  #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9 [merged for ansible 2.9.16]
+  #  - https://github.com/ansible/ansible/pull/72457 for stable-2.10 [merged for ansible-base 2.10.4]
+  ansible.builtin.command:
+    argv:
+    - openssl
+    - verify
+    - "-no-CAfile"
+    - "-no-CApath"
+    - "-CAfile"
+    - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | felixfontein.tools.path_join }}"
+    - "-untrusted"
+    - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | felixfontein.tools.path_join }}"
+    - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | felixfontein.tools.path_join }}"
   changed_when: false
   delegate_to: localhost
   run_once: true
