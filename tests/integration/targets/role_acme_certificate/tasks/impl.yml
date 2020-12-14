@@ -61,11 +61,17 @@
       - "'DNS:example.org' in cert.subject_alt_name"
 
 - name: Validate certificate
-  ansible.builtin.command: >-
-    openssl verify
-    -CAfile "{{ output_dir }}/acme-root-0.pem"
-    -untrusted "{{ acme_certificate_keys_path }}example.org-chain.pem"
-    "{{ acme_certificate_keys_path }}example.org.pem"
+  ansible.builtin.command:
+    argv:
+      - openssl
+      - verify
+      - "-no-CAfile"
+      - "-no-CApath"
+      - "-CAfile"
+      - "{{ output_dir }}/acme-root-0.pem"
+      - "-untrusted"
+      - "{{ acme_certificate_keys_path }}example.org-chain.pem"
+      - "{{ acme_certificate_keys_path }}example.org.pem"
 
 - include_role:
     name: felixfontein.acme.acme_certificate
@@ -90,12 +96,17 @@
       - "'DNS:example.com' in cert.subject_alt_name"
 
 - name: Validate certificate
-  ansible.builtin.command: >-
-    openssl verify
-    -no-CAfile -no-CApath
-    -CAfile "{{ output_dir }}/acme-root-0.pem"
-    -untrusted "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
-    "{{ acme_certificate_keys_path }}_.example.com.pem"
+  ansible.builtin.command:
+    argv:
+      - openssl
+      - verify
+      - "-no-CAfile"
+      - "-no-CApath"
+      - "-CAfile"
+      - "{{ output_dir }}/acme-root-0.pem"
+      - "-untrusted"
+      - "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
+      - "{{ acme_certificate_keys_path }}_.example.com.pem"
 
 - include_role:
     name: felixfontein.acme.acme_certificate
@@ -117,9 +128,14 @@
       - "'IP:127.0.0.1' in cert.subject_alt_name"
 
 - name: Validate certificate
-  ansible.builtin.command: >-
-    openssl verify
-    -no-CAfile -no-CApath
-    -CAfile "{{ output_dir }}/acme-root-0.pem"
-    -untrusted "{{ acme_certificate_keys_path }}127.0.0.1-chain.pem"
-    "{{ acme_certificate_keys_path }}127.0.0.1.pem"
+  ansible.builtin.command:
+    argv:
+      - openssl
+      - verify
+      - "-no-CAfile"
+      - "-no-CApath"
+      - "-CAfile"
+      - "{{ output_dir }}/acme-root-0.pem"
+      - "-untrusted"
+      - "{{ acme_certificate_keys_path }}127.0.0.1-chain.pem"
+      - "{{ acme_certificate_keys_path }}127.0.0.1.pem"
