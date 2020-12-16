@@ -1,5 +1,6 @@
+---
 name: CI
-on:
+'on':
   # Run CI against all pushes (direct commits, also merged PRs) to main, and all Pull Requests
   push:
     branches:
@@ -10,12 +11,6 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
-
-###
-# Sanity tests (REQUIRED)
-#
-# https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
-
   sanity:
     name: Sanity (Ⓐ${{ matrix.ansible }})
     strategy:
@@ -54,16 +49,6 @@ jobs:
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color
         working-directory: ./ansible_collections/felixfontein/acme
-
-###
-# Integration tests (RECOMMENDED)
-#
-# https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
-
-
-# If the application you are testing is available as a docker container and you want to test
-# multiple versions see the following for an example:
-# https://github.com/ansible-collections/community.zabbix/tree/master/.github/workflows
 
   integration:
     runs-on: ubuntu-latest
@@ -133,3 +118,22 @@ jobs:
 
       - name: Run ansible-lint
         run: ansible-lint
+
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install yamllint
+        run: |
+          pip install yamllint --disable-pip-version-check
+
+      - name: Run yamllint
+        run: yamllint .

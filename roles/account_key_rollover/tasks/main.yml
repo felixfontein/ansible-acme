@@ -2,8 +2,11 @@
 - block:
   - name: Read the old key
     set_fact:
-      acme_certificate_INTERNAL_old_account_key: >
-        {{ lookup('community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file', acme_certificate_acme_account) }}
+      acme_certificate_INTERNAL_old_account_key: >-
+        {{ lookup(
+          'community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file',
+           acme_certificate_acme_account
+        ) }}
 
   - name: Create copy of old key
     ansible.builtin.copy:
@@ -55,7 +58,8 @@
     community.crypto.acme_account:
       account_key_content: "{{ acme_certificate_INTERNAL_old_account_key }}"
       new_account_key_src: "{{ acme_certificate_acme_account if not acme_certificate_account_key_sops_encrypted else omit }}"
-      new_account_key_content: "{{ lookup('community.sops.sops', acme_certificate_acme_account) if acme_certificate_account_key_sops_encrypted else omit }}"
+      new_account_key_content: >-
+        {{ lookup('community.sops.sops', acme_certificate_acme_account) if acme_certificate_account_key_sops_encrypted else omit }}
       # We could use acme_certificate_INTERNAL_new_account_key.privatekey directly instead of lookup('community.sops.sops', ...),
       # but the latter makes sure that the stored private key actually works. If for some reason it does not, the key will not
       # be changed and we decrease likelihood of key loss.
