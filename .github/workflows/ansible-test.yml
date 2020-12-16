@@ -89,7 +89,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install dependencies
-      - name: Install collection dependencies
+      - name: Install collection dependencies needed for tests
         run: |
           ansible-galaxy collection install community.crypto community.sops felixfontein.tools -p .
 
@@ -104,6 +104,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+        with:
+          path: ansible_collections/felixfontein/acme
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -115,8 +117,16 @@ jobs:
           pip install https://github.com/ansible/ansible/archive/stable-2.10.tar.gz --disable-pip-version-check
           pip install git+https://github.com/ansible-community/ansible-lint.git#egg=ansible-lint --disable-pip-version-check
 
+      # Install dependencies
+      - name: Install all collection dependencies
+        run: |
+          ansible-galaxy collection install community.crypto community.aws community.sops felixfontein.hosttech_dns felixfontein.tools -p .
+
       - name: Run ansible-lint
         run: ansible-lint
+        env:
+          ANSIBLE_COLLECTIONS_PATHS: ../../../
+        working-directory: ./ansible_collections/felixfontein/acme
 
   yamllint:
     name: yamllint
