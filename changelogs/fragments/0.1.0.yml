@@ -1,1 +1,0 @@
-release_summary: Initial release of my `acme_certificate <https://galaxy.ansible.com/felixfontein/acme_certificate>`_ role converted to a collection, with two new roles `revoke_old_certificates` and `account_key_rollover`.
