@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  role_name: account_key_rollover
+  author: Felix Fontein
+  description: >
+    Simplifies ACME account key rollover.
+
+  license: MIT
+
+  min_ansible_version: 2.9.10
+
+  galaxy_tags:
+  - acme
+  - letsencrypt
+  - buypass
+  - ssl
+  - tls
+  - https
+  - encryption
+  - security
+  - web
+  - account
+
+dependencies: []

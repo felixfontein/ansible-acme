@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  role_name: revoke_old_certificates
+  author: Felix Fontein
+  description: >
+    Simplifies revocation of certificates via ACME.
+
+  license: MIT
+
+  min_ansible_version: 2.9.10
+
+  galaxy_tags:
+  - acme
+  - letsencrypt
+  - buypass
+  - ssl
+  - tls
+  - https
+  - encryption
+  - security
+  - web
+  - revoke
+
+dependencies: []
