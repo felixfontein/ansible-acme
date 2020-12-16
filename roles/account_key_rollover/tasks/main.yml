@@ -2,7 +2,8 @@
 - block:
   - name: Read the old key
     set_fact:
-      acme_certificate_INTERNAL_old_account_key: "{{ lookup('community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file', acme_certificate_acme_account) }}"
+      acme_certificate_INTERNAL_old_account_key: >
+        {{ lookup('community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file', acme_certificate_acme_account) }}
 
   - name: Create copy of old key
     ansible.builtin.copy:

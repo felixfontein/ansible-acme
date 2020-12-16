@@ -112,3 +112,23 @@ jobs:
       - name: Run integration test
         run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker
         working-directory: ./ansible_collections/felixfontein/acme
+
+  ansible-lint:
+    name: ansible-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install ansible-base and ansible-lint
+        run: |
+          pip install https://github.com/ansible/ansible/archive/stable-2.10.tar.gz --disable-pip-version-check
+          pip install https://github.com/ansible-community/ansible-lint/archive/master.tar.gz --disable-pip-version-check
+
+      - name: Run ansible-lint
+        run: ansible-lint
