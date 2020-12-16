@@ -127,6 +127,7 @@ jobs:
 
       - name: Install ansible-base and ansible-lint
         run: |
+          pip install --upgrade setuptools --disable-pip-version-check
           pip install https://github.com/ansible/ansible/archive/stable-2.10.tar.gz --disable-pip-version-check
           pip install https://github.com/ansible-community/ansible-lint/archive/master.tar.gz --disable-pip-version-check
 
