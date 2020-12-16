@@ -114,8 +114,14 @@
 
   - name: "Creating CSR for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     community.crypto.openssl_csr_pipe:
-      privatekey_content: "{{ lookup('community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | felixfontein.tools.path_join) if acme_certificate_use_sops_for_key else omit }}"
-      privatekey_path: "{{ omit if acme_certificate_use_sops_for_key else [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}"
+      privatekey_content: >-
+        {{ lookup(
+             'community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops']
+             | felixfontein.tools.path_join)
+           if acme_certificate_use_sops_for_key else omit }}
+      privatekey_path: >-
+        {{ omit if acme_certificate_use_sops_for_key else
+           [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}
       subject_alt_name: |
           {{
             (acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list)

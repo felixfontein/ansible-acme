@@ -1,5 +1,6 @@
+---
 name: CI
-on:
+'on':
   # Run CI against all pushes (direct commits, also merged PRs) to main, and all Pull Requests
   push:
     branches:
@@ -10,12 +11,6 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
-
-###
-# Sanity tests (REQUIRED)
-#
-# https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
-
   sanity:
     name: Sanity (Ⓐ${{ matrix.ansible }})
     strategy:
@@ -54,16 +49,6 @@ jobs:
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color
         working-directory: ./ansible_collections/felixfontein/acme
-
-###
-# Integration tests (RECOMMENDED)
-#
-# https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
-
-
-# If the application you are testing is available as a docker container and you want to test
-# multiple versions see the following for an example:
-# https://github.com/ansible-collections/community.zabbix/tree/master/.github/workflows
 
   integration:
     runs-on: ubuntu-latest
@@ -104,7 +89,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install dependencies
-      - name: Install collection dependencies
+      - name: Install collection dependencies needed for tests
         run: |
           ansible-galaxy collection install community.crypto community.sops felixfontein.tools -p .
 
@@ -112,3 +97,52 @@ jobs:
       - name: Run integration test
         run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker
         working-directory: ./ansible_collections/felixfontein/acme
+
+  ansible-lint:
+    name: ansible-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/felixfontein/acme
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install ansible-base and ansible-lint
+        run: |
+          pip install https://github.com/ansible/ansible/archive/stable-2.10.tar.gz --disable-pip-version-check
+          pip install git+https://github.com/ansible-community/ansible-lint.git#egg=ansible-lint --disable-pip-version-check
+
+      # Install dependencies
+      - name: Install all collection dependencies
+        run: |
+          ansible-galaxy collection install community.crypto community.aws community.sops felixfontein.hosttech_dns felixfontein.tools -p .
+
+      - name: Run ansible-lint
+        run: ansible-lint
+        env:
+          ANSIBLE_COLLECTIONS_PATHS: ../../../
+        working-directory: ./ansible_collections/felixfontein/acme
+
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install yamllint
+        run: |
+          pip install yamllint --disable-pip-version-check
+
+      - name: Run yamllint
+        run: yamllint .

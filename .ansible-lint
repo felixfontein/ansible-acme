@@ -1,0 +1,6 @@
+---
+skip_list:
+  - '701'
+exclude_paths:
+- roles/acme_certificate/tasks/dns-ns1-cleanup.yml
+- roles/acme_certificate/tasks/dns-ns1-create.yml
