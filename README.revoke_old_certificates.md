@@ -8,12 +8,13 @@ Make sure that you first replace all usages of the old certificates by the new o
 
 ## Parameters
 
-See [here](./README.general-parameters.md) for general parameters, and for challenge-specific parameters. Please note that this role does **not** need an ACME account, and relies on the private key of the certificates to revoke them.
+See [here](./README.general-parameters.md) for general parameters, and for challenge-specific parameters. Please note that this role does **not** need an ACME account if not explicitly configured to use it, and relies on the private key of the certificates to revoke them.
 
 These are the main variables used by the `felixfontein.acme.revoke_old_certificates` role:
 
 - `acme_certificate_keys_old_path`: Where old keys and certificates should be copied to; used in case `acme_certificate_keys_old_store` is true. Default value is `"keys/old/"`.
 - `acme_certificate_revoke_reason`: which reason to use for revocation. The default value is `4` (superseeded, i.e. you issued a new certificate for the same set of domains, this is an old one). Other sensible values are `5` (cessation of operation, i.e. you don't want to use this set of domain names in a certificate anymore). See [here](https://docs.ansible.com/ansible/latest/collections/community/crypto/acme_certificate_revoke_module.html#parameter-revoke_reason) for a full list of reasons.
+- `acme_certificate_revoke_with_acme_account`: if set to `true`, will not use the private key of the certificate to revoke, but the account key. This is needed for ACME providers which do not support revocation by private certificate key, like BuyPass.
 
 ## Example playbook
 
