@@ -1,0 +1,2 @@
+minor_changes:
+- "revoke_old_certificates role - allow to revoke by ACME account key instead of certificate private key by setting ``acme_certificate_revoke_with_acme_account`` to ``true``. This allows to revoke certificates with BuyPass, which does not support revocation by certificate private key."
