@@ -1,5 +1,8 @@
 ---
 skip_list:
+  - '106'  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern - necessary for integration tests
+  - '301'  # Commands should not change things if nothing needs doing
+  - '303'  # Using command rather than module - this is necessary, since the apt module does not work in the default test container
   - '701'
 exclude_paths:
 - roles/acme_certificate/tasks/dns-ns1-cleanup.yml

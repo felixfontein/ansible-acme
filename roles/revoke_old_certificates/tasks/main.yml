@@ -4,7 +4,8 @@
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     account_key: "{{ (acme_certificate_acme_account | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
-    account_key_content: "{{ (acme_certificate_acme_account_content | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
+    account_key_content: >-
+      {{ (acme_certificate_acme_account_content | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}
     account_uri: "{{ (acme_certificate_acme_account_uri | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
     revoke_reason: "{{ acme_certificate_revoke_reason }}"
     certificate: "{{ item[:-4] }}.pem"
@@ -20,7 +21,8 @@
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     account_key: "{{ (acme_certificate_acme_account | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
-    account_key_content: "{{ (acme_certificate_acme_account_content | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
+    account_key_content: >-
+      {{ (acme_certificate_acme_account_content | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}
     account_uri: "{{ (acme_certificate_acme_account_uri | default(omit)) if acme_certificate_revoke_with_acme_account else omit }}"
     revoke_reason: "{{ acme_certificate_revoke_reason }}"
     certificate: "{{ item[:-9] }}.pem"
