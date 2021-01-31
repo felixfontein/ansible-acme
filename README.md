@@ -1,5 +1,5 @@
 # Tools for ACME
-[![CI](https://github.com/felixfontein/ansible-acme/workflows/CI/badge.svg?event=push)](https://github.com/felixfontein/ansible-acme/actions)
+[![CI](https://github.com/felixfontein/ansible-acme/workflows/CI/badge.svg?event=push&branch=main)](https://github.com/felixfontein/ansible-acme/actions?query=workflow%3A%22CI%22+branch%3Amain)
 
 This collection provides some useful roles for retrieving ACME certificates.
 
