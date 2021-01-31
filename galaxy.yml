@@ -17,10 +17,11 @@ tags:
   - encryption
   - security
   - web
+  - sops
 dependencies:
   community.crypto: '>=1.3.0'
   community.aws: '>=1.0.0'
-  community.sops: '>=0.2.0'
+  community.sops: '>=1.0.0'
   felixfontein.hosttech_dns: '>=1.1.0'
   felixfontein.tools: '>=1.1.0'
 repository: https://github.com/felixfontein/ansible-acme
