@@ -12,7 +12,7 @@
     mode: "0755"
 
 - name: install gnupg2
-  command: apt-get install gnupg2
+  command: apt-get install gnupg2  # noqa 301 noqa 303
 
 - name: download sops test GPG key
   get_url:
@@ -20,7 +20,7 @@
     dest: /tmp/sops_functional_tests_key.asc
 
 - name: import sops test GPG key
-  command: gpg --import /tmp/sops_functional_tests_key.asc
+  command: gpg --import /tmp/sops_functional_tests_key.asc  # noqa 301
   ignore_errors: yes
 
 - name: report that sops is installed
