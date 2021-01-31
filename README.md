@@ -5,7 +5,7 @@ This collection provides some useful roles for retrieving ACME certificates.
 
 ## Tested with Ansible
 
-Tested with both Ansible 2.9, 2.10 and the current development version of Ansible.
+This collection is tested with Ansible 2.9, ansible-base 2.10 and ansible-core's `devel` branch.
 
 ## External requirements
 
@@ -42,6 +42,10 @@ For using this collection, you always also need an ACME account. See [here](http
 ## Release notes
 
 See [here](https://github.com/felixfontein/ansible-acme/tree/main/CHANGELOG.rst).
+
+## Releasing, Deprecation and Versioning
+
+We release new versions once there are new features or bugfixes. Deprecations can happen, and we try to announce them a long time in advance. We currently do not plan breaking changes, so there will be no new major release anytime soon.
 
 ## More information
 
