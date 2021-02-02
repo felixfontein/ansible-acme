@@ -3,5 +3,6 @@ skip_list:
   - '106'  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern - necessary for integration tests
   - '701'  # Role info should contain platforms
 exclude_paths:
+- changelogs/
 - roles/acme_certificate/tasks/dns-ns1-cleanup.yml
 - roles/acme_certificate/tasks/dns-ns1-create.yml

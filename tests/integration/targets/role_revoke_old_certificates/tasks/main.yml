@@ -19,6 +19,7 @@
   file:
     path: "{{ item }}"
     state: directory
+    mode: "0700"
   loop:
     - "{{ acme_certificate_keys_path }}"
     - "{{ acme_certificate_keys_old_path }}"
@@ -42,19 +43,22 @@
       loop: "{{ root_numbers }}"
       register: acme_intermediates
 
-    - set_fact:
+    - name: Set root list (1/3)
+      set_fact:
         x__: "{{ item | dict2items | selectattr('key', 'in', interesting_keys) | list | items2dict }}"
         y__: "{{ lookup('file', output_dir ~ '/acme-root-' ~ item.item ~ '.pem', rstrip=False) }}"
       loop: "{{ acme_roots.results }}"
       register: acme_roots_tmp
 
-    - set_fact:
+    - name: Set root list (2/3)
+      set_fact:
         x__: "{{ item | dict2items | selectattr('key', 'in', interesting_keys) | list | items2dict }}"
         y__: "{{ lookup('file', output_dir ~ '/acme-intermediate-' ~ item.item ~ '.pem', rstrip=False) }}"
       loop: "{{ acme_intermediates.results }}"
       register: acme_intermediates_tmp
 
-    - set_fact:
+    - name: Set root list (3/3)
+      set_fact:
         acme_roots: "{{ acme_roots_tmp.results | map(attribute='ansible_facts.x__') | list }}"
         acme_root_certs: "{{ acme_roots_tmp.results | map(attribute='ansible_facts.y__') | list }}"
         acme_intermediates: "{{ acme_intermediates_tmp.results | map(attribute='ansible_facts.x__') | list }}"

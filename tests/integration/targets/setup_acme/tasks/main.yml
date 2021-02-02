@@ -3,15 +3,16 @@
   set_fact:
     openssl_binary: openssl
 
-- name: Register openssl version
+- name: Register openssl version  # noqa 301 noqa 306
   shell: "{{ openssl_binary }} version | cut -d' ' -f2"
   register: openssl_version
 
-- name: Register cryptography version
+- name: Register cryptography version  # noqa 301
   command: "{{ ansible_python.executable }} -c 'import cryptography; print(cryptography.__version__)'"
   register: cryptography_version
 
-- debug:
+- name: Output details
+  debug:
     msg: >-
       ACME test container IP is {{ acme_host }};
       OpenSSL version is {{ openssl_version.stdout }};
