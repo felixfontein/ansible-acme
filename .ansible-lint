@@ -4,5 +4,5 @@ skip_list:
   - '701'  # Role info should contain platforms
 exclude_paths:
 - changelogs/
-- roles/acme_certificate/tasks/dns-ns1-cleanup.yml
-- roles/acme_certificate/tasks/dns-ns1-create.yml
+mock_modules:
+- ns1_record
