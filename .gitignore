@@ -2,5 +2,6 @@
 /changelogs/.plugin-cache.yaml
 /felixfontein-acme-*.tar.gz
 /tests/output
+/.cache
 
 __pycache__

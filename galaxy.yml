@@ -33,3 +33,4 @@ build_ignore:
   - felixfontein-acme-*.tar.gz
   - changelogs/.plugin-cache.yaml
   - tests/output
+  - .cache
