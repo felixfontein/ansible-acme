@@ -7,15 +7,27 @@ releases:
         and `account_key_rollover`.
     fragments:
     - 0.1.0.yml
-    release_date: '2020-12-16'
     objects:
       role:
-        - name: acme_certificate
-          description: Retrieve a certificate for a set of domains and/or IP addresses
-          namespace: null
-        - name: revoke_old_certificates
-          description: Revoke old certificates copied aside by acme_certificate
-          namespace: null
-        - name: account_key_rollover
-          description: Rollover for the ACME account key
-          namespace: null
+      - description: Rollover for the ACME account key
+        name: account_key_rollover
+        namespace: null
+      - description: Retrieve a certificate for a set of domains and/or IP addresses
+        name: acme_certificate
+        namespace: null
+      - description: Revoke old certificates copied aside by acme_certificate
+        name: revoke_old_certificates
+        namespace: null
+    release_date: '2020-12-16'
+  0.2.0:
+    changes:
+      minor_changes:
+      - revoke_old_certificates role - allow to revoke by ACME account key instead
+        of certificate private key by setting ``acme_certificate_revoke_with_acme_account``
+        to ``true``. This allows to revoke certificates with BuyPass, which does not
+        support revocation by certificate private key.
+      release_summary: Feature and repository maintenance release.
+    fragments:
+    - 0.2.0.yml
+    - revoke-by-acme-account.yml
+    release_date: '2021-02-08'
