@@ -3,6 +3,7 @@ extends: default
 
 ignore: |
   /changelogs/
+  /.github/workflows/import-galaxy.yml
 
 rules:
   line-length:
