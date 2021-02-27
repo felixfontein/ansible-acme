@@ -31,7 +31,8 @@
 
 ###############################################################################
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.account_key_rollover
   vars:
     acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
@@ -49,7 +50,8 @@
     that:
       - account_key.type == 'RSA'
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.account_key_rollover
   vars:
     acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"

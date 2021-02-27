@@ -1,7 +1,7 @@
 ---
 skip_list:
-  - '106'  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern - necessary for integration tests
-  - '701'  # Role info should contain platforms
+  - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern - necessary for integration tests
+  - meta-no-info  # Role info should contain platforms
 exclude_paths:
 - changelogs/
 mock_modules:

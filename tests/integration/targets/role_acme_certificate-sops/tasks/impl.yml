@@ -32,7 +32,8 @@
 
 ###############################################################################
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -41,7 +42,8 @@
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
     acme_certificate_use_sops_for_key: true
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:

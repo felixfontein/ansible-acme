@@ -2,7 +2,7 @@
 # Create HTTP challenges for ansible-test's ACME test container
 - name: "Copying challenge files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (ansible-test internal)"
   ansible.builtin.uri:
-    # noqa 206 - The problem is that the space eating in the following YAML string will result in `{{item...`
+    # noqa var-spacing - The problem is that the space eating in the following YAML string will result in `{{item...`
     url: >-
       http://{{ acme_host }}:5000/http/{{ item.key }}/{{
         item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/'|length):] }}
