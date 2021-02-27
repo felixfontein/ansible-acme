@@ -3,11 +3,11 @@
   set_fact:
     openssl_binary: openssl
 
-- name: Register openssl version  # noqa 301 noqa 306
+- name: Register openssl version  # noqa no-changed-when noqa risky-shell-pipe
   shell: "{{ openssl_binary }} version | cut -d' ' -f2"
   register: openssl_version
 
-- name: Register cryptography version  # noqa 301
+- name: Register cryptography version  # noqa no-changed-when
   command: "{{ ansible_python.executable }} -c 'import cryptography; print(cryptography.__version__)'"
   register: cryptography_version
 

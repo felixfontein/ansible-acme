@@ -122,7 +122,7 @@
       privatekey_path: >-
         {{ omit if acme_certificate_use_sops_for_key else
            [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | felixfontein.tools.path_join }}
-      # noqa 206 - The problem is that the space eating in the following YAML string will result in `{{(acme...`
+      # noqa var-spacing - The problem is that the space eating in the following YAML string will result in `{{(acme...`
       subject_alt_name: |
           {{
             (acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list)

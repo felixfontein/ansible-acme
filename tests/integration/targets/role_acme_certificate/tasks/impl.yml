@@ -41,7 +41,8 @@
 
 ###############################################################################
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -73,7 +74,8 @@
       - "{{ acme_certificate_keys_path }}example.org-chain.pem"
       - "{{ acme_certificate_keys_path }}example.org.pem"
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -108,7 +110,8 @@
       - "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
       - "{{ acme_certificate_keys_path }}_.example.com.pem"
 
-- include_role:
+- name: Run role
+  include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_ips:
