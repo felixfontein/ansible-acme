@@ -19,5 +19,13 @@
   - issue-tls-certs
 
 - name: Wait for DNS entries to propagate
-  ansible.builtin.pause:
-    seconds: 10
+  felixfontein.tools.wait_for_txt:
+    records: >-
+      {{
+        acme_certificate_INTERNAL_challenge.challenge_data_dns.items()
+          | map('felixfontein.tools.list_to_dict', ['name', 'values'])
+          | list
+      }}
+    timeout: 120
+  delegate_to: localhost
+  run_once: true
