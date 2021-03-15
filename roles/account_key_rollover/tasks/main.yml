@@ -34,6 +34,8 @@
     when: not acme_certificate_account_key_sops_encrypted
 
   - when: acme_certificate_account_key_sops_encrypted
+    run_once: true
+    delegate_to: localhost
     block:
     - name: Creating new private account key (sops encrypted)
       community.crypto.openssl_privatekey_pipe:
@@ -45,8 +47,6 @@
              'secp384r1' if acme_certificate_account_algorithm == 'p-384' else
              'secp521r1' if acme_certificate_account_algorithm == 'p-521' else
              'invalid value for acme_certificate_account_algorithm!' }}
-      run_once: true
-      delegate_to: localhost
       register: acme_certificate_INTERNAL_new_account_key
 
     - name: Stored sops-encrypted private account key

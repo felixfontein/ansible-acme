@@ -1,0 +1,2 @@
+bugfixes:
+- "account_key_rollover role - when using sops-encrypted keys, ``community.sops.sops_encrypt`` was run on the remote node and not the controller node (https://github.com/felixfontein/ansible-acme/pull/7)."
