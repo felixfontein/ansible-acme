@@ -1,0 +1,12 @@
+---
+sections:
+  - title: General
+    toctree:
+      - requirements
+      - general_role_parameters
+      - acme_account
+  - title: Roles
+    toctree:
+      - account_key_rollover_role
+      - acme_certificate_role
+      - revoke_old_certificates_role
