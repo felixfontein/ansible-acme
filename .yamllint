@@ -3,12 +3,12 @@ extends: default
 
 ignore: |
   /changelogs/
-  /.github/workflows/import-galaxy.yml
+  /.github/workflows/
 
 rules:
   line-length:
     max: 140
-    level: warning
+    level: error
   document-start:
     present: true
   document-end:
