@@ -8,7 +8,7 @@ ignore: |
 rules:
   line-length:
     max: 140
-    level: warning
+    level: error
   document-start:
     present: true
   document-end:
