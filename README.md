@@ -5,8 +5,7 @@ This collection provides some useful roles for retrieving ACME certificates.
 
 ## Tested with Ansible
 
-This collection is tested with Ansible 2.9, ansible-base 2.10 and ansible-core's `devel` branch.
-This collection requires Ansible 2.9.10 or newer.
+Tested with the current Ansible 2.9, ansible-base 2.10 and ansible-core 2.11 releases and the current development version of ansible-core. Ansible versions before 2.9.10 are not supported.
 
 ## External requirements
 
