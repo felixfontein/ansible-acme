@@ -1,7 +1,7 @@
 ---
 # Create DNS challenges for DNS provider HostTech
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via HostTech API
-  felixfontein.hosttech_dns.hosttech_dns_record:
+  community.dns.hosttech_dns_record:
     state: present
     zone: "{{ item.key | community.dns.get_registrable_domain }}"
     record: "{{ item.key }}"
