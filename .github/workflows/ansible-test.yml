@@ -94,11 +94,12 @@ jobs:
       - name: Install collection dependencies needed for tests
         run: |
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ./ansible_collections/community/crypto
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ./ansible_collections/community/dns
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.sops.git ./ansible_collections/community/sops
           git clone --depth=1 --single-branch https://github.com/felixfontein/ansible-tools.git ./ansible_collections/felixfontein/tools
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
-        #   ansible-galaxy collection install community.crypto community.sops felixfontein.tools -p .
+        #   ansible-galaxy collection install community.crypto community.dns community.sops felixfontein.tools -p .
 
       # Run the integration tests
       - name: Run integration test
@@ -128,14 +129,14 @@ jobs:
       - name: Install all collection dependencies
         run: |
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ./ansible_collections/community/crypto
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ./ansible_collections/community/dns
           git clone --depth=1 --single-branch https://github.com/ansible-collections/amazon.aws.git ./ansible_collections/amazon/aws
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.aws.git ./ansible_collections/community/aws
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.sops.git ./ansible_collections/community/sops
-          git clone --depth=1 --single-branch https://github.com/felixfontein/ansible-hosttech_dns.git ./ansible_collections/felixfontein/hosttech_dns
           git clone --depth=1 --single-branch https://github.com/felixfontein/ansible-tools.git ./ansible_collections/felixfontein/tools
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
-        #   ansible-galaxy collection install community.crypto community.aws community.sops felixfontein.hosttech_dns felixfontein.tools -p .
+        #   ansible-galaxy collection install community.crypto community.dns community.aws community.sops felixfontein.tools -p .
 
       - name: Run ansible-lint
         run: ansible-lint

@@ -1,0 +1,2 @@
+breaking_changes:
+- "Replace ``felixfontein.hosttech_dns`` collection dependency by ``community.dns``."
