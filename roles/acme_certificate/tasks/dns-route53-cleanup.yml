@@ -3,7 +3,7 @@
 - name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
   community.aws.route53:
     state: absent
-    zone: "{{ item.key | felixfontein.tools.dns_zone }}"
+    zone: "{{ item.key | community.dns.get_registrable_domain }}"
     record: "{{ item.key }}"
     type: TXT
     ttl: 60

@@ -3,7 +3,7 @@
   ns1_record:
     apiKey: "{{ acme_certificate_ns1_secret_key }}"
     name: "{{ item.key }}"
-    zone: "{{ item.key | felixfontein.tools.dns_zone }}"
+    zone: "{{ item.key | community.dns.get_registrable_domain }}"
     state: present
     type: TXT
     answers:
@@ -17,13 +17,9 @@
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
 
 - name: Wait for DNS entries to propagate
-  felixfontein.tools.wait_for_txt:
+  community.dns.wait_for_txt:
     records: >-
-      {{
-        acme_certificate_INTERNAL_challenge.challenge_data_dns.items()
-          | map('felixfontein.tools.list_to_dict', ['name', 'values'])
-          | list
-      }}
+      {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
     timeout: 120
   delegate_to: localhost
   run_once: true

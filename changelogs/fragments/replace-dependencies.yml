@@ -1,0 +1,2 @@
+breaking_changes:
+- "Replace ``felixfontein.hosttech_dns`` and ``felixfontein.tools`` collection dependencies by ``community.dns >= 0.1.0`` and ``community.general >= 2.5.0``."

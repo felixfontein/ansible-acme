@@ -1,2 +1,2 @@
 minor_changes:
-- "Use ``felixfontein.tools.wait_for_txt`` to speed up waiting for DNS challenges to propagate."
+- "Use ``community.dns.wait_for_txt`` to speed up waiting for DNS challenges to propagate."
