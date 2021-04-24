@@ -12,7 +12,7 @@
     mode: "0755"
 
 - name: install gnupg2
-  command: apt-get install gnupg2  # noqa no-changed-when noqa command-instead-of-module
+  command: apt-get install -y gnupg2  # noqa no-changed-when noqa command-instead-of-module
 
 - name: download sops test GPG key
   get_url:
