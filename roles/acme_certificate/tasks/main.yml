@@ -24,6 +24,10 @@
       msg: "acme_certificate_domains or acme_certificate_ips must be specified"
     run_once: true
 
+  # Sanity checks for DNS providers
+  - include_tasks: dns-{{ acme_certificate_dns_provider }}-sanity.yml
+    when: "acme_certificate_challenge == 'dns-01'"
+
   - name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
     ansible.builtin.stat:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
