@@ -6,11 +6,12 @@
     zone: "{{ item.key | community.dns.get_registrable_domain }}"
     record: "{{ item.key }}"
     type: TXT
-    ttl: 300
+    ttl: "{{ 600 if acme_certificate_hosttech_token is defined else 300 }}"
     value: "{{ item.value }}"
     overwrite: true
-    hosttech_username: "{{ acme_certificate_hosttech_username }}"
-    hosttech_password: "{{ acme_certificate_hosttech_password }}"
+    hosttech_username: "{{ acme_certificate_hosttech_username | default(omit) }}"
+    hosttech_password: "{{ acme_certificate_hosttech_password | default(omit) }}"
+    hosttech_token: "{{ acme_certificate_hosttech_token | default(omit) }}"
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
