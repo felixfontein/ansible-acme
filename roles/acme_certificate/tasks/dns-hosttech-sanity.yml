@@ -1,0 +1,16 @@
+---
+- name: DNS sanity checks
+  ansible.builtin.assert:
+    that:
+      - >-
+        (acme_certificate_hosttech_username is defined and acme_certificate_hosttech_password is defined)
+        or acme_certificate_hosttech_token is defined
+      - >-
+        not (
+          (acme_certificate_hosttech_username is defined or acme_certificate_hosttech_password is defined)
+          and acme_certificate_hosttech_token is defined
+        )
+    msg: >-
+      acme_certificate_hosttech_token must be specified for HostTech DNS (new API), or alternatively
+      acme_certificate_hosttech_username and acme_certificate_hosttech_password must be specified (old API)
+  run_once: true

@@ -1,0 +1,7 @@
+---
+- name: DNS sanity checks
+  ansible.builtin.assert:
+    that:
+      - acme_certificate_ns1_secret_key is defined
+    msg: "acme_certificate_ns1_secret_key must be specified for NS1 DNS"
+  run_once: true
