@@ -1,0 +1,61 @@
+---
+argument_specs:
+  main:
+    short_description: Revoke old certificates
+    version_added: 0.1.0
+    description:
+      - This is a role which can use any CA supporting the ACME protocol, such as L(Let's Encrypt,https://letsencrypt.org/),
+        L(Buypass,https://www.buypass.com/ssl/products/acme) or L(ZeroSSL,https://zerossl.com/features/acme/), to revoke
+        issued TLS/SSL certificates for your server.
+      - This role assumes that the C(felixfontein.acme.acme_certificate) has been used with I(acme_certificate_keys_old_store)
+        set to C(true). The role then copies the old certificate into C(keys/old/) (or the path configured by
+        I(acme_certificate_keys_old_path)) before renewal. This role iterates over all certificates (respectively their private
+        keys) in this directory and revokes them all with the given reason.
+      - This role supports both plaintext private keys and sops-encrypted private keys (see I(acme_certificate_use_sops_for_key)
+        option of the C(felixfontein.acme.acme_certificate) role.
+      - Make sure that you first replace all usages of the old certificates by the new ones before revokation!
+    author:
+      - Felix Fontein (@felixfontein)
+    options:
+      acme_certificate_acme_account:
+        type: str
+        description:
+          - Path to the private ACME account key. Either this or I(acme_certificate_acme_account_content) must always be specified.
+      acme_certificate_acme_account_content:
+        type: str
+        description:
+          - Content of the private ACME account key. Either this or I(acme_certificate_acme_account) must always be specified.
+      acme_certificate_acme_account_uri:
+        type: str
+        description:
+          - Instead of determining the account URI from the account key, assumes the given account URI.
+      acme_certificate_acme_directory:
+        type: str
+        default: https://acme-v02.api.letsencrypt.org/directory
+        description:
+          - The ACME directory to use.
+          - Default is C(https://acme-v02.api.letsencrypt.org/directory), which is the current production ACME v2 endpoint of Let's Encrypt.
+      acme_certificate_acme_version:
+        type: int
+        default: 2
+        description:
+          - The ACME directory's version.
+      acme_certificate_keys_old_path:
+        type: str
+        default: keys/old/
+        description:
+          - The directory where old keys and certificates were copied to by the C(felixfontein.acme.acme_certifiate) role.
+      acme_certificate_revoke_with_acme_account:
+        type: bool
+        default: false
+        description:
+          - If set to C(true), will not use the private key of the certificate to revoke, but the account key.
+          - This is needed for ACME providers which do not support revocation by private certificate key, like BuyPass.
+      acme_certificate_revoke_reason:
+        type: int
+        default: 4
+        description:
+          -  which reason to use for revocation.
+          - The default value is C(4) (B(superseeded), i.e. you issued a new certificate for the same set of domains, this is an old one).
+          - Another sensible value is C(5) (B(cessation of operation), i.e. you don't want to use this set of domain names in a certificate anymore).
+          - See the I(revoke_reason) parameter of the M(community.crypto.acme_certificate_revoke) module for a full list of reasons.

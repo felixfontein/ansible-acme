@@ -1,0 +1,4 @@
+minor_changes:
+- "Adding support for ansible-core's new role argument spec feature. This makes a sufficient new version of
+  ansible-core 2.11 validate the parameters passed to the roles in this collection
+  (https://github.com/felixfontein/ansible-acme/pull/13)."

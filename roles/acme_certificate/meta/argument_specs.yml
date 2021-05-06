@@ -1,0 +1,232 @@
+---
+argument_specs:
+  main:
+    short_description: Issue TLS/SSL certificates from an ACME CA
+    version_added: 0.1.0
+    description:
+      - "This is a role which can use any CA supporting the ACME protocol, such as L(Let's Encrypt,https://letsencrypt.org/),
+        L(Buypass,https://www.buypass.com/ssl/products/acme) or L(ZeroSSL,https://zerossl.com/features/acme/), to issue
+        TLS/SSL certificates for your server."
+      - "The main advantage of this approach over others is that B(almost no code is executed on your webserver): only when
+        you use HTTP challenges, files need to be copied onto your webserver, and afterwards deleted from it. Everything
+        else is executed on your local machine! In particular, the account key is B(never) sent to another machine."
+      - "This role does not cover installing the certificates, you have to do that yourself in another role."
+    author:
+      - Felix Fontein (@felixfontein)
+    options:
+      acme_certificate_acme_account:
+        type: str
+        description:
+          - Path to the private ACME account key. Either this or I(acme_certificate_acme_account_content) must always be specified.
+      acme_certificate_acme_account_content:
+        type: str
+        description:
+          - Content of the private ACME account key. Either this or I(acme_certificate_acme_account) must always be specified.
+      acme_certificate_acme_account_uri:
+        type: str
+        description:
+          - Instead of determining the account URI from the account key, assumes the given account URI.
+      acme_certificate_acme_directory:
+        type: str
+        default: https://acme-v02.api.letsencrypt.org/directory
+        description:
+          - The ACME directory to use.
+          - Default is C(https://acme-v02.api.letsencrypt.org/directory), which is the current production ACME v2 endpoint of Let's Encrypt.
+      acme_certificate_acme_version:
+        type: int
+        default: 2
+        description:
+          - The ACME directory's version.
+      acme_certificate_server_location:
+        type: str
+        default: /var/www/challenges
+        description:
+          - Location where C(.well-known/acme-challenge/) will be served from.
+      acme_certificate_http_become:
+        type: bool
+        default: false
+        description:
+          - "Argument for C(become:) for the M(ansible.builtin.file) and M(ansible.builtin.copy) tasks."
+      acme_certificate_http_challenge_user:
+        type: str
+        default: root
+        description:
+          - The user the challenge files are owned by.
+      acme_certificate_http_challenge_group:
+        type: str
+        default: http
+        description:
+          - The group the challenge files are owned by.
+      acme_certificate_http_challenge_folder_mode:
+        type: str
+        default: '0750'
+        description:
+          - The mode to use for the challenge folder.
+      acme_certificate_http_challenge_file_mode:
+        type: str
+        default: '0640'
+        description:
+          - The mode to use for the challenge files.
+      acme_certificate_dns_provider:
+        type: str
+        choices:
+          - route53
+          - hosttech
+          - ns1
+        description:
+          - Determines which DNS provider is used for DNS challenges.
+          - Every DNS provider requires further configuration.
+      acme_certificate_aws_access_key:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=route53), the AWS access key for Route53 must be passed in this option.
+      acme_certificate_aws_secret_key:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=route53), the AWS secret key for Route53 must be passed in this option.
+      acme_certificate_hosttech_username:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API, the API username must be passed in this option.
+          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username) and I(acme_certificate_hosttech_password).
+      acme_certificate_hosttech_password:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API, the API password must be passed in this option.
+          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username) and I(acme_certificate_hosttech_password).
+      acme_certificate_hosttech_token:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=hosttech) with the new HostTech JSON REST API, the API token must be passed in this option.
+      acme_certificate_ns1_secret_key:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=ns1), the NS1 account key must be passed in this option.
+          - Please note that NS1 support depends on the external module C(ns1_record). Please check out the documentation on how to install it.
+      acme_certificate_domains:
+        type: str
+        description:
+          - The domain names you want to get a certificate for.
+          - Wildcards are only allowed as the first component, i.e. C(*.example.com) is ok, while C(*.*.example.com) and
+            C(www.*.example.com) are not ok.
+          - Also, when wildcards are used, not every challenge type is allowed. Let's Encrypt only allows wildcard domains
+            with the C(dns-01) challenge. At least one of I(acme_certificate_domains) and I(acme_certificate_ips) must be specified.
+      acme_certificate_ips:
+        type: str
+        description:
+          - The IP addresses you want to get a certificate for.
+          - B(Note) that this is not supported by every CA!
+          - At least one of I(acme_certificate_domains) and I(acme_certificate_ips) must be specified.
+      acme_certificate_acme_email:
+        type: str
+        description:
+          - Your email address which shall be associated to the ACME account.
+      acme_certificate_algorithm:
+        type: str
+        default: rsa
+        choices:
+          - rsa
+          - p-256
+          - p-384
+          - p-521
+        description:
+          - The algorithm used for creating private keys.
+          - The default is C(rsa) for RSA keys.
+          - Other choices are C(p-256), C(p-384) or C(p-521) for the NIST elliptic curves C(prime256v1),
+            C(secp384r1) and C(secp521r1), respectively.
+      acme_certificate_key_length:
+        type: int
+        default: 4096
+        description:
+          - The bit-size to use for RSA private keys.
+          - Should not be less than 2048. Also values above 4096 might not be supported by all TLS/SSL clients.
+      acme_certificate_key_name:
+        type: str
+        description:
+          - The basename for storing the keys and certificates.
+          - The default is the first domain specified, with C(*) replaced by C(_).
+      acme_certificate_keys_path:
+        type: str
+        default: keys/
+        description:
+          - Where the keys and certificates are stored.
+      acme_certificate_keys_old_path:
+        type: str
+        default: keys/old/
+        description:
+          - Where old keys and certificates should be copied to.
+          - Used in case I(acme_certificate_keys_old_store=true).
+      acme_certificate_keys_old_store:
+        type: bool
+        default: false
+        description:
+          - If set to C(true), will make copies of old keys and certificates.
+          - The copies will be stored in the directory specified by I(acme_certificate_keys_old_store).
+      acme_certificate_keys_old_prepend_timestamp:
+        type: bool
+        default: false
+        description:
+          - Whether copies of old keys and certificates should be prepended by the current date and time.
+      acme_certificate_use_sops_for_key:
+        type: bool
+        default: false
+        description:
+          - Use L(Mozilla sops,https://github.com/mozilla/sops) to encrypt private key.
+          - Needs C(.sops.yaml) file inside the keys directory or somewhere up the directory chain.
+      acme_certificate_ocsp_must_staple:
+        type: bool
+        default: false
+        description:
+          - Whether a certificate with the OCSP Must Staple extension is requested.
+      acme_certificate_terms_agreed:
+        type: bool
+        default: false
+        description:
+          - Whether the terms of services are accepted or not.
+          - Usually needs to be set explicitly to ``true`` to allow creating an ACME account.
+          - This is only used for ACME v2.
+      acme_certificate_challenge:
+        type: str
+        choices:
+          - http-01
+          - dns-01
+        description:
+          - The challenge type to use.
+          - Should be C(http-01) for HTTP challenges (needs access to web server) or C(dns-01) for DNS challenges (needs
+            access to DNS provider).
+      acme_certificate_root_certificate:
+        type: str
+        default: https://letsencrypt.org/certs/isrgrootx1.pem
+        description:
+          - The root certificate for the ACME directory.
+          - "Default value is C(https://letsencrypt.org/certs/isrgrootx1.pem) for the root certificate of Let's Encrypt."
+      acme_certificate_deactivate_authzs:
+        type: bool
+        default: true
+        description:
+          - Whether C(authz) objects (authorizations) should be deactivated afterwards.
+          - Set to C(false) to be able to re-use C(authz) objects. This should mostly be used when issuing multiple
+            certificates for the same domain names.
+      acme_certificate_modify_account:
+        type: bool
+        default: true
+        description:
+          - Whether the ACME account should be created (if it doesn't exist) and the contact data (email address)
+            should be updated.
+          - Set to C(false) if you want to use the M(community.crypto.acme_account) module to manage your ACME account
+            (not done by this role).
+      acme_certificate_privatekey_mode:
+        type: str
+        default: '0600'
+        description:
+          - Which file mode to use for the private key file.
+          - Default value is C(0600) (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly C(root)).
+      acme_certificate_select_chain:
+        type: list
+        elements: dict
+        description:
+          - Must be in the format described for the I(select_chain) parameter of M(community.crypto.acme_certificate) module.
+          - Allows to select the certificate chain to be used; ``acme_certificate_root_certificate`` must be used in conjunction.
+          - This can be used for example with
+            L(Let's Encrypt,https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516) to select
+            which root certificate to use. See the documentation for concrete examples how to choose between the Let's Encrypt roots.
