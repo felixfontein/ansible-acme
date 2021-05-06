@@ -73,9 +73,11 @@ argument_specs:
           - route53
           - hosttech
           - ns1
+          - ansibletest
         description:
           - Determines which DNS provider is used for DNS challenges.
           - Every DNS provider requires further configuration.
+          - The value C(ansibletest) must not be used outside of integration tests. It will B(not) work.
       acme_certificate_aws_access_key:
         type: str
         description:
