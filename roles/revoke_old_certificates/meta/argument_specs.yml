@@ -55,7 +55,8 @@ argument_specs:
         type: int
         default: 4
         description:
-          -  which reason to use for revocation.
+          - Which reason to use for revocation.
           - The default value is C(4) (B(superseeded), i.e. you issued a new certificate for the same set of domains, this is an old one).
-          - Another sensible value is C(5) (B(cessation of operation), i.e. you don't want to use this set of domain names in a certificate anymore).
+          - Another sensible value is C(5) (B(cessation of operation), i.e. you don't want to use this set of domain names in
+            a certificate anymore).
           - See the I(revoke_reason) parameter of the M(community.crypto.acme_certificate_revoke) module for a full list of reasons.

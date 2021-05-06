@@ -87,22 +87,28 @@ argument_specs:
       acme_certificate_hosttech_username:
         type: str
         description:
-          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API, the API username must be passed in this option.
-          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username) and I(acme_certificate_hosttech_password).
+          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API,
+            the API username must be passed in this option.
+          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username)
+            and I(acme_certificate_hosttech_password).
       acme_certificate_hosttech_password:
         type: str
         description:
-          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API, the API password must be passed in this option.
-          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username) and I(acme_certificate_hosttech_password).
+          - When using I(acme_certificate_dns_provider=hosttech) with the old HostTech WSDL API,
+            the API password must be passed in this option.
+          - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username)
+            and I(acme_certificate_hosttech_password).
       acme_certificate_hosttech_token:
         type: str
         description:
-          - When using I(acme_certificate_dns_provider=hosttech) with the new HostTech JSON REST API, the API token must be passed in this option.
+          - When using I(acme_certificate_dns_provider=hosttech) with the new HostTech JSON REST API,
+            the API token must be passed in this option.
       acme_certificate_ns1_secret_key:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=ns1), the NS1 account key must be passed in this option.
-          - Please note that NS1 support depends on the external module C(ns1_record). Please check out the documentation on how to install it.
+          - Please note that NS1 support depends on the external module C(ns1_record). Please check out the
+            documentation on how to install it.
       acme_certificate_domains:
         type: str
         description:
@@ -220,7 +226,8 @@ argument_specs:
         default: '0600'
         description:
           - Which file mode to use for the private key file.
-          - Default value is C(0600) (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly C(root)).
+          - Default value is C(0600) (octal string), which means read- and writeable by the owner, but not
+            accessible by anyone else (except possibly C(root)).
       acme_certificate_select_chain:
         type: list
         elements: dict
