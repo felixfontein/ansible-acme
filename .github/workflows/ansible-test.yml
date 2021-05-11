@@ -18,9 +18,9 @@ jobs:
         ansible:
           # It's important that Sanity is tested against all stable-X.Y branches
           # Testing against `devel` may fail as new tests are added.
-          #- stable-2.9
-          #- stable-2.10
-          #- stable-2.11
+          - stable-2.9
+          - stable-2.10
+          - stable-2.11
           - devel
     runs-on: ubuntu-latest
     steps:
@@ -41,8 +41,8 @@ jobs:
           python-version: 3.8
 
       # Install the head of the given branch (devel, stable-2.10)
-      - name: Install ansible-core devel from Shrew's branch
-        run: pip install https://github.com/Shrews/ansible/archive/role_argspec_sep_file.tar.gz --disable-pip-version-check
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # run ansible-test sanity inside of Docker.
       # The docker container has all the pinned dependencies that are required
@@ -58,9 +58,9 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          #- stable-2.9
-          #- stable-2.10
-          #- stable-2.11
+          - stable-2.9
+          - stable-2.10
+          - stable-2.11
           - devel
         python:
           - 2.6
@@ -87,8 +87,8 @@ jobs:
           # will run on all python versions it supports.
           python-version: 3.8
 
-      - name: Install ansible-core devel from Shrew's branch
-        run: pip install https://github.com/Shrews/ansible/archive/role_argspec_sep_file.tar.gz --disable-pip-version-check
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install dependencies
       - name: Install collection dependencies needed for tests
