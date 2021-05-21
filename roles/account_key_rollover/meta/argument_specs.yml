@@ -5,7 +5,7 @@ argument_specs:
     version_added: 0.1.0
     description:
       - This is a role which can use any CA supporting the ACME protocol, such as L(Let's Encrypt,https://letsencrypt.org/),
-        L(Buypass,https://www.buypass.com/ssl/products/acme>) or L(ZeroSSL,https://zerossl.com/features/acme/>), to rekey
+        L(Buypass,https://www.buypass.com/ssl/products/acme) or L(ZeroSSL,https://zerossl.com/features/acme/), to rekey
         ACME account keys.
       - This role will create a backup copy of the existing account key if requested to do so, re-create the account key,
         and then roll over the ACME account to the new key.
