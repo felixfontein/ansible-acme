@@ -47,6 +47,7 @@
             if acme_certificate_keys_old_prepend_timestamp else ''
           ) ~ acme_certificate_key_name ~ item
         ] | community.general.path_join }}
+      mode: preserve
     delegate_to: localhost
     loop:
     - "-chain.pem"

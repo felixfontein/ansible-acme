@@ -73,6 +73,7 @@
       - "-untrusted"
       - "{{ acme_certificate_keys_path }}example.org-chain.pem"
       - "{{ acme_certificate_keys_path }}example.org.pem"
+  changed_when: false
 
 - name: Run role
   include_role:
@@ -109,6 +110,7 @@
       - "-untrusted"
       - "{{ acme_certificate_keys_path }}_.example.com-chain.pem"
       - "{{ acme_certificate_keys_path }}_.example.com.pem"
+  changed_when: false
 
 - name: Run role
   include_role:
@@ -142,3 +144,4 @@
       - "-untrusted"
       - "{{ acme_certificate_keys_path }}127.0.0.1-chain.pem"
       - "{{ acme_certificate_keys_path }}127.0.0.1.pem"
+  changed_when: false

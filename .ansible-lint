@@ -2,7 +2,10 @@
 skip_list:
   - role-name  # Role name {0} does not match ``^[a-z][a-z0-9_]+$`` pattern - necessary for integration tests
   - meta-no-info  # Role info should contain platforms
+  - ignore-errors  # Use failed_when and specify error conditions instead of using ignore_errors
+  - var-naming  # Task uses 'set_fact' to define variables that violates variable naming standards
+  - no-log-password  # password should not be logged. [TBH this rule should not have been added to ansible-lint in the first place]
 exclude_paths:
-- changelogs/
+  - changelogs/
 mock_modules:
-- ns1_record
+  - ns1_record

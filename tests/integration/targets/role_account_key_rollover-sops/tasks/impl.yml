@@ -3,6 +3,7 @@
   ansible.builtin.copy:
     src: ".sops.yaml"
     dest: "{{ output_dir }}/.sops.yaml"
+    mode: "0644"
 
 - name: Create account key
   community.crypto.openssl_privatekey_pipe:
