@@ -1,4 +1,5 @@
 # Tools for ACME
+[![Doc](https://img.shields.io/badge/docs-brightgreen.svg)](https://ansible.fontein.de/collections/felixfontein/acme/)
 [![CI](https://github.com/felixfontein/ansible-acme/workflows/CI/badge.svg?branch=main)](https://github.com/felixfontein/ansible-acme/actions?query=workflow%3A%22CI%22+branch%3Amain)
 
 This collection provides some useful roles for retrieving ACME certificates.
@@ -11,9 +12,9 @@ Tested with the current Ansible 2.9, ansible-base 2.10 and ansible-core 2.11 rel
 
 Requires the Python [cryptography](https://pypi.org/project/cryptography/) library installed on the controller, available to the Python version used to execute the playbook. If `cryptography` is not installed, a recent enough version of [PyOpenSSL](https://pypi.org/project/pyOpenSSL/) is currently supported as a fallback by the `community.crypto.openssl_privatekey` and `community.crypto.openssl_csr` modules.
 
-The `openssl` binary must also be available in the executable path on the controller. It is needed by the `acme_certificate` module in case `cryptography` is not installed, and it is used for certificate chain validation.
+The `openssl` binary must also be available in the executable path on the controller. It is needed by the `acme_certificate` module in case `cryptography` is not installed, and it is used for certificate chain validation by the `felixfontein.acme.acme_certificate` role.
 
-If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `route53` module requires the Python [`boto`](https://pypi.org/project/boto/) package. If Hosttech DNS challenges are used, the [`lxml`](https://pypi.org/project/lxml/) package needs to be installed. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
+If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `community.aws.route53` module requires the Python [`boto3`](https://pypi.org/project/boto3/) package. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
 
 ## Included content
 
@@ -23,7 +24,7 @@ If DNS challenges are used, there can be other requirements depending on the DNS
 
 ## Using this collection
 
-Before using the crypto community collection, you need to install the collection with the `ansible-galaxy` CLI:
+Before using the `felixfontein.acme` collection, you need to install the collection with the `ansible-galaxy` CLI:
 ```
 ansible-galaxy collection install felixfontein.acme
 ```
