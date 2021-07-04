@@ -1,2 +1,2 @@
 minor_changes:
-- "Add documentation for all filter and test plugins to the `collection's docsite <https://ansible.fontein.de/collections/felixfontein/acme/>`_ (https://github.com/felixfontein/ansible-acme/pull/9)."
+- "Add documentation for the roles to the `collection's docsite <https://ansible.fontein.de/collections/felixfontein/acme/>`_ (https://github.com/felixfontein/ansible-acme/pull/9)."
