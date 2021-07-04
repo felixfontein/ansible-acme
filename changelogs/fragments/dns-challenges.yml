@@ -1,2 +1,0 @@
-minor_changes:
-- "Use ``community.dns.wait_for_txt`` to speed up waiting for DNS challenges to propagate."

@@ -1,3 +1,0 @@
-minor_changes:
-- "acme_certificate - add ``acme_certificate_hosttech_token`` option to use HostTech's new JSON API instead of old WSDL API (https://github.com/felixfontein/ansible-acme/pull/12)."
-- "acme_certificate - check whether credentials for DNS provider are set before starting certificate retrieval (https://github.com/felixfontein/ansible-acme/pull/12)."
