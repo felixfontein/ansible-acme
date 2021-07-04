@@ -42,6 +42,14 @@ argument_specs:
         default: /var/www/challenges
         description:
           - Location where C(.well-known/acme-challenge/) will be served from.
+      acme_certificate_regenerate_private_keys:
+        type: bool
+        default: true
+        description:
+          - Whether to regenerate private keys.
+          - It is recommended to regularly create new private keys instead of re-using the existing ones forever.
+            The easiest way to ensure this is to simply regenerate them when the certificates are regenerated.
+          - If you use public key pinning, make sure to set this to C(false)!
       acme_certificate_http_become:
         type: bool
         default: false

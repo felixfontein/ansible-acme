@@ -8,9 +8,6 @@
     group: "{{ acme_certificate_http_challenge_group }}"
     mode: "{{ acme_certificate_http_challenge_folder_mode }}"
   become: "{{ acme_certificate_http_become }}"
-  tags:
-  - issue-tls-certs-newkey
-  - issue-tls-certs
 
 # Create challenge files on server.
 - name: "Copying challenge files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
@@ -26,6 +23,3 @@
     mode: "{{ acme_certificate_http_challenge_file_mode }}"
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data }}"
   become: "{{ acme_certificate_http_become }}"
-  tags:
-  - issue-tls-certs-newkey
-  - issue-tls-certs
