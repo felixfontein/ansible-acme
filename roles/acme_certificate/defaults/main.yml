@@ -8,6 +8,7 @@ acme_certificate_keys_path: keys/
 acme_certificate_keys_old_path: keys/old/
 acme_certificate_keys_old_store: false
 acme_certificate_keys_old_prepend_timestamp: false
+acme_certificate_regenerate_private_keys: true
 acme_certificate_ocsp_must_staple: false
 acme_certificate_terms_agreed: true
 acme_certificate_acme_directory: https://acme-v02.api.letsencrypt.org/directory

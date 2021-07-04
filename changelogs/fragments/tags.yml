@@ -1,0 +1,2 @@
+breaking_changes:
+- "acme_certificate role - remove usage of tags ``issue-tls-certs``, ``issue-tls-certs-newkey`` and ``verify-tls-certs``. By default, new private keys are generated. This can be disabled by setting ``acme_certificate_regenerate_private_keys`` to ``false`` (https://github.com/felixfontein/ansible-acme/pull/15)."

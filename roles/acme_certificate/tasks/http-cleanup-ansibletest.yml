@@ -10,6 +10,3 @@
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.get('challenge_data', {}) }}"
-  tags:
-  - issue-tls-certs-newkey
-  - issue-tls-certs
