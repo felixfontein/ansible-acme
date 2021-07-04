@@ -92,7 +92,8 @@
     when: acme_certificate_INTERNAL_private_key.changed
 
   always:
-  - set_fact:
+  - name: Remove private key data from Ansible facts
+    set_fact:
       acme_certificate_INTERNAL_private_key: ''
 
   when: acme_certificate_use_sops_for_key
@@ -153,7 +154,8 @@
     register: acme_certificate_INTERNAL_challenge
 
   always:
-  - ansible.builtin.debug:
+  - name: Show account and order URI
+    ansible.builtin.debug:
       msg: >-
         account URI: {{ acme_certificate_INTERNAL_challenge.get('account_uri') }};
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
@@ -192,7 +194,7 @@
     run_once: true
 
   - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    ansible.builtin.copy:
+    ansible.builtin.copy:  # noqa risky-file-permissions - use the user's umask
       dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | community.general.path_join }}"
       content: |
         {{ lookup('file', [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join) }}
