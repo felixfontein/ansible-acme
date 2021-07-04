@@ -37,11 +37,11 @@ collections:
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
-For using this collection, you always also need an ACME account. See [here](https://ansible.fontein.de/collections/felixfontein/acme/docsite/acme_account.html) on how to create one.
+For using this collection, you always also need an ACME account. See [the documentation on ACME accounts](https://ansible.fontein.de/collections/felixfontein/acme/docsite/acme_account.html) on how to create one.
 
 ## Release notes
 
-See [here](https://github.com/felixfontein/ansible-acme/tree/main/CHANGELOG.rst).
+See [the changelog](https://github.com/felixfontein/ansible-acme/tree/main/CHANGELOG.rst).
 
 ## Releasing, Deprecation and Versioning
 
