@@ -17,9 +17,9 @@ If DNS challenges are used, there can be other requirements depending on the DNS
 
 ## Included content
 
-- Role [felixfontein.acme.acme_certificate](https://github.com/felixfontein/ansible-acme/tree/main/README.acme_certificate.md).
-- Role [felixfontein.acme.revoke_old_certificates](https://github.com/felixfontein/ansible-acme/tree/main/README.revoke_old_certificates.md).
-- Role [felixfontein.acme.account_key_rollover](https://github.com/felixfontein/ansible-acme/tree/main/README.account_key_rollover.md).
+- Role [felixfontein.acme.acme_certificate](https://ansible.fontein.de/collections/felixfontein/acme/docsite/acme_certificate_role.html).
+- Role [felixfontein.acme.revoke_old_certificates](https://ansible.fontein.de/collections/felixfontein/acme/docsite/revoke_old_certificates_role.html).
+- Role [felixfontein.acme.account_key_rollover](https://ansible.fontein.de/collections/felixfontein/acme/docsite/account_key_rollover_role.html).
 
 ## Using this collection
 
@@ -37,7 +37,7 @@ collections:
 
 See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
-For using this collection, you always also need an ACME account. See [here](https://github.com/felixfontein/ansible-acme/tree/main/README.acme-account.md) on how to create one.
+For using this collection, you always also need an ACME account. See [here](https://ansible.fontein.de/collections/felixfontein/acme/docsite/acme_account.html) on how to create one.
 
 ## Release notes
 
