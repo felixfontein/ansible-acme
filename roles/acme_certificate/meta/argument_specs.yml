@@ -288,3 +288,8 @@ argument_specs:
               - "The identifier must be of the form
                  C(C4:A7:B1:A4:7B:2C:71:FA:DB:E1:4B:90:75:FF:C4:15:60:85:89:10)."
             type: str
+    seealso:
+      - module: community.crypto.openssl_privatekey
+        description: You can create ACME account keys with this module.
+      - module: community.crypto.acme_account
+        description: You can manage ACME accounts with this module.
