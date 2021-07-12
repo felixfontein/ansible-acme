@@ -5,6 +5,19 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.3.1
+======
+
+Release Summary
+---------------
+
+Update dependencies.
+
+Bugfixes
+--------
+
+- Hosttech DNS support: restrict required version of community.dns to < 2.0.0. A later version will bump the requirement to >= 2.0.0 and switch to the new API.
+
 v0.3.0
 ======
 
