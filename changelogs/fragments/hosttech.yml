@@ -1,2 +1,2 @@
-minor_changes:
+bugfixes:
 - "Hosttech DNS support: restrict required version of community.dns to < 2.0.0. A later version will bump the requirement to >= 2.0.0 and switch to the new API."
