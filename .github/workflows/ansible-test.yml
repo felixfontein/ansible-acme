@@ -41,7 +41,7 @@ jobs:
           python-version: 3.8
 
       # Install the head of the given branch (devel, stable-2.10)
-      - name: Install ansible-base (${{ matrix.ansible }})
+      - name: Install ansible-core (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # run ansible-test sanity inside of Docker.
@@ -87,7 +87,7 @@ jobs:
           # will run on all python versions it supports.
           python-version: 3.8
 
-      - name: Install ansible-base (${{ matrix.ansible }})
+      - name: Install ansible-core (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install dependencies
@@ -120,7 +120,7 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install ansible-base and ansible-lint
+      - name: Install ansible-core and ansible-lint
         run: |
           pip install https://github.com/ansible/ansible/archive/stable-2.10.tar.gz --disable-pip-version-check
           pip install git+https://github.com/ansible-community/ansible-lint.git#egg=ansible-lint --disable-pip-version-check
