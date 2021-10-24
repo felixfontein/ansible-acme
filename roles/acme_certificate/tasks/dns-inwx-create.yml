@@ -1,0 +1,26 @@
+---
+# Create DNS challenges for DNS provider INWX
+
+- name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via INWX
+  inwx.collection.dns:
+    state: present
+    domain: "{{ item.key | community.dns.get_registrable_domain }}"
+    type: TXT
+    record: "{{ item.key | community.dns.remove_registrable_domain }}"
+    value: "{{ item.value | first }}"
+    solo: true
+    ttl: 300
+    username: "{{ acme_certificate_inwx_username | default(omit) }}"
+    password: "{{ acme_certificate_inwx_password | default(omit) }}"
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+
+- name: Wait for DNS entries to propagate
+  community.dns.wait_for_txt:
+    always_ask_default_resolver: false
+    records: >-
+      {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
+    timeout: 600
+  delegate_to: localhost
+  run_once: true
