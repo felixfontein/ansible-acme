@@ -18,7 +18,6 @@
 
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
-    always_ask_default_resolver: false
     records: >-
       {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
     timeout: 600
