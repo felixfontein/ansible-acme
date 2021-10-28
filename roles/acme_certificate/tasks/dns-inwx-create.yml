@@ -4,17 +4,19 @@
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via INWX
   inwx.collection.dns:
     state: present
-    domain: "{{ item.key | community.dns.get_registrable_domain }}"
+    domain: "{{ item.0.key | community.dns.get_registrable_domain }}"
     type: TXT
-    record: "{{ item.key | community.dns.remove_registrable_domain }}"
-    value: "{{ item.value | first }}"
-    solo: true
+    record: "{{ item.0.key | community.dns.remove_registrable_domain }}"
+    value: "{{ item.1 }}"
+    solo: "{{ 'true' if ansible_loop.first else 'false' }}"
     ttl: 300
     username: "{{ acme_certificate_inwx_username | default(omit) }}"
     password: "{{ acme_certificate_inwx_password | default(omit) }}"
   delegate_to: localhost
   run_once: true
-  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  loop_control:
+    extended: yes  
+  loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items | subelements('value') }}"
 
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:

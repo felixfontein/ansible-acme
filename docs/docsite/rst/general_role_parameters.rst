@@ -87,12 +87,14 @@ DNS Challenges
 
 If DNS challenges are used, the following variables define how the challenges can be fulfilled:
 
-- ``acme_certificate_dns_provider``: must be one of ``route53``, ``hosttech``, and ``ns1``. Each needs more information:
+- ``acme_certificate_dns_provider``: must be one of ``route53``, ``hosttech``, ``ns1`` and ``inwx``. Each needs more information:
   - For ``route53`` (`Amazon Route 53 <https://aws.amazon.com/route53/>`_), the credentials must be passed as ``acme_certificate_aws_access_key`` and ``acme_certificate_aws_secret_key``.
   - For ``hosttech`` (`hosttech GmbH <https://www.hosttech.ch/>`_), the credentials have to be passed as ``acme_certificate_hosttech_username`` and ``acme_certificate_hosttech_password`` for using the old WSDL API, and ``acme_certificate_hosttech_token`` for the new JSON API.
   - For ``ns1`` (`ns1.com <https://ns1.com>`_) the key for your API account must be passed as ``acme_certificate_ns1_secret_key``. Also it depends on external module ``ns1_record``. See below for instructions on how to install these modules.
+  - For ``inwx`` (`inwx.de <https://inwx.de>`_) the credentials have to be passed as ``acme_certificate_inwx_username`` and ``acme_certificate_inwx_password``.
+Please keep in mind that 2FA (two factor authentication) is currently not supported and needs do be disabled. Related Issue: (`inwx/ansible-collection#3 <https://github.com/inwx/ansible-collection/issues/3>`_)
 
-Please note that the DNS challenge code is not perfect. The Route 53, Hosttech and NS1 functionality has been tested.
+Please note that the DNS challenge code is not perfect. The Route 53, Hosttech, NS1 and INWX functionality has been tested.
 
 Setting up NS1 modules
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -105,3 +107,10 @@ For ``ns1`` (`ns1.com <https://ns1.com>`_) the external ``ns1_record`` module ne
     curl --create-dirs -L -o ~/.ansible/plugins/modules/ns1_record.py https://github.com/ns1/ns1-ansible-modules/raw/master/library/ns1_record.py
 
 Once NS1 converts their `set of modules <https://github.com/ns1/ns1-ansible-modules>`_ into a `collection <https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html>`_, it will become a lot easier to install and use them (`NS1 tracking issue <https://github.com/ns1/ns1-ansible-modules/issues/32>`_).
+
+Setting up INWX modules
+~~~~~~~~~~~~~~~~~~~~~~
+
+For ``inwx`` (`inwx.de <https://inwx.de>`_) the available Ansible Galaxy collection ``inwx.collection`` (`galaxy.ansible.com <https://galaxy.ansible.com/inwx/collection>`_) needs to be installed.
+  
+It's as simple as: ``ansible-galaxy collection install inwx.collection``
