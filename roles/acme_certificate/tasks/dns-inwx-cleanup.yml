@@ -1,14 +1,17 @@
 ---
 # Clean up DNS challenges for DNS provider INWX
+
 - name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via INWX
   inwx.collection.dns:
     state: absent
-    domain: "{{ item.key | community.dns.get_registrable_domain }}"
+    domain: "{{ item.0.key | community.dns.get_registrable_domain }}"
     type: TXT
-    record: "{{ item.key | community.dns.remove_registrable_domain }}"
-    value: "{{ item.value | first }}"
+    record: "{{ item.0.key | community.dns.remove_registrable_domain }}"
+    value: "{{ item.1 }}"
     username: "{{ acme_certificate_inwx_username | default(omit) }}"
     password: "{{ acme_certificate_inwx_password | default(omit) }}"
   delegate_to: localhost
   run_once: true
-  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) }}"
+  loop_control:
+    extended: yes
+  loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items | subelements('value') }}"
