@@ -48,8 +48,11 @@ class LookupModule(LookupBase):
         for term in terms:
             found = False
             for loader in (action_loader, module_loader):
-                context = loader.find_plugin_with_context(term)
-                if context.resolved and context.plugin_resolved_path:
+                data = loader.find_plugin(term)
+                # Ansible 2.9 returns a tuple
+                if isinstance(data, tuple):
+                    data = data[0]
+                if data is not None:
                     found = True
                     break
             result.append(found)
