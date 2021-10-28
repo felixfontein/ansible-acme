@@ -24,7 +24,7 @@ options:
 EXAMPLES = """
 - name: Check version of community.general
   ansible.builtin.debug:
-    msg: "community.general version {{ lookup('felixfontein.acme.check_collection', 'community.general) }}"
+    msg: "community.general version {{ lookup('felixfontein.acme.check_collection', 'community.general') }}"
 """
 
 RETURN = """

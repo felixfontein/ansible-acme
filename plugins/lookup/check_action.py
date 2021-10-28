@@ -25,7 +25,7 @@ options:
 EXAMPLES = """
 - name: Check whether community.general.cobbler_system is available.
   ansible.builtin.debug:
-    msg: "We can use cobbler_system: {{ lookup('felixfontein.acme.check_action', 'community.general.cobbler_system) }}"
+    msg: "We can use cobbler_system: {{ lookup('felixfontein.acme.check_action', 'community.general.cobbler_system') }}"
 """
 
 RETURN = """
