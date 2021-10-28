@@ -39,21 +39,15 @@ RETURN = """
     elements: str
 """
 
+import json
 import os
 import re
 
 import yaml
 
 from ansible.errors import AnsibleLookupError
-from ansible.plugins.lookup import LookupBase
-from ansible.module_utils._text import to_text
-from ansible.utils.display import Display
-
-from ansible.utils.collection_loader._collection_finder import _get_collection_metadata
-
 from ansible.module_utils.compat.importlib import import_module
-
-display = Display()
+from ansible.plugins.lookup import LookupBase
 
 
 FQCN_RE = re.compile(r'^[A-Za-z0-9_]+\.[A-Za-z0-9_]+$')
