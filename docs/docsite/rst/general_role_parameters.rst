@@ -91,8 +91,7 @@ If DNS challenges are used, the following variables define how the challenges ca
   - For ``route53`` (`Amazon Route 53 <https://aws.amazon.com/route53/>`_), the credentials must be passed as ``acme_certificate_aws_access_key`` and ``acme_certificate_aws_secret_key``.
   - For ``hosttech`` (`hosttech GmbH <https://www.hosttech.ch/>`_), the credentials have to be passed as ``acme_certificate_hosttech_username`` and ``acme_certificate_hosttech_password`` for using the old WSDL API, and ``acme_certificate_hosttech_token`` for the new JSON API.
   - For ``ns1`` (`ns1.com <https://ns1.com>`_) the key for your API account must be passed as ``acme_certificate_ns1_secret_key``. Also it depends on external module ``ns1_record``. See below for instructions on how to install these modules.
-  - For ``inwx`` (`inwx.de <https://inwx.de>`_) the credentials have to be passed as ``acme_certificate_inwx_username`` and ``acme_certificate_inwx_password``.
-Please keep in mind that 2FA (two factor authentication) is currently not supported and needs do be disabled. Related Issue: (`inwx/ansible-collection#3 <https://github.com/inwx/ansible-collection/issues/3>`_)
+  - For ``inwx`` (`inwx.de <https://inwx.de>`_) the credentials have to be passed as ``acme_certificate_inwx_username`` and ``acme_certificate_inwx_password``. Please keep in mind that 2FA (two factor authentication) is currently not supported and needs do be disabled. Related Issue: (`inwx/ansible-collection#3 <https://github.com/inwx/ansible-collection/issues/3>`_)
 
 Please note that the DNS challenge code is not perfect. The Route 53, Hosttech, NS1 and INWX functionality has been tested.
 
