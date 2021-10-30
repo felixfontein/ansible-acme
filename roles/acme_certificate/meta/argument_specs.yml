@@ -132,8 +132,8 @@ argument_specs:
           - When using I(acme_certificate_dns_provider=inwx), the INWX account password must be passed in this option.
           - Please note that INWX support depends on the collection C(inwx.collection). Please check out the
             documentation on how to install it.
-          - Please note that the collection C(inwx.collection) does currently not support 2FA (two factor authentication)
-            in order to use this module you need to disable it.
+          - Please note that the collection C(inwx.collection) does currently not support 2FA (two factor authentication).
+            In order to use this module you need to disable it.
       acme_certificate_domains:
         type: str
         description:
