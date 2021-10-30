@@ -108,7 +108,7 @@ For ``ns1`` (`ns1.com <https://ns1.com>`_) the external ``ns1_record`` module ne
 Once NS1 converts their `set of modules <https://github.com/ns1/ns1-ansible-modules>`_ into a `collection <https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html>`_, it will become a lot easier to install and use them (`NS1 tracking issue <https://github.com/ns1/ns1-ansible-modules/issues/32>`_).
 
 Setting up INWX modules
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 For ``inwx`` (`inwx.de <https://inwx.de>`_) the available Ansible Galaxy collection ``inwx.collection`` (`galaxy.ansible.com <https://galaxy.ansible.com/inwx/collection>`_) needs to be installed.
   
