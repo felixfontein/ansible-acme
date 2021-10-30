@@ -15,7 +15,7 @@
   delegate_to: localhost
   run_once: true
   loop_control:
-    extended: yes  
+    extended: yes
   loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items | subelements('value') }}"
 
 - name: Wait for DNS entries to propagate
