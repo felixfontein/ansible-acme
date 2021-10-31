@@ -8,7 +8,7 @@
     type: TXT
     record: "{{ item.0.key | community.dns.remove_registrable_domain }}"
     value: "{{ item.1 }}"
-    solo: "{{ 'true' if ansible_loop.first else 'false' }}"
+    solo: "{{ ansible_loop.first }}"
     ttl: 300
     username: "{{ acme_certificate_inwx_username | default(omit) }}"
     password: "{{ acme_certificate_inwx_password | default(omit) }}"
