@@ -1,0 +1,2 @@
+minor_changes:
+- "The role ``felixfontein.acme.acme_certificate`` can now handle the DNS provider INWX (https://github.com/felixfontein/ansible-acme/pull/19)."

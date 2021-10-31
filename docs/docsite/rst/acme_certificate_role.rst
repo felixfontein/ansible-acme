@@ -191,6 +191,10 @@ This role can be used as follows. Note that it obtains several certificates, and
         # For DNS challenges with ns1:
         # acme_certificate_dns_provider: ns1
         # acme_certificate_ns1_secret_key: REPLACE_WITH_YOUR_SECRET_KEY
+        # For DNS challenges with inwx:
+        # acme_certificate_dns_provider: inwx
+        # acme_certificate_inwx_username: REPLACE_WITH_YOUR_USERNAME
+        # acme_certificate_inwx_password: REPLACE_WITH_YOUR_SECRET_PASSWORD
 
       roles:
         - role: felixfontein.acme.acme_certificate

@@ -1,0 +1,8 @@
+---
+- name: DNS sanity checks
+  ansible.builtin.assert:
+    that:
+      - acme_certificate_inwx_username is defined
+      - acme_certificate_inwx_password is defined
+    msg: "acme_certificate_inwx_username and acme_certificate_inwx_password must be specified for INWX DNS"
+  run_once: true
