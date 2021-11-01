@@ -1,6 +1,0 @@
----
-- name: Test check_collection
-  assert:
-    that:
-      - query('felixfontein.acme.check_collection', 'foo.bar') == [none]
-      - lookup('felixfontein.acme.check_collection', 'community.general') is string

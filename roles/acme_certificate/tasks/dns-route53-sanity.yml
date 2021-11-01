@@ -10,6 +10,6 @@
 - name: DNS sanity checks (2/2)
   ansible.builtin.assert:
     that:
-      - lookup('felixfontein.acme.check_action', 'community.aws.route53') is true
+      - "'community.aws.route53' is community.general.a_module"
     msg: "The community.aws collection with the community.aws.route53 module must be installed for Route53 DNS"
   run_once: true
