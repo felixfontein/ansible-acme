@@ -1,8 +1,15 @@
 ---
-- name: DNS sanity checks
+- name: DNS sanity checks (1/2)
   ansible.builtin.assert:
     that:
       - acme_certificate_inwx_username is defined
       - acme_certificate_inwx_password is defined
     msg: "acme_certificate_inwx_username and acme_certificate_inwx_password must be specified for INWX DNS"
+  run_once: true
+
+- name: DNS sanity checks (2/2)
+  ansible.builtin.assert:
+    that:
+      - "'inwx.collection.dns' is community.general.a_module"
+    msg: "The inwx.collection collection with the inwx.collection.dns module must be installed for INWX DNS"
   run_once: true

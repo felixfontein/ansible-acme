@@ -1,8 +1,0 @@
----
-- name: Test check_action
-  assert:
-    that:
-      - query('felixfontein.acme.check_action', 'foo_bar') == [false]
-      - query('felixfontein.acme.check_action', 'file') == [true]
-      - query('felixfontein.acme.check_action', 'foo.bar.baz') == [false]
-      - query('felixfontein.acme.check_action', 'community.general.cobbler_sync') == [true]
