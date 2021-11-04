@@ -32,6 +32,7 @@ These are the main variables used by this role:
 - ``acme_certificate_terms_agreed``: Whether the terms of services are accepted or not. Default value is ``false``, usually needs to be set explicitly to ``true`` to allow creating an ACME account. This is only used for ACME v2.
 - ``acme_certificate_challenge``: The challenge type to use. Should be ``http-01`` for HTTP challenges (needs access to web server) or ``dns-01`` for DNS challenges (needs access to DNS provider).
 - ``acme_certificate_root_certificate``: The root certificate for the ACME directory. Default value is ``https://letsencrypt.org/certs/isrgrootx1.pem`` for the root certificate of Let's Encrypt.
+- ``acme_certificate_root_certificate_for_verification``: The root certificate to use when ``acme_certificate_verify_certs=true`` (the default). By default equals ``acme_certificate_root_certificate``. It can be useful to set this to ``https://letsencrypt.org/certs/isrgrootx1.pem`` when ``acme_certificate_root_certificate`` is set to ``https://letsencrypt.org/certs/trustid-x3-root.pem.txt``.
 - ``acme_certificate_deactivate_authzs``: Whether `authz`s (authorizations) should be deactivated afterwards. Default value is ``true``. Set to ``false`` to be able to re-use ``authz``.
 - ``acme_certificate_modify_account``: Whether the ACME account should be created (if it doesn't exist) and the contact data (email address) should be updated. Default value is ``true``. Set to ``false`` if you want to use the :ref:`community.crypto.acme_account module <ansible_collections.community.crypto.acme_account_module>` module to manage your ACME account (not done by this role).
 - ``acme_certificate_privatekey_mode``: Which file mode to use for the private key file. Default value is ``"0600"`` (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly ``root``).
@@ -50,6 +51,8 @@ The following configuration makes sure that the IdenTrust cross-signed intermedi
         issuer:
           CN: DST Root CA X3
           O: Digital Signature Trust Co.
+    # The following is needed to avoid validation failures now that the TrustID root expired
+    acme_certificate_root_certificate_for_verification: https://letsencrypt.org/certs/isrgrootx1.pem
 
 The following configuration selects the new IRSG X1 root:
 

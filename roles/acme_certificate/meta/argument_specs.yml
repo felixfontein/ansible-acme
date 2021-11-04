@@ -231,6 +231,14 @@ argument_specs:
         description:
           - The root certificate for the ACME directory.
           - "Default value is C(https://letsencrypt.org/certs/isrgrootx1.pem) for the root certificate of Let's Encrypt."
+      acme_certificate_root_certificate_for_verification:
+        type: str
+        description:
+          - The root certificate to use for validating the ceritificate chain if I(acme_certificate_verify_certs=true).
+          - If I(acme_certificate_root_certificate) is set to C(https://letsencrypt.org/certs/trustid-x3-root.pem.txt),
+            this should be set to C(https://letsencrypt.org/certs/isrgrootx1.pem) to avoid validation failure as the
+            TrustID root has by now expired.
+          - By default uses the same value as I(acme_certificate_root_certificate).
       acme_certificate_deactivate_authzs:
         type: bool
         default: true

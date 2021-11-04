@@ -1,0 +1,2 @@
+minor_changes:
+  - "acme_certificate role - an alternative root certificate URL can be specified in ``acme_certificate_root_certificate_for_verification`` that is only used for validating the retrieved chain (https://github.com/felixfontein/ansible-acme/pull/22)."

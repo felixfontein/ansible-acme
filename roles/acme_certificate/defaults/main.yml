@@ -19,6 +19,7 @@ acme_certificate_challenge: http-01
 acme_certificate_root_certificate: https://letsencrypt.org/certs/isrgrootx1.pem
 # For staging, use:
 #   root_certificate: https://letsencrypt.org/certs/fakelerootx1.pem
+acme_certificate_root_certificate_for_verification: "{{ acme_certificate_root_certificate }}"
 acme_certificate_deactivate_authzs: true
 acme_certificate_modify_account: true
 acme_certificate_validate_certs: true
