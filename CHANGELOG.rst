@@ -5,6 +5,22 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.4.0
+======
+
+Release Summary
+---------------
+
+This release bumps some requirements and adds some features.
+
+Minor Changes
+-------------
+
+- The collection now requires community.dns >= 2.0.0 for Hosttech DNS support.
+- The collection now requires community.general >= 4.0.0.
+- acme_certificate role - an alternative root certificate URL can be specified in ``acme_certificate_root_certificate_for_verification`` that is only used for validating the retrieved chain (https://github.com/felixfontein/ansible-acme/pull/22).
+- acme_certificate role - the role can now handle the DNS provider INWX (https://github.com/felixfontein/ansible-acme/pull/19).
+
 v0.3.1
 ======
 

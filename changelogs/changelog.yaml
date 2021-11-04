@@ -78,3 +78,20 @@ releases:
     - 0.3.1.yml
     - hosttech.yml
     release_date: '2021-07-12'
+  0.4.0:
+    changes:
+      minor_changes:
+      - The collection now requires community.dns >= 2.0.0 for Hosttech DNS support.
+      - The collection now requires community.general >= 4.0.0.
+      - acme_certificate role - an alternative root certificate URL can be specified
+        in ``acme_certificate_root_certificate_for_verification`` that is only used
+        for validating the retrieved chain (https://github.com/felixfontein/ansible-acme/pull/22).
+      - acme_certificate role - the role can now handle the DNS provider INWX (https://github.com/felixfontein/ansible-acme/pull/19).
+      release_summary: This release bumps some requirements and adds some features.
+    fragments:
+    - 0.4.0.yml
+    - 19-add-inwx-dns-provider.yaml
+    - 22-validation-root.yml
+    - community.dns-2.0.0.yml
+    - community.general-4.0.0.yml
+    release_date: '2021-11-04'

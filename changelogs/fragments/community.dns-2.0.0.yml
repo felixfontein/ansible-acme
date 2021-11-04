@@ -1,2 +1,0 @@
-minor_changes:
-- "The collection now requires community.dns >= 2.0.0 for Hosttech DNS support."
