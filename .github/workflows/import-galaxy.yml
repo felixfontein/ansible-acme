@@ -24,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install ansible-core
         run: pip install https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
@@ -65,7 +65,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install ansible-core
         run: pip install https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
