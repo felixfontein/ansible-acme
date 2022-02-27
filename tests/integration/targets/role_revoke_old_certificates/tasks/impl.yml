@@ -25,14 +25,14 @@
   register: accounts
 
 - name: Store account URIs
-  set_fact:
+  ansible.builtin.set_fact:
     account_uris:
       ec265: "{{ accounts.results[0].account_uri }}"
 
 ###############################################################################
 
 - name: Create certificate
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -41,9 +41,9 @@
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
 
 - name: Revoke certificate
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.revoke_old_certificates
 
 - name: Revoke certificate (second time)
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.revoke_old_certificates

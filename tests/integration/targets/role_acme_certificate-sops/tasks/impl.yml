@@ -28,13 +28,13 @@
   register: account
 
 - name: Store account URI
-  set_fact:
+  ansible.builtin.set_fact:
     account_uri: "{{ account.account_uri }}"
 
 ###############################################################################
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -44,7 +44,7 @@
     acme_certificate_use_sops_for_key: true
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
