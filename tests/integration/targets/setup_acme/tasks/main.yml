@@ -1,18 +1,18 @@
 ---
 - name: Default value for OpenSSL binary path
-  set_fact:
+  ansible.builtin.set_fact:
     openssl_binary: openssl
 
 - name: Register openssl version  # noqa no-changed-when noqa risky-shell-pipe
-  shell: "{{ openssl_binary }} version | cut -d' ' -f2"
+  ansible.builtin.shell: "{{ openssl_binary }} version | cut -d' ' -f2"
   register: openssl_version
 
 - name: Register cryptography version  # noqa no-changed-when
-  command: "{{ ansible_python.executable }} -c 'import cryptography; print(cryptography.__version__)'"
+  ansible.builtin.command: "{{ ansible_python.executable }} -c 'import cryptography; print(cryptography.__version__)'"
   register: cryptography_version
 
 - name: Output details
-  debug:
+  ansible.builtin.debug:
     msg: >-
       ACME test container IP is {{ acme_host }};
       OpenSSL version is {{ openssl_version.stdout }};

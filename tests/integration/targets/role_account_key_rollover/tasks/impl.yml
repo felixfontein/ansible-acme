@@ -25,14 +25,14 @@
   register: accounts
 
 - name: Store account URIs
-  set_fact:
+  ansible.builtin.set_fact:
     account_uris:
       ec265: "{{ accounts.results[0].account_uri }}"
 
 ###############################################################################
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.account_key_rollover
   vars:
     acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
@@ -46,12 +46,12 @@
   register: account_key
 
 - name: Validate account key information
-  assert:
+  ansible.builtin.assert:
     that:
       - account_key.type == 'RSA'
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.account_key_rollover
   vars:
     acme_certificate_acme_account: "{{ output_dir }}/account-ec256.pem"
@@ -64,6 +64,6 @@
   register: account_key
 
 - name: Validate account key information
-  assert:
+  ansible.builtin.assert:
     that:
       - account_key.type == 'ECC'

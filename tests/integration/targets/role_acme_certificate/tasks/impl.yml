@@ -33,7 +33,7 @@
   register: accounts
 
 - name: Store account URIs
-  set_fact:
+  ansible.builtin.set_fact:
     account_uris:
       ec265: "{{ accounts.results[0].account_uri }}"
       ec384: "{{ accounts.results[1].account_uri }}"
@@ -42,7 +42,7 @@
 ###############################################################################
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
@@ -56,7 +56,7 @@
   register: cert
 
 - name: Validate certificate information
-  assert:
+  ansible.builtin.assert:
     that:
       - cert.subject_alt_name | length == 1
       - "'DNS:example.org' in cert.subject_alt_name"
@@ -76,14 +76,14 @@
   changed_when: false
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_domains:
       - '*.example.com'
       - 'example.com'
     acme_certificate_challenge: dns-01
-    acme_certificate_acme_account_content: "{{ lookup('file', output_dir ~ '/account-rsa2048.pem') }}"
+    acme_certificate_acme_account_content: "{{ lookup('ansible.builtin.file', output_dir ~ '/account-rsa2048.pem') }}"
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
 
 - name: Retrieve certificate information
@@ -92,7 +92,7 @@
   register: cert
 
 - name: Validate certificate information
-  assert:
+  ansible.builtin.assert:
     that:
       - cert.subject_alt_name | length == 2
       - "'DNS:*.example.com' in cert.subject_alt_name"
@@ -113,12 +113,12 @@
   changed_when: false
 
 - name: Run role
-  include_role:
+  ansible.builtin.include_role:
     name: felixfontein.acme.acme_certificate
   vars:
     acme_certificate_ips:
       - 127.0.0.1
-    acme_certificate_acme_account_content: "{{ lookup('file', output_dir ~ '/account-rsa2048.pem') }}"
+    acme_certificate_acme_account_content: "{{ lookup('ansible.builtin.file', output_dir ~ '/account-rsa2048.pem') }}"
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
 
 - name: Retrieve certificate information
@@ -127,7 +127,7 @@
   register: cert
 
 - name: Validate certificate information
-  assert:
+  ansible.builtin.assert:
     that:
       - cert.subject_alt_name | length == 1
       - "'IP:127.0.0.1' in cert.subject_alt_name"

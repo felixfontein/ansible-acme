@@ -1,7 +1,7 @@
 ---
 - block:
   - name: Read the old key
-    set_fact:
+    ansible.builtin.set_fact:
       acme_certificate_INTERNAL_old_account_key: >-
         {{ lookup(
           'community.sops.sops' if acme_certificate_account_key_sops_encrypted else 'ansible.builtin.file',
@@ -74,6 +74,6 @@
 
   always:
   - name: Remove keys from facts
-    set_fact:
+    ansible.builtin.set_fact:
       acme_certificate_INTERNAL_old_account_key: ''
       acme_certificate_INTERNAL_new_account_key: ''

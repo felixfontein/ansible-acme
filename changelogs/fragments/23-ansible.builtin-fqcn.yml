@@ -1,0 +1,2 @@
+minor_changes:
+  - "Use FQCN for builtin actions and lookup plugins (https://github.com/felixfontein/ansible-acme/pull/23)."

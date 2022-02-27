@@ -2,8 +2,8 @@
 # Copyright 2018-2020 Edoardo Tenani <e.tenani@arduino.cc> [@endorama]
 
 - name: Prepare status variable.
-  set_fact:
+  ansible.builtin.set_fact:
     sops_installed: no
 
-- include: ubuntu.yml
+- ansible.builtin.include: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
