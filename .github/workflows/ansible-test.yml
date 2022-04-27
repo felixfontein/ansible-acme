@@ -113,7 +113,7 @@ jobs:
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
         #   ansible-galaxy collection install community.crypto community.dns community.general community.sops -p .
-        if: ${{ ansible != 'stable-2.9' }}
+        if: ${{ matrix.ansible != 'stable-2.9' }}
 
       - name: Install collection dependencies needed for tests (Ansible 2.9)
         run: |
@@ -124,7 +124,7 @@ jobs:
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
         #   ansible-galaxy collection install community.crypto community.dns 'community.general:<5.0.0' community.sops -p .
-        if: ${{ ansible == 'stable-2.9' }}
+        if: ${{ matrix.ansible == 'stable-2.9' }}
 
       # Run the integration tests
       - name: Run integration test
