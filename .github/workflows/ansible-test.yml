@@ -104,7 +104,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install dependencies
-      - name: Install collection dependencies needed for tests
+      - name: Install collection dependencies needed for tests (ansible-core >= 2.10)
         run: |
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ./ansible_collections/community/crypto
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ./ansible_collections/community/dns
@@ -113,6 +113,18 @@ jobs:
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
         #   ansible-galaxy collection install community.crypto community.dns community.general community.sops -p .
+        if: ${{ ansible != 'stable-2.9' }}
+
+      - name: Install collection dependencies needed for tests (Ansible 2.9)
+        run: |
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ./ansible_collections/community/crypto
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ./ansible_collections/community/dns
+          git clone --depth=1 --single-branch --branch stable-4 https://github.com/ansible-collections/community.general.git ./ansible_collections/community/general
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.sops.git ./ansible_collections/community/sops
+        # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
+        # run: |
+        #   ansible-galaxy collection install community.crypto community.dns 'community.general:<5.0.0' community.sops -p .
+        if: ${{ ansible == 'stable-2.9' }}
 
       # Run the integration tests
       - name: Run integration test
