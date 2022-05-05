@@ -26,7 +26,7 @@
 
 - block:
     - name: Obtain root and intermediate certificates
-      ansible.builtin.get_url:
+      ansible.builtin.get_url:  # noqa risky-file-permissions
         url: "http://{{ acme_host }}:5000/{{ item.0 }}-certificate-for-ca/{{ item.1 }}"
         dest: "{{ output_dir }}/acme-{{ item.0 }}-{{ item.1 }}.pem"
       loop: "{{ query('ansible.builtin.nested', types, root_numbers) }}"
