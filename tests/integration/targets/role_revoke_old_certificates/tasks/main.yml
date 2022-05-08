@@ -24,7 +24,7 @@
     - "{{ acme_certificate_keys_path }}"
     - "{{ acme_certificate_keys_old_path }}"
 
-- block:
+- block:  # noqa unnamed-task
     - name: Obtain root and intermediate certificates
       ansible.builtin.get_url:  # noqa risky-file-permissions
         url: "http://{{ acme_host }}:5000/{{ item.0 }}-certificate-for-ca/{{ item.1 }}"

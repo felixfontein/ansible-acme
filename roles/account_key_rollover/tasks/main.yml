@@ -1,5 +1,5 @@
 ---
-- block:
+- block:  # noqa unnamed-task
   - name: Read the old key
     ansible.builtin.set_fact:
       acme_certificate_INTERNAL_old_account_key: >-
@@ -37,7 +37,7 @@
   - when: acme_certificate_account_key_sops_encrypted
     run_once: true
     delegate_to: localhost
-    block:
+    block:  # noqa unnamed-task
     - name: Creating new private account key (sops encrypted)
       community.crypto.openssl_privatekey_pipe:
         type: "{{ 'RSA' if acme_certificate_account_algorithm == 'rsa' else 'ECC' }}"

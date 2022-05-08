@@ -63,7 +63,7 @@
   delegate_to: localhost
   run_once: true
 
-- block:
+- block:  # noqa unnamed-task
   - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
     community.crypto.openssl_privatekey_pipe:
       content: >-
@@ -131,7 +131,7 @@
   delegate_to: localhost
   run_once: true
 
-- block:
+- block:  # noqa unnamed-task
   - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     community.crypto.acme_certificate:
       account_key: "{{ acme_certificate_acme_account | default(omit) }}"
@@ -161,7 +161,7 @@
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
     run_once: true
 
-- block:
+- block:  # noqa unnamed-task
   # Set up HTTP challenges
   - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
@@ -212,9 +212,9 @@
   - include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
-  when: acme_certificate_INTERNAL_challenge is changed
+  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
 
-- block:
+- block:  # noqa unnamed-task
   - name: Create temporary file
     ansible.builtin.tempfile:
     register: acme_certificate_INTERNAL_tempfile
