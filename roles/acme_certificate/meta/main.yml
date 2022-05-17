@@ -22,4 +22,6 @@ galaxy_info:
   - web
   - certificate
 
+  platforms: []
+
 dependencies: []

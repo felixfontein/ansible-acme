@@ -21,4 +21,6 @@ galaxy_info:
   - web
   - revoke
 
+  platforms: []
+
 dependencies: []
