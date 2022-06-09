@@ -5,7 +5,7 @@
     # noqa var-spacing - The problem is that the space eating in the following YAML string will result in `{{item...`
     url: >-
       http://{{ acme_host }}:5000/http/{{ item.key }}/{{
-        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/'|length):] }}
+        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):] }}
     method: PUT
     body_format: raw
     body: "{{ item.value[acme_certificate_challenge].resource_value }}"

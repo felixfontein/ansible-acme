@@ -15,7 +15,7 @@
     dest: >-
       {{ [
         acme_certificate_server_location,
-        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/'|length):]
+        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):]
       ] | community.general.path_join }}
     content: "{{ item.value[acme_certificate_challenge].resource_value }}"
     owner: "{{ acme_certificate_http_challenge_user }}"
