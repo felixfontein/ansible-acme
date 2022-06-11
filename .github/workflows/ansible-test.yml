@@ -59,8 +59,6 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          - stable-2.11
-          - stable-2.12
           - devel
         python:
           - 2.7
@@ -69,6 +67,8 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
+          - '3.10'
+          - '3.11'
         include:
           # 2.9
           - ansible: stable-2.9
@@ -83,9 +83,17 @@ jobs:
           # 2.11
           - ansible: stable-2.11
             python: 2.6
+          - ansible: stable-2.11
+            python: 3.5
+          - ansible: stable-2.11
+            python: 3.8
           # 2.12
           - ansible: stable-2.12
             python: 2.6
+          - ansible: stable-2.12
+            python: 3.5
+          - ansible: stable-2.12
+            python: 3.9
 
     steps:
       - name: Check out code
