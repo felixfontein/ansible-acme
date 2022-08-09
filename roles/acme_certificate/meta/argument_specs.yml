@@ -214,7 +214,7 @@ argument_specs:
         default: false
         description:
           - Whether the terms of services are accepted or not.
-          - Usually needs to be set explicitly to ``true`` to allow creating an ACME account.
+          - Usually needs to be set explicitly to C(true) to allow creating an ACME account.
           - This is only used for ACME v2.
       acme_certificate_challenge:
         type: str
@@ -266,7 +266,7 @@ argument_specs:
         elements: dict
         description:
           - Must be in the format described for the I(select_chain) parameter of M(community.crypto.acme_certificate) module.
-          - Allows to select the certificate chain to be used; ``acme_certificate_root_certificate`` must be used in conjunction.
+          - Allows to select the certificate chain to be used; I(acme_certificate_root_certificate) must be used in conjunction.
           - This can be used for example with
             L(Let's Encrypt,https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516) to select
             which root certificate to use. See the documentation for concrete examples how to choose between the Let's Encrypt roots.
