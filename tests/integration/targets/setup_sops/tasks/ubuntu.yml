@@ -1,28 +1,28 @@
 ---
 # Copyright 2018-2020 Edoardo Tenani <e.tenani@arduino.cc> [@endorama]
 
-- name: download sops executable
+- name: Download sops executable
   ansible.builtin.get_url:  # noqa risky-file-permissions
     url: https://github.com/mozilla/sops/releases/download/v{{ sops_version }}/sops-v{{ sops_version }}.linux
     dest: /usr/bin/sops
 
-- name: make sops executable executable
+- name: Make sops executable executable
   ansible.builtin.file:
     path: /usr/bin/sops
     mode: "0755"
 
-- name: install gnupg2
+- name: Install gnupg2
   ansible.builtin.command: apt-get install -y gnupg2  # noqa no-changed-when noqa command-instead-of-module
 
-- name: download sops test GPG key
+- name: Download sops test GPG key
   ansible.builtin.get_url:  # noqa risky-file-permissions
     url: https://raw.githubusercontent.com/mozilla/sops/master/pgp/sops_functional_tests_key.asc
     dest: /tmp/sops_functional_tests_key.asc
 
-- name: import sops test GPG key
+- name: Import sops test GPG key
   ansible.builtin.command: gpg --import /tmp/sops_functional_tests_key.asc  # noqa no-changed-when
   ignore_errors: yes
 
-- name: report that sops is installed
+- name: Report that sops is installed
   ansible.builtin.set_fact:
     sops_installed: yes
