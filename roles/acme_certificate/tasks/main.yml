@@ -63,7 +63,7 @@
   delegate_to: localhost
   run_once: true
 
-- block:  # noqa unnamed-task
+- block:  # noqa name[missing]
   - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
     community.crypto.openssl_privatekey_pipe:
       content: >-
@@ -110,7 +110,7 @@
     privatekey_path: >-
       {{ omit if acme_certificate_use_sops_for_key else
          [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | community.general.path_join }}
-    # noqa var-spacing - The problem is that the space eating in the following YAML string will result in `{{(acme...`
+    # noqa jinja[spacing] - The problem is that the space eating in the following YAML string will result in `{{(acme...`
     subject_alt_name: |
         {{
           (acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list)
@@ -131,7 +131,7 @@
   delegate_to: localhost
   run_once: true
 
-- block:  # noqa unnamed-task
+- block:  # noqa name[missing]
   - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     community.crypto.acme_certificate:
       account_key: "{{ acme_certificate_acme_account | default(omit) }}"
@@ -161,7 +161,7 @@
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
     run_once: true
 
-- block:  # noqa unnamed-task
+- block:  # noqa name[missing]
   # Set up HTTP challenges
   - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
@@ -214,7 +214,7 @@
 
   when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
 
-- block:  # noqa unnamed-task
+- block:  # noqa name[missing]
   - name: Create temporary file
     ansible.builtin.tempfile:
     register: acme_certificate_INTERNAL_tempfile
