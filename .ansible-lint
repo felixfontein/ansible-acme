@@ -4,6 +4,7 @@ skip_list:
   - meta-no-info  # Role info should contain platforms
   - ignore-errors  # Use failed_when and specify error conditions instead of using ignore_errors
   - var-naming  # Task uses 'set_fact' to define variables that violates variable naming standards
+  - jinja[spacing]  # This is not really mature yet and produces wrong recommendations
 exclude_paths:
   - changelogs/
 mock_modules:
