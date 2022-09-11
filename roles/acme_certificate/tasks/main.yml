@@ -33,13 +33,13 @@
   register: acme_certificate_INTERNAL_old_certificate_info
   when: >-
     acme_certificate_renewal_on_remaining_days is defined
-    and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(false))
+    and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
 
 # Only renew certificate when a) it does not yet exist, or b) when acme_certificate_renewal_on_remaining_days has not
 # been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
 - when: >-
-    not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(false))
+    not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
     or acme_certificate_renewal_on_remaining_days is not defined
-    or acme_certificate_INTERNAL_old_certificate_info.valid_at.soon
+    or not (acme_certificate_INTERNAL_old_certificate_info.valid_at.soon | default(true))
   block:  # noqa name[missing]
     - include_tasks: obtain-cert.yml
