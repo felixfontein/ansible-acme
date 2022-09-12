@@ -311,6 +311,12 @@ argument_specs:
               - "The identifier must be of the form
                  C(C4:A7:B1:A4:7B:2C:71:FA:DB:E1:4B:90:75:FF:C4:15:60:85:89:10)."
             type: str
+      acme_certificate_renewal_on_remaining_days:
+        type: int
+        version_added: 0.5.0
+        description:
+          - Only obtain a new certificate if the certificate does not yet exist, or if the certificate's expiry date is less than
+            I(acme_certificate_remaining_days) days in the future.
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.

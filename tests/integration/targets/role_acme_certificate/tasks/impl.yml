@@ -85,6 +85,7 @@
     acme_certificate_challenge: dns-01
     acme_certificate_acme_account_content: "{{ lookup('ansible.builtin.file', output_dir ~ '/account-rsa2048.pem') }}"
     acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+    acme_certificate_renewal_on_remaining_days: 1
 
 - name: Retrieve certificate information
   community.crypto.x509_certificate_info:
@@ -145,3 +146,27 @@
       - "{{ acme_certificate_keys_path }}127.0.0.1-chain.pem"
       - "{{ acme_certificate_keys_path }}127.0.0.1.pem"
   changed_when: false
+
+- name: Recursively collect information on all files in the keys path
+  community.internal_test_tools.files_collect:
+    directories:
+      - path: "{{ acme_certificate_keys_path }}"
+  register: acme_keys_path_state
+
+- name: Run role again (should not renew)
+  ansible.builtin.include_role:
+    name: felixfontein.acme.acme_certificate
+  vars:
+    acme_certificate_domains:
+      - '*.example.com'
+      - 'example.com'
+    acme_certificate_challenge: dns-01
+    acme_certificate_acme_account_content: "{{ lookup('ansible.builtin.file', output_dir ~ '/account-rsa2048.pem') }}"
+    acme_certificate_root_certificate: http://{{ acme_host }}:5000/root-certificate-for-ca/0
+    acme_certificate_renewal_on_remaining_days: 1
+
+- name: Assert that no file changed in the keys path
+  community.internal_test_tools.files_diff:
+    state: "{{ acme_keys_path_state }}"
+    fail_on_diffs: true
+  diff: true

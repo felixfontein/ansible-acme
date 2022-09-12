@@ -1,0 +1,2 @@
+minor_changes:
+  - "acme_certificate role - add ``acme_certificate_renewal_on_remaining_days`` option which allows to only renew certificates that expire in a certain amount of days (https://github.com/felixfontein/ansible-acme/pull/28)."

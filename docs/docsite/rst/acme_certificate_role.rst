@@ -37,6 +37,7 @@ These are the main variables used by this role:
 - ``acme_certificate_modify_account``: Whether the ACME account should be created (if it doesn't exist) and the contact data (email address) should be updated. Default value is ``true``. Set to ``false`` if you want to use the :ref:`community.crypto.acme_account module <ansible_collections.community.crypto.acme_account_module>` module to manage your ACME account (not done by this role).
 - ``acme_certificate_privatekey_mode``: Which file mode to use for the private key file. Default value is ``"0600"`` (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly ``root``).
 - ``acme_certificate_select_chain``: Must be in the format described for the ``select_chain`` parameter of :ref:`community.crypto.acme_certificate module <ansible_collections.community.crypto.acme_certificate_module>`. Allows to select the certificate chain to be used; ``acme_certificate_root_certificate`` must be used in conjunction. This can be used for example with `Let's Encrypt <https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516>`__ to select which root certificate to use. See below for concrete examples how to choose between the Let's Encrypt roots.
+- ``acme_certificate_renewal_on_remaining_days``: Only renew the certificate if it does not yet exist, or expires in less than the given amount of days.
 
 Selecting which root to use with Let's Encrypt
 ----------------------------------------------

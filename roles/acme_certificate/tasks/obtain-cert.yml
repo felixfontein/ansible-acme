@@ -1,0 +1,247 @@
+---
+- name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+  ansible.builtin.copy:
+    src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}{{ item }}"
+    dest: >-
+      {{ [
+        acme_certificate_keys_old_path,
+        (
+          (ansible_date_time.date ~ '-' ~ ansible_date_time.hour ~ ansible_date_time.minute ~ ansible_date_time.second ~ '-')
+          if acme_certificate_keys_old_prepend_timestamp else ''
+        ) ~ acme_certificate_key_name ~ item
+      ] | community.general.path_join }}
+    mode: preserve
+  delegate_to: localhost
+  loop:
+  - "-chain.pem"
+  - "-fullchain.pem"
+  - "-rootchain.pem"
+  - "-root.pem"
+  - "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
+  - ".pem"
+  when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
+  run_once: true
+
+- name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+  community.crypto.openssl_privatekey:
+    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | community.general.path_join }}"
+    mode: "{{ acme_certificate_privatekey_mode }}"
+    type: "{{ 'RSA' if acme_certificate_algorithm == 'rsa' else 'ECC' }}"
+    size: "{{ acme_certificate_key_length if acme_certificate_algorithm == 'rsa' else omit }}"
+    curve: >-
+      {{ omit if acme_certificate_algorithm == 'rsa' else
+         'secp256r1' if acme_certificate_algorithm == 'p-256' else
+         'secp384r1' if acme_certificate_algorithm == 'p-384' else
+         'secp521r1' if acme_certificate_algorithm == 'p-521' else
+         'invalid value for acme_certificate_algorithm!' }}
+    force: "{{ acme_certificate_regenerate_private_keys }}"
+  when: not acme_certificate_use_sops_for_key
+  delegate_to: localhost
+  run_once: true
+
+- block:  # noqa name[missing]
+  - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
+    community.crypto.openssl_privatekey_pipe:
+      content: >-
+        {{
+          lookup(
+              'community.sops.sops',
+              [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join,
+              empty_on_not_exist=true
+          ) | default(omit, true)
+          if not acme_certificate_regenerate_private_keys else omit }}
+      type: "{{ 'RSA' if acme_certificate_algorithm == 'rsa' else 'ECC' }}"
+      size: "{{ acme_certificate_key_length if acme_certificate_algorithm == 'rsa' else omit }}"
+      curve: >-
+        {{ omit if acme_certificate_algorithm == 'rsa' else
+           'secp256r1' if acme_certificate_algorithm == 'p-256' else
+           'secp384r1' if acme_certificate_algorithm == 'p-384' else
+           'secp521r1' if acme_certificate_algorithm == 'p-521' else
+           'invalid value for acme_certificate_algorithm!' }}
+    no_log: true
+    register: acme_certificate_INTERNAL_private_key
+
+  - name: "Store sops-encrypted private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    community.sops.sops_encrypt:
+      path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join }}"
+      content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
+    when: acme_certificate_INTERNAL_private_key.changed
+
+  always:
+  - name: Remove private key data from Ansible facts
+    ansible.builtin.set_fact:
+      acme_certificate_INTERNAL_private_key: ''
+
+  when: acme_certificate_use_sops_for_key
+  delegate_to: localhost
+  run_once: true
+
+- name: "Creating CSR for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+  community.crypto.openssl_csr_pipe:
+    privatekey_content: >-
+      {{ lookup(
+           'community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops']
+           | community.general.path_join)
+         if acme_certificate_use_sops_for_key else omit }}
+    privatekey_path: >-
+      {{ omit if acme_certificate_use_sops_for_key else
+         [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | community.general.path_join }}
+    # noqa jinja[spacing] - The problem is that the space eating in the following YAML string will result in `{{(acme...`
+    subject_alt_name: |
+        {{
+          (acme_certificate_domains | map('regex_replace', '^(.*)$', 'DNS:\1' ) | list)
+          + (acme_certificate_ips | map('regex_replace', '^(.*)$', 'IP:\1' ) | list)
+        }}
+    ocsp_must_staple: "{{ acme_certificate_ocsp_must_staple }}"
+    use_common_name_for_san: false
+  register: acme_certificate_INTERNAL_csr
+  delegate_to: localhost
+  run_once: true
+
+- name: "Get root certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+  ansible.builtin.get_url:  # noqa risky-file-permissions
+    url: "{{ acme_certificate_root_certificate }}"
+    dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join }}"
+    force: true
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  delegate_to: localhost
+  run_once: true
+
+- block:  # noqa name[missing]
+  - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    community.crypto.acme_certificate:
+      account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+      account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+      modify_account: "{{ acme_certificate_modify_account }}"
+      csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
+      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
+      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
+      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
+      account_email: "{{ acme_certificate_acme_email | default(omit) }}"
+      terms_agreed: "{{ acme_certificate_terms_agreed }}"
+      challenge: "{{ acme_certificate_challenge }}"
+      acme_directory: "{{ acme_certificate_acme_directory }}"
+      acme_version: "{{ acme_certificate_acme_version }}"
+      force: true
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+    delegate_to: localhost
+    run_once: true
+    register: acme_certificate_INTERNAL_challenge
+
+  always:
+  - name: Show account and order URI
+    ansible.builtin.debug:
+      msg: >-
+        account URI: {{ acme_certificate_INTERNAL_challenge.get('account_uri') }};
+        order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
+    run_once: true
+
+- block:  # noqa name[missing]
+  # Set up HTTP challenges
+  - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+    when: "acme_certificate_challenge == 'http-01'"
+
+  # Set up DNS challenges
+  - include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
+    when: "acme_certificate_challenge == 'dns-01'"
+
+  - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    community.crypto.acme_certificate:
+      account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+      account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+      modify_account: "{{ acme_certificate_modify_account }}"
+      csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
+      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
+      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
+      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
+      account_email: "{{ acme_certificate_acme_email | default(omit) }}"
+      terms_agreed: "{{ acme_certificate_terms_agreed }}"
+      challenge: "{{ acme_certificate_challenge }}"
+      acme_directory: "{{ acme_certificate_acme_directory }}"
+      acme_version: "{{ acme_certificate_acme_version }}"
+      force: true
+      data: "{{ acme_certificate_INTERNAL_challenge }}"
+      deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+      select_chain: "{{ acme_certificate_select_chain | default(omit) }}"
+    delegate_to: localhost
+    run_once: true
+
+  - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    ansible.builtin.copy:  # noqa risky-file-permissions - use the user's umask
+      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | community.general.path_join }}"
+      content: |
+        {{ lookup('ansible.builtin.file',
+                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join) }}
+        {{ lookup('ansible.builtin.file',
+                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join) }}
+    delegate_to: localhost
+    run_once: true
+  always:
+  # Clean up HTTP challenges
+  - include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+    when: "acme_certificate_challenge == 'http-01'"
+
+  # Clean up DNS challenges
+  - include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
+    when: "acme_certificate_challenge == 'dns-01'"
+
+  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
+
+- block:  # noqa name[missing]
+  - name: Create temporary file
+    ansible.builtin.tempfile:
+    register: acme_certificate_INTERNAL_tempfile
+    changed_when: false
+    when: acme_certificate_root_certificate != acme_certificate_root_certificate_for_verification
+    delegate_to: localhost
+    run_once: true
+
+  - name: "Get root certificate for validation"
+    ansible.builtin.get_url:  # noqa risky-file-permissions
+      url: "{{ acme_certificate_root_certificate_for_verification }}"
+      dest: "{{ acme_certificate_INTERNAL_tempfile.path }}"
+      force: true
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+    changed_when: false
+    when: acme_certificate_root_certificate != acme_certificate_root_certificate_for_verification
+    delegate_to: localhost
+    run_once: true
+
+  - name: "Verifying certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    # If you get strange failures here, upgrade to later versions of Ansible 2.9 / ansible-base 2.10.
+    # You need a version which includes the following backports:
+    #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9 [merged for ansible 2.9.16]
+    #  - https://github.com/ansible/ansible/pull/72457 for stable-2.10 [merged for ansible-base 2.10.4]
+    ansible.builtin.command:
+      argv:
+      - openssl
+      - verify
+      - "-no-CAfile"
+      - "-no-CApath"
+      - "-CAfile"
+      - >-
+        {{
+          [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join
+          if acme_certificate_root_certificate == acme_certificate_root_certificate_for_verification
+          else acme_certificate_INTERNAL_tempfile.path
+        }}
+      - "-untrusted"
+      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
+      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
+    changed_when: false
+    delegate_to: localhost
+    run_once: true
+    ignore_errors: "{{ not acme_certificate_verify_certs }}"
+
+  always:
+  - name: Clean up tempfile
+    ansible.builtin.file:
+      path: "{{ acme_certificate_INTERNAL_tempfile.path }}"
+      state: absent
+    changed_when: false
+    when: acme_certificate_root_certificate != acme_certificate_root_certificate_for_verification
+    delegate_to: localhost
+    run_once: true
