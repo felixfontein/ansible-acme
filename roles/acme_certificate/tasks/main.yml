@@ -41,11 +41,102 @@
     and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
   run_once: true
 
+- name: Prepare memory
+  ansible.builtin.set_fact:
+    acme_certificate_INTERNAL_success: false
+    acme_certificate_INTERNAL_backup_copies: {}
+    acme_certificate_INTERNAL_backup_prefix: >-
+      {{ [
+        acme_certificate_keys_old_path,
+        (
+          (ansible_date_time.date ~ '-' ~ ansible_date_time.hour ~ ansible_date_time.minute ~ ansible_date_time.second ~ '-')
+          if acme_certificate_keys_old_prepend_timestamp else ''
+        ) ~ acme_certificate_key_name
+      ] | community.general.path_join }}
+  delegate_to: localhost
+  run_once: true
+
 # Only renew certificate when a) it does not yet exist, or b) when acme_certificate_renewal_on_remaining_days has not
 # been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
 - when: >-
     not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
     or acme_certificate_renewal_on_remaining_days is not defined
     or not (acme_certificate_INTERNAL_old_certificate_info.valid_at.soon | default(true))
+  vars:
+    acme_certificate_INTERNAL_key_extension: "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
   block:  # noqa name[missing]
+    - name: Check whether private key exists
+      ansible.builtin.stat:
+        path: >-
+          {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
+             | community.general.path_join }}
+      delegate_to: localhost
+      register: acme_certificate_INTERNAL_old_privatekey_exists
+      run_once: true
+
+    - name: Read private key into memory to be able to recover in case of failures
+      ansible.builtin.set_fact:
+        acme_certificate_INTERNAL_private_key_copy: >-
+          {{ lookup('ansible.builtin.file',
+                    [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
+                      | community.general.path_join,
+                    rstrip=false) | b64encode }}
+      when: acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+      ansible.builtin.copy:
+        src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}{{ item }}"
+        dest: "{{ acme_certificate_INTERNAL_backup_prefix ~ item }}"
+        mode: preserve
+      delegate_to: localhost
+      loop:
+        - "-chain.pem"
+        - "-fullchain.pem"
+        - "-rootchain.pem"
+        - "-root.pem"
+        - "{{ acme_certificate_INTERNAL_key_extension }}"
+        - ".pem"
+      register: acme_certificate_INTERNAL_backup_copies
+      when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
+      run_once: true
+
     - include_tasks: obtain-cert.yml
+  rescue:
+    - name: Restore private key
+      ansible.builtin.template:
+        src: key.j2
+        dest: >-
+          {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
+             | community.general.path_join }}
+        mode: preserve
+      delegate_to: localhost
+      when: >-
+        not acme_certificate_INTERNAL_success
+        and acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
+        and acme_certificate_INTERNAL_private_key_copy is defined
+      run_once: true
+
+    - name: Remove backups
+      ansible.builtin.file:
+        path: "{{ acme_certificate_INTERNAL_backup_prefix ~ item.item }}"
+        state: absent
+      loop: >-
+        {{ acme_certificate_INTERNAL_backup_copies.results | default([]) }}
+      delegate_to: localhost
+      when: >-
+        not acme_certificate_INTERNAL_success
+        and item.changed
+      run_once: true
+
+    - name: Make sure role fails
+      ansible.builtin.fail:
+        msg: 'Re-fail from {{ ansible_failed_task.name }}'
+
+  always:
+    - name: Purge private key from memory
+      ansible.builtin.set_fact:
+        acme_certificate_INTERNAL_private_key_copy: ''
+      delegate_to: localhost
+      run_once: true
