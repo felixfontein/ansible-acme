@@ -1,4 +1,8 @@
 ---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2020, Felix Fontein
+
 # Create DNS challenges for ansible-test's ACME test container
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
   ansible.builtin.uri:
