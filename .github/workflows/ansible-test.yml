@@ -88,12 +88,18 @@ jobs:
           ansible-core-version: ${{ matrix.ansible }}
           target-python-version: ${{ matrix.python }}
           testing-type: integration
-          test-deps: >-
-            git+https://github.com/ansible-collections/community.crypto.git,main
-            git+https://github.com/ansible-collections/community.dns.git,main
-            git+https://github.com/ansible-collections/community.general.git,${{ matrix.ansible == 'stable-2.9' && 'stable-4' || 'main' }}
-            git+https://github.com/ansible-collections/community.sops.git,main
-            git+https://github.com/ansible-collections/community.internal_test_tools.git,main
+          pre-test-cmd: |-
+            git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ../../community/crypto
+            git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ../../community/dns
+            git clone --depth=1 --single-branch --branch ${{ matrix.ansible == 'stable-2.9' && 'stable-4' || 'main' }} https://github.com/ansible-collections/community.general.git ../../community/general
+            git clone --depth=1 --single-branch https://github.com/ansible-collections/community.sops.git ../../community/sops
+            git clone --depth=1 --single-branch https://github.com/ansible-collections/community.internal_test_tools.git ../../community/internal_test_tools
+          # test-deps: >-
+          #   git+https://github.com/ansible-collections/community.crypto.git,main
+          #   git+https://github.com/ansible-collections/community.dns.git,main
+          #   git+https://github.com/ansible-collections/community.general.git,${{ matrix.ansible == 'stable-2.9' && 'stable-4' || 'main' }}
+          #   git+https://github.com/ansible-collections/community.sops.git,main
+          #   git+https://github.com/ansible-collections/community.internal_test_tools.git,main
 
   ansible-lint:
     name: ansible-lint
