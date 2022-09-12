@@ -30,10 +30,12 @@
     path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
     valid_at:
       soon: "+{{ acme_certificate_renewal_on_remaining_days }}d"
+  delegate_to: localhost
   register: acme_certificate_INTERNAL_old_certificate_info
   when: >-
     acme_certificate_renewal_on_remaining_days is defined
     and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
+  run_once: true
 
 # Only renew certificate when a) it does not yet exist, or b) when acme_certificate_renewal_on_remaining_days has not
 # been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
