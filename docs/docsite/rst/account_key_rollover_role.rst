@@ -1,3 +1,8 @@
+..
+  GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+  SPDX-License-Identifier: GPL-3.0-or-later
+  SPDX-FileCopyrightText: 2020, Felix Fontein
+
 .. _ansible_collections.felixfontein.acme.docsite.account_key_rollover_role:
 
 felixfontein.acme.account_key_rollover role

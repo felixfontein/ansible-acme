@@ -1,4 +1,9 @@
 ---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2020, Oleg Gerasymchuk <oleg.gerasymchuk@globallogic.com>
+# SPDX-FileCopyrightText: 2020, Felix Fontein
+
 - name: DNS sanity checks (1/2)
   ansible.builtin.assert:
     that:
