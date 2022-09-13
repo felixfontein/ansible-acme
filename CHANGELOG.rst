@@ -5,6 +5,19 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.5.1
+======
+
+Release Summary
+---------------
+
+Bugfix release.
+
+Bugfixes
+--------
+
+- When cleaning up after failures in the ``acme_certificate`` role, make sure that an undefined ``ansible_failed_task`` does not cause another error (https://github.com/felixfontein/ansible-acme/pull/32).
+
 v0.5.0
 ======
 

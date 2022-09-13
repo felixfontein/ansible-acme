@@ -121,3 +121,13 @@ releases:
     - 30-reuse.yml
     - 31-rescue.yml
     release_date: '2022-09-13'
+  0.5.1:
+    changes:
+      bugfixes:
+      - When cleaning up after failures in the ``acme_certificate`` role, make sure
+        that an undefined ``ansible_failed_task`` does not cause another error (https://github.com/felixfontein/ansible-acme/pull/32).
+      release_summary: Bugfix release.
+    fragments:
+    - 0.5.1.yml
+    - 32-fail-task.yml
+    release_date: '2022-09-13'
