@@ -5,7 +5,7 @@
 
 galaxy_info:
   role_name: revoke_old_certificates
-  author: Felix Fontein
+  author: felixfontein
   description: >
     Simplifies revocation of certificates via ACME.
 

@@ -5,7 +5,7 @@
 
 galaxy_info:
   role_name: account_key_rollover
-  author: Felix Fontein
+  author: felixfontein
   description: >
     Simplifies ACME account key rollover.
 
