@@ -132,7 +132,7 @@
 
     - name: Make sure role fails
       ansible.builtin.fail:
-        msg: 'Re-fail from {{ ansible_failed_task.name }}'
+        msg: 'Re-fail from {{ ansible_failed_task.name | default("unknown task") }}'
 
   always:
     - name: Purge private key from memory
