@@ -1,2 +1,0 @@
-minor_changes:
-  - "In case an error happens before a certificate is issued, restore private key, and remove certificate and key backups if these were made (``acme_certificate_keys_old_store`` option) (https://github.com/felixfontein/ansible-acme/pull/30)."

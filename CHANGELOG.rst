@@ -5,6 +5,27 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.5.0
+======
+
+Release Summary
+---------------
+
+Feature release dropping support for some specific old Ansible/ansible-base versions.
+
+Minor Changes
+-------------
+
+- In case an error happens before a certificate is issued, restore private key, and remove certificate and key backups if these were made (``acme_certificate_keys_old_store`` option) (https://github.com/felixfontein/ansible-acme/pull/30).
+- The collection repository conforms to the `REUSE specification <https://reuse.software/spec/>`__ (https://github.com/felixfontein/ansible-acme/pull/30).
+- Use FQCN for builtin actions and lookup plugins (https://github.com/felixfontein/ansible-acme/pull/23).
+- acme_certificate role - add ``acme_certificate_renewal_on_remaining_days`` option which allows to only renew certificates that expire in a certain amount of days (https://github.com/felixfontein/ansible-acme/pull/28).
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Officially drop support for Ansible 2.9.10 to 2.9.16, and ansible-base 2.10.0 to 2.10.3. These versions did not work with the ``felixfontein.acme.acme_certificate`` role for some time now, so this should not really affect any regular user of this collection (https://github.com/felixfontein/ansible-acme/pull/23).
+
 v0.4.0
 ======
 

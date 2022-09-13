@@ -95,3 +95,29 @@ releases:
     - community.dns-2.0.0.yml
     - community.general-4.0.0.yml
     release_date: '2021-11-04'
+  0.5.0:
+    changes:
+      breaking_changes:
+      - Officially drop support for Ansible 2.9.10 to 2.9.16, and ansible-base 2.10.0
+        to 2.10.3. These versions did not work with the ``felixfontein.acme.acme_certificate``
+        role for some time now, so this should not really affect any regular user
+        of this collection (https://github.com/felixfontein/ansible-acme/pull/23).
+      minor_changes:
+      - In case an error happens before a certificate is issued, restore private key,
+        and remove certificate and key backups if these were made (``acme_certificate_keys_old_store``
+        option) (https://github.com/felixfontein/ansible-acme/pull/30).
+      - The collection repository conforms to the `REUSE specification <https://reuse.software/spec/>`__
+        (https://github.com/felixfontein/ansible-acme/pull/30).
+      - Use FQCN for builtin actions and lookup plugins (https://github.com/felixfontein/ansible-acme/pull/23).
+      - acme_certificate role - add ``acme_certificate_renewal_on_remaining_days``
+        option which allows to only renew certificates that expire in a certain amount
+        of days (https://github.com/felixfontein/ansible-acme/pull/28).
+      release_summary: Feature release dropping support for some specific old Ansible/ansible-base
+        versions.
+    fragments:
+    - 0.5.0.yml
+    - 23-ansible.builtin-fqcn.yml
+    - 28-renewal-days.yml
+    - 30-reuse.yml
+    - 31-rescue.yml
+    release_date: '2022-09-13'
