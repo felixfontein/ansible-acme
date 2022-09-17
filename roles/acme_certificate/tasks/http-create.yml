@@ -15,13 +15,13 @@
 
 # Create challenge files on server.
 - name: "Copying challenge files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-  ansible.builtin.copy:
+  ansible.builtin.template:
     dest: >-
       {{ [
         acme_certificate_server_location,
         item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):]
       ] | community.general.path_join }}
-    content: "{{ item.value[acme_certificate_challenge].resource_value }}"
+    src: http-challenge.j2
     owner: "{{ acme_certificate_http_challenge_user }}"
     group: "{{ acme_certificate_http_challenge_group }}"
     mode: "{{ acme_certificate_http_challenge_file_mode }}"
