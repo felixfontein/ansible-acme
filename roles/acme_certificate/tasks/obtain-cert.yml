@@ -157,13 +157,9 @@
     run_once: true
 
   - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    ansible.builtin.copy:  # noqa risky-file-permissions - use the user's umask
+    ansible.builtin.template:  # noqa risky-file-permissions - use the user's umask
       dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | community.general.path_join }}"
-      content: |
-        {{ lookup('ansible.builtin.file',
-                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join) }}
-        {{ lookup('ansible.builtin.file',
-                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join) }}
+      src: root-chain.pem.j2
     delegate_to: localhost
     run_once: true
   always:
