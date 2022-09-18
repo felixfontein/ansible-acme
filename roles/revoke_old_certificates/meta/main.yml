@@ -4,27 +4,8 @@
 # SPDX-FileCopyrightText: 2020, Felix Fontein
 
 galaxy_info:
-  role_name: revoke_old_certificates
-  author: felixfontein
+  standalone: false
   description: >
     Simplifies revocation of certificates via ACME.
-
-  license: MIT
-
-  min_ansible_version: 2.9.10
-
-  galaxy_tags:
-  - acme
-  - letsencrypt
-  - buypass
-  - ssl
-  - tls
-  - https
-  - encryption
-  - security
-  - web
-  - revoke
-
-  platforms: []
 
 dependencies: []
