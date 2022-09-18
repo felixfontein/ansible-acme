@@ -131,3 +131,9 @@ releases:
     - 0.5.1.yml
     - 32-fail-task.yml
     release_date: '2022-09-13'
+  0.5.2:
+    changes:
+      release_summary: Maintenance release.
+    fragments:
+    - 0.5.2.yml
+    release_date: '2022-09-18'
