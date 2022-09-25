@@ -9,6 +9,7 @@ skip_list:
   - ignore-errors  # Use failed_when and specify error conditions instead of using ignore_errors
   - var-naming  # Task uses 'set_fact' to define variables that violates variable naming standards
   - jinja[spacing]  # This is not really mature yet and produces wrong recommendations
+  - name[template]  # I disagree with this one
 exclude_paths:
   - changelogs/
 mock_modules:

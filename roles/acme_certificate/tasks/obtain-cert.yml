@@ -20,7 +20,10 @@
   delegate_to: localhost
   run_once: true
 
-- block:  # noqa name[missing]
+- when: acme_certificate_use_sops_for_key
+  delegate_to: localhost
+  run_once: true
+  block:  # noqa name[missing]
   - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
     community.crypto.openssl_privatekey_pipe:
       content: >-
@@ -52,10 +55,6 @@
   - name: Remove private key data from Ansible facts
     ansible.builtin.set_fact:
       acme_certificate_INTERNAL_private_key: ''
-
-  when: acme_certificate_use_sops_for_key
-  delegate_to: localhost
-  run_once: true
 
 - name: "Creating CSR for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   community.crypto.openssl_csr_pipe:
@@ -118,7 +117,8 @@
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
     run_once: true
 
-- block:  # noqa name[missing]
+- when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
+  block:  # noqa name[missing]
   # Set up HTTP challenges
   - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
@@ -170,8 +170,6 @@
   # Clean up DNS challenges
   - include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
     when: "acme_certificate_challenge == 'dns-01'"
-
-  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
 
 - block:  # noqa name[missing]
   - name: Create temporary file

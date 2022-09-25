@@ -28,7 +28,22 @@
     - "{{ acme_certificate_keys_path }}"
     - "{{ acme_certificate_keys_old_path }}"
 
-- block:  # noqa name[missing]
+- vars:
+    types:
+      - root
+      - intermediate
+    root_numbers:
+      # The number 3 comes from here: https://github.com/ansible/acme-test-container/blob/master/run.sh#L12
+      - 0
+      - 1
+      - 2
+      - 3
+    interesting_keys:
+      - authority_key_identifier
+      - subject_key_identifier
+      - issuer
+      - subject
+  block:  # noqa name[missing]
     - name: Obtain root and intermediate certificates
       ansible.builtin.get_url:  # noqa risky-file-permissions
         url: "http://{{ acme_host }}:5000/{{ item.0 }}-certificate-for-ca/{{ item.1 }}"
@@ -67,22 +82,6 @@
         acme_root_certs: "{{ acme_roots_tmp.results | map(attribute='ansible_facts.y__') | list }}"
         acme_intermediates: "{{ acme_intermediates_tmp.results | map(attribute='ansible_facts.x__') | list }}"
         acme_intermediate_certs: "{{ acme_intermediates_tmp.results | map(attribute='ansible_facts.y__') | list }}"
-
-  vars:
-    types:
-      - root
-      - intermediate
-    root_numbers:
-      # The number 3 comes from here: https://github.com/ansible/acme-test-container/blob/master/run.sh#L12
-      - 0
-      - 1
-      - 2
-      - 3
-    interesting_keys:
-      - authority_key_identifier
-      - subject_key_identifier
-      - issuer
-      - subject
 
 - name: ACME root certificate info
   ansible.builtin.debug:
