@@ -15,8 +15,8 @@
     msg: "acme_certificate_domains or acme_certificate_ips must be specified"
   run_once: true
 
-# Sanity checks for DNS providers
-- include_tasks: dns-{{ acme_certificate_dns_provider }}-sanity.yml
+- name: Sanity checks for DNS providers
+  ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-sanity.yml
   when: "acme_certificate_challenge == 'dns-01'"
 
 - name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
@@ -58,13 +58,14 @@
 
 # Only renew certificate when a) it does not yet exist, or b) when acme_certificate_renewal_on_remaining_days has not
 # been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
-- when: >-
+- name: Renew certificate
+  when: >-
     not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
     or acme_certificate_renewal_on_remaining_days is not defined
     or not (acme_certificate_INTERNAL_old_certificate_info.valid_at.soon | default(true))
   vars:
     acme_certificate_INTERNAL_key_extension: "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
-  block:  # noqa name[missing]
+  block:
     - name: Check whether private key exists
       ansible.builtin.stat:
         path: >-
@@ -102,7 +103,8 @@
       when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
       run_once: true
 
-    - include_tasks: obtain-cert.yml
+    - name: Obtain certificate
+      ansible.builtin.include_tasks: obtain-cert.yml
   rescue:
     - name: Restore private key
       ansible.builtin.template:

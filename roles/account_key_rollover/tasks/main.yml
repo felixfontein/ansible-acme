@@ -38,10 +38,11 @@
     delegate_to: localhost
     when: not acme_certificate_account_key_sops_encrypted
 
-  - when: acme_certificate_account_key_sops_encrypted
+  - name: Create new sops encrypted private account key
+    when: acme_certificate_account_key_sops_encrypted
     run_once: true
     delegate_to: localhost
-    block:  # noqa name[missing]
+    block:
     - name: Creating new private account key (sops encrypted)
       community.crypto.openssl_privatekey_pipe:
         type: "{{ 'RSA' if acme_certificate_account_algorithm == 'rsa' else 'ECC' }}"

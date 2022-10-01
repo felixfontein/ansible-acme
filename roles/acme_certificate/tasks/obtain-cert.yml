@@ -20,10 +20,11 @@
   delegate_to: localhost
   run_once: true
 
-- when: acme_certificate_use_sops_for_key
+- name: Create sops encrypted private key
+  when: acme_certificate_use_sops_for_key
   delegate_to: localhost
   run_once: true
-  block:  # noqa name[missing]
+  block:
   - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
     community.crypto.openssl_privatekey_pipe:
       content: >-
@@ -117,14 +118,15 @@
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
     run_once: true
 
-- when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
-  block:  # noqa name[missing]
-  # Set up HTTP challenges
-  - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+- name: Get certificate
+  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
+  block:
+  - name: Set up HTTP challenges
+    ansible.builtin.include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
 
-  # Set up DNS challenges
-  - include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
+  - name: Set up DNS challenges
+    ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
   - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
@@ -163,15 +165,16 @@
     delegate_to: localhost
     run_once: true
   always:
-  # Clean up HTTP challenges
-  - include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+  - name: Clean up HTTP challenges
+    ansible.builtin.include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
 
-  # Clean up DNS challenges
-  - include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
+  - name: Clean up DNS challenges
+    ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
-- block:  # noqa name[missing]
+- name: Verify certificates
+  block:
   - name: Create temporary file
     ansible.builtin.tempfile:
     register: acme_certificate_INTERNAL_tempfile

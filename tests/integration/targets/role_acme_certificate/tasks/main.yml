@@ -28,7 +28,8 @@
     - "{{ acme_certificate_keys_path }}"
     - "{{ acme_certificate_keys_old_path }}"
 
-- vars:
+- name: Get information on root and intermediate certificates
+  vars:
     types:
       - root
       - intermediate
@@ -43,7 +44,7 @@
       - subject_key_identifier
       - issuer
       - subject
-  block:  # noqa name[missing]
+  block:
     - name: Obtain root and intermediate certificates
       ansible.builtin.get_url:  # noqa risky-file-permissions
         url: "http://{{ acme_host }}:5000/{{ item.0 }}-certificate-for-ca/{{ item.1 }}"

@@ -5,7 +5,7 @@
 # SPDX-FileCopyrightText: 2020, Felix Fontein
 
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via NS1 DNS
-  ns1_record:
+  ns1_record:  # noqa: fqcn[action]
     apiKey: "{{ acme_certificate_ns1_secret_key }}"
     name: "{{ item.key }}"
     zone: "{{ item.key | community.dns.get_registrable_domain }}"
