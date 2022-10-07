@@ -179,7 +179,7 @@ jobs:
         #   ansible-galaxy collection install community.aws community.crypto community.dns community.general community.sops -p .
 
       - name: Run ansible-lint
-        run: ansible-lint
+        run: ansible-lint --offline
         env:
           ANSIBLE_COLLECTIONS_PATHS: ../../../
         working-directory: ./ansible_collections/felixfontein/acme
