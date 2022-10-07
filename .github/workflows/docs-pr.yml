@@ -18,6 +18,7 @@ jobs:
     name: Build Ansible Docs
     uses: ansible-community/github-docs-build/.github/workflows/_shared-docs-build-pr.yml@main
     with:
+      collection-name: felixfontein.acme
       init-fail-on-error: true
       extra-collections: community.crypto community.aws community.dns community.sops
 
