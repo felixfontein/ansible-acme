@@ -55,7 +55,7 @@ The values for ``kid`` and ``key`` will be provided by the ACME server operator,
 Account key setup
 -----------------
 
-You can create an account key using the `openssl` binary as follows:
+You can create an account key using the ``openssl`` binary as follows:
 
 .. code-block:: sh
 
@@ -66,7 +66,7 @@ You can create an account key using the `openssl` binary as follows:
     # ECC 384 bit key (P-384)
     openssl ecparam -name secp384r1 -genkey -out keys/acme-account.key
 
-With Ansible, you can use the `openssl_privatekey` module as follows:
+With Ansible, you can use the ``community.crypto.openssl_privatekey`` module as follows:
 
 .. code-block:: yaml+jinja
 
