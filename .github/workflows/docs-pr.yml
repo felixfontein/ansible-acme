@@ -20,7 +20,7 @@ jobs:
     with:
       collection-name: felixfontein.acme
       init-fail-on-error: true
-      extra-collections: community.crypto community.aws community.dns community.sops
+      extra-collections: community.crypto amazon.aws community.dns community.sops
 
   comment:
     permissions:
