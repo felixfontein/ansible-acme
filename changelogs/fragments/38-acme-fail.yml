@@ -1,0 +1,2 @@
+bugfixes:
+  - "Avoid double failure of acme_certificate rescue task when first task in block fails (https://github.com/felixfontein/ansible-acme/pull/38)."
