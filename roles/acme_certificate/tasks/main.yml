@@ -116,7 +116,7 @@
       delegate_to: localhost
       when: >-
         not acme_certificate_INTERNAL_success
-        and acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
+        and (acme_certificate_INTERNAL_old_privatekey_exists.stat.exists | default(false))
         and acme_certificate_INTERNAL_private_key_copy is defined
       run_once: true
 
