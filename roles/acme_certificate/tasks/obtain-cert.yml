@@ -20,11 +20,7 @@
   delegate_to: localhost
   run_once: true
 
-- name: Create sops encrypted private key
-  when: acme_certificate_use_sops_for_key
-  delegate_to: localhost
-  run_once: true
-  block:
+- block:  # noqa name[missing]
   - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} (sops encrypted)"
     community.crypto.openssl_privatekey_pipe:
       content: >-
@@ -56,6 +52,10 @@
   - name: Remove private key data from Ansible facts
     ansible.builtin.set_fact:
       acme_certificate_INTERNAL_private_key: ''
+
+  when: acme_certificate_use_sops_for_key
+  delegate_to: localhost
+  run_once: true
 
 - name: "Creating CSR for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   community.crypto.openssl_csr_pipe:
@@ -118,15 +118,13 @@
         order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
     run_once: true
 
-- name: Get certificate
-  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
-  block:
-  - name: Set up HTTP challenges
-    ansible.builtin.include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+- block:  # noqa name[missing]
+  # Set up HTTP challenges
+  - include_tasks: http-create{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
 
-  - name: Set up DNS challenges
-    ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
+  # Set up DNS challenges
+  - include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
   - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
@@ -159,22 +157,27 @@
     run_once: true
 
   - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    ansible.builtin.template:  # noqa risky-file-permissions - use the user's umask
+    ansible.builtin.copy:  # noqa risky-file-permissions - use the user's umask
       dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | community.general.path_join }}"
-      src: root-chain.pem.j2
+      content: |
+        {{ lookup('ansible.builtin.file',
+                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join) }}
+        {{ lookup('ansible.builtin.file',
+                  [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join) }}
     delegate_to: localhost
     run_once: true
   always:
-  - name: Clean up HTTP challenges
-    ansible.builtin.include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
+  # Clean up HTTP challenges
+  - include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
 
-  - name: Clean up DNS challenges
-    ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
+  # Clean up DNS challenges
+  - include_tasks: dns-{{ acme_certificate_dns_provider }}-cleanup.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
-- name: Verify certificates
-  block:
+  when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
+
+- block:  # noqa name[missing]
   - name: Create temporary file
     ansible.builtin.tempfile:
     register: acme_certificate_INTERNAL_tempfile

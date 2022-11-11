@@ -8,9 +8,9 @@
 - name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via INWX
   inwx.collection.dns:
     state: absent
-    domain: "{{ item.0.key | community.dns.get_registrable_domain }}"
+    domain: "{{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
     type: TXT
-    record: "{{ item.0.key | community.dns.remove_registrable_domain }}"
+    record: "{{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}"
     value: "{{ item.1 }}"
     username: "{{ acme_certificate_inwx_username | default(omit) }}"
     password: "{{ acme_certificate_inwx_password | default(omit) }}"
@@ -18,4 +18,4 @@
   run_once: true
   loop_control:
     extended: yes
-  loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items | subelements('value') }}"
+  loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) | dict2items | subelements('value') }}"

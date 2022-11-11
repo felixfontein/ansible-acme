@@ -7,8 +7,8 @@
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via HostTech API
   community.dns.hosttech_dns_record_set:
     state: present
-    zone_name: "{{ item.key | community.dns.get_registrable_domain }}"
-    record: "{{ item.key }}"
+    zone_name: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
     type: TXT
     ttl: "{{ 600 if acme_certificate_hosttech_token is defined else 300 }}"
     value: "{{ item.value }}"
