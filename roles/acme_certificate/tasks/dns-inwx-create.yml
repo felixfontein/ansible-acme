@@ -8,9 +8,11 @@
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via INWX
   inwx.collection.dns:
     state: present
-    domain: "{{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    domain: >-
+      {{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}
     type: TXT
-    record: "{{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}"
+    record: >-
+      {{ item.0.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}
     value: "{{ item.1 }}"
     solo: "{{ ansible_loop.first }}"
     ttl: 300

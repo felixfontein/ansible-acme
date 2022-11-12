@@ -56,11 +56,11 @@ def substitute_dns(name, substitution_map):
     if name.endswith('.'):
         suffix = '.'
         name = name[:-1]
-        
+
     longest_result = ''
     for src, dst in substitution_map.items():
         if not isinstance(src, text_type) or not isinstance(dst, text_type):
-            raise AnsibleFilterTypeError("Key or value of dictionary entry are of type %s resp. %s, and not both are text" % (type(src), type(dst)))
+            raise AnsibleFilterTypeError("Key or value of dictionary entry are of type {0} resp. {1}, and not both are text".format(type(src), type(dst)))
         src_wildcard = False
         if src.startswith('*.'):
             src_wildcard = True
@@ -68,7 +68,7 @@ def substitute_dns(name, substitution_map):
         dst_wildcard = False
         if dst.startswith('*.'):
             if not src_wildcard:
-                raise AnsibleFilterError('Non-wildcard key %s has wildcard value %s'.format(src, dst))
+                raise AnsibleFilterError('Non-wildcard key {0} has wildcard value {1}'.format(src, dst))
             dst_wildcard = True
             dst = dst[1:]
         if src_wildcard:
