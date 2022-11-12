@@ -5,7 +5,7 @@
 
 # Create DNS challenges for DNS provider Amazon Route53
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
-  community.aws.route53:
+  community.aws.route53:   # noqa fqcn[canonical]
     state: present
     zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
     record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
