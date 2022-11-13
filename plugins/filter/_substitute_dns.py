@@ -9,10 +9,11 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
   name: _substitute_dns
-  short_description: Convert a list of tuples into a dictionary
-  version_added: 3.0.0
+  short_description: [INTERNAL] Convert a list of tuples into a dictionary
+  version_added: 0.6.0
   author: Felix Fontein (@felixfontein)
   description:
+    - B(This is an internal tool and must not be used outside this collection!)
     - Convert a list of tuples into a dictionary. This is a filter version of the C(dict) function.
   options:
     _input:
@@ -29,10 +30,20 @@ DOCUMENTATION = '''
 '''
 
 EXAMPLES = '''
-- name: Convert list of tuples into dictionary
+- name: Simple replace
+  ansible.builtin.set_fact:
+    name: "{{ 'www.example.com' | felixfontein.acme._substitute_dns({'www.example.com': 'www.com.example.org'}) }}"
+    # Result is 'www.com.example.org'
+
+- name: Replace with wildcard
   ansible.builtin.set_fact:
     name: "{{ 'foo.example.com' | felixfontein.acme._substitute_dns({'*.example.com': '*.com.example.org'}) }}"
-    # Result is 'foo.com.example.org'
+    # Result is '*.com.example.org'
+
+- name: Replace (not) with wildcard
+  ansible.builtin.set_fact:
+    name: "{{ 'www.foo.example.com' | felixfontein.acme._substitute_dns({'*.example.com': '*.com.example.org'}) }}"
+    # Result is 'www.foo.example.com' (the wildcard does not match because there is more than one component)
 '''
 
 RETURN = '''
@@ -51,36 +62,34 @@ def substitute_dns(name, substitution_map):
         raise AnsibleFilterTypeError("The DNS name is of type %s, and not text" % type(name))
     if not isinstance(substitution_map, Mapping):
         raise AnsibleFilterTypeError("The substitution map type %s, and not a dictionary" % type(substitution_map))
+    if len(name) > 1 and (name.startswith('.') or '..' in name):
+        raise AnsibleFilterError("Invalid DNS name %r" % name)
 
     suffix = ''
     if name.endswith('.'):
         suffix = '.'
         name = name[:-1]
 
-    longest_result = ''
+    result = name
+    result_wc = True
     for src, dst in substitution_map.items():
         if not isinstance(src, text_type) or not isinstance(dst, text_type):
-            raise AnsibleFilterTypeError("Key or value of dictionary entry are of type {0} resp. {1}, and not both are text".format(type(src), type(dst)))
+            raise AnsibleFilterTypeError("Key or value of dictionary entry are of type {0} resp. {1}, but both must be text".format(type(src), type(dst)))
         src_wildcard = False
         if src.startswith('*.'):
             src_wildcard = True
             src = src[1:]
-        dst_wildcard = False
-        if dst.startswith('*.'):
-            if not src_wildcard:
-                raise AnsibleFilterError('Non-wildcard key {0} has wildcard value {1}'.format(src, dst))
-            dst_wildcard = True
-            dst = dst[1:]
         if src_wildcard:
-            if name.endswith(src):
-                prefix = name[:-len(src)] if dst_wildcard else ''
-                if len(dst) + len(prefix) > len(longest_result):
-                    longest_result = prefix + dst
+            if name.endswith(src) and '.' not in name[:-len(src)] and result_wc:
+                result = dst
+                result_wc = True
         else:
-            if src == name and len(dst) > len(longest_result):
-                longest_result = dst
+            if src == name:
+                result = dst
+                result_wc = False
+                break
 
-    return (longest_result or name) + suffix
+    return result + suffix
 
 
 class FilterModule(object):
