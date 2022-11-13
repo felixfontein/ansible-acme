@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2022, Felix Fontein
 
 - name: Validate filter
-  assert:
+  ansible.builtin.assert:
     that:
       - >-
         'example.com' | felixfontein.acme._substitute_dns(substitution_map) == 'com.example.org'
@@ -32,42 +32,42 @@
       '*.wc.example.net': wc.net.example.org
 
 - name: Filter errors (1/5)
-  set_fact:
+  ansible.builtin.set_fact:
     error_value: >-
       {{ {} | felixfontein.acme._substitute_dns({}) }}
   ignore_errors: true
   register: error_1
 
 - name: Filter errors (2/5)
-  set_fact:
+  ansible.builtin.set_fact:
     error_value: >-
       {{ 'wc.example.net' | felixfontein.acme._substitute_dns([]) }}
   ignore_errors: true
   register: error_2
 
 - name: Filter errors (3/5)
-  set_fact:
+  ansible.builtin.set_fact:
     error_value: >-
       {{ '.wc.example.net' | felixfontein.acme._substitute_dns({}) }}
   ignore_errors: true
   register: error_3
 
 - name: Filter errors (4/5)
-  set_fact:
+  ansible.builtin.set_fact:
     error_value: >-
       {{ 'wc.example.net' | felixfontein.acme._substitute_dns({'a': 1}) }}
   ignore_errors: true
   register: error_4
 
 - name: Filter errors (5/5)
-  set_fact:
+  ansible.builtin.set_fact:
     error_value: >-
       {{ 'wc.example.net' | felixfontein.acme._substitute_dns({1: 'a'}) }}
   ignore_errors: true
   register: error_5
 
 - name: Validate errors
-  assert:
+  ansible.builtin.assert:
     that:
       - error_1 is failed
       - >-
