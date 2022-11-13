@@ -9,7 +9,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
   name: _substitute_dns
-  short_description: [INTERNAL] Convert a list of tuples into a dictionary
+  short_description: "[INTERNAL] Convert a list of tuples into a dictionary"
   version_added: 0.6.0
   author: Felix Fontein (@felixfontein)
   description:
@@ -53,34 +53,38 @@ RETURN = '''
 '''
 
 from ansible.errors import AnsibleFilterError, AnsibleFilterTypeError
-from ansible.module_utils.six import text_type
+from ansible.module_utils.six import string_types
 from ansible.module_utils.common._collections_compat import Mapping
+from ansible.module_utils.common.text.converters import to_text
 
 
 def substitute_dns(name, substitution_map):
-    if not isinstance(name, text_type):
+    if not isinstance(name, string_types):
         raise AnsibleFilterTypeError("The DNS name is of type %s, and not text" % type(name))
     if not isinstance(substitution_map, Mapping):
         raise AnsibleFilterTypeError("The substitution map type %s, and not a dictionary" % type(substitution_map))
-    if len(name) > 1 and (name.startswith('.') or '..' in name):
+    name = to_text(name)
+    if len(name) > 1 and (name.startswith(u'.') or u'..' in name):
         raise AnsibleFilterError("Invalid DNS name %r" % name)
 
-    suffix = ''
-    if name.endswith('.'):
-        suffix = '.'
+    suffix = u''
+    if name.endswith(u'.'):
+        suffix = u'.'
         name = name[:-1]
 
     result = name
     result_wc = True
     for src, dst in substitution_map.items():
-        if not isinstance(src, text_type) or not isinstance(dst, text_type):
+        if not isinstance(src, string_types) or not isinstance(dst, string_types):
             raise AnsibleFilterTypeError("Key or value of dictionary entry are of type {0} resp. {1}, but both must be text".format(type(src), type(dst)))
+        src = to_text(src)
+        dst = to_text(dst)
         src_wildcard = False
-        if src.startswith('*.'):
+        if src.startswith(u'*.'):
             src_wildcard = True
             src = src[1:]
         if src_wildcard:
-            if name.endswith(src) and '.' not in name[:-len(src)] and result_wc:
+            if name.endswith(src) and u'.' not in name[:-len(src)] and result_wc:
                 result = dst
                 result_wc = True
         else:
