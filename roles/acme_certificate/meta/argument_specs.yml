@@ -328,6 +328,18 @@ argument_specs:
           - Allows to substitute parts of the DNS entry domain names. This can be very useful if
             certificates are obtained for domain names that are CNAMEs, and the DNS provider for where
             the CNAME points need to be modified.
+          - The entries in this dictionary should be the names that are to be replaced, and the values
+            the replacements. Leading wildcards can be used to replace suffixes instead of the complete
+            string. If the key is C(*.example.com) and the value C(*.foo.example.org), the name C(_acme-challenge.example.com)
+            will be replaced by C(_acme-challenge.foo.example.org). If the key is C(*.example.com) and the value C(foo.example.org),
+            the name C(_acme-challenge.example.com) will be replaced by C(foo.example.org). And if the key is C(example.com) and
+            the value C(foo.example.org), C(_acme-challenge.example.com) will not be changed at all, only C(example.com) will be
+            changed to C(foo.example.org).
+          - Note that if you want to obtain certificates with ACME with I(acme_certificate_challenge=dns-01) for C(example.com)
+            whose CNAME is C(foo.example.org), you should create anothe CNAME record C(_acme-challenge.example.com) with value
+            C(_acme-challenge.foo.example.org), and if you want to obtain a certificate for C(*.example.com) you should create
+            a third CNAME record C(*.example.com) with value C(*.foo.example.org). If there are more specific DNS records at
+            C(xxx.foo.example.org) that should be reachable by C(xxx.example.com), you need to create more CNAMEs for these.
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.
