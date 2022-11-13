@@ -9,15 +9,16 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
   name: _substitute_dns
-  short_description: "[INTERNAL] Convert a list of tuples into a dictionary"
+  short_description: "[INTERNAL] Adjust DNS name according to a CNAME substitution map"
   version_added: 0.6.0
   author: Felix Fontein (@felixfontein)
   description:
-    - B(This is an internal tool and must not be used outside this collection!)
-    - Convert a list of tuples into a dictionary. This is a filter version of the C(dict) function.
+    - B(This is an internal tool and must only be used from roles in this collection!)
+      If you use it from outside this collection, be warned that its behavior can change
+      and it can be removed at any time, even in bugfix releases!
   options:
     _input:
-      description: A list of tuples (with exactly two elements).
+      description: A DNS name.
       type: string
       required: true
     substitution_map:
