@@ -71,16 +71,20 @@
     that:
       - error_1 is failed
       - >-
-        "The DNS name is of type <class 'dict'>, and not text" in error_1.msg
+        "The DNS name is of type <class 'dict'>, and not text" in error_1.msg or
+        "The DNS name is of type <type 'dict'>, and not text" in error_1.msg
       - error_2 is failed
       - >-
-        "The substitution map type <class 'list'>, and not a dictionary" in error_2.msg
+        "The substitution map type <class 'list'>, and not a dictionary" in error_2.msg or
+        "The substitution map type <type 'list'>, and not a dictionary" in error_2.msg
       - error_3 is failed
       - >-
         "Invalid DNS name '.wc.example.net'" in error_3.msg
       - error_4 is failed
       - >-
-        "Key or value of dictionary entry are of type <class 'str'> resp. <class 'int'>, but both must be text" in error_4.msg
+        "Key or value of dictionary entry are of type <class 'str'> resp. <class 'int'>, but both must be text" in error_4.msg or
+        "Key or value of dictionary entry are of type <type 'str'> resp. <type 'int'>, but both must be text" in error_4.msg
       - error_5 is failed
       - >-
-        "Key or value of dictionary entry are of type <class 'int'> resp. <class 'str'>, but both must be text" in error_5.msg
+        "Key or value of dictionary entry are of type <class 'int'> resp. <class 'str'>, but both must be text" in error_5.msg or
+        "Key or value of dictionary entry are of type <type 'int'> resp. <type 'str'>, but both must be text" in error_5.msg
