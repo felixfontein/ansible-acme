@@ -55,7 +55,7 @@ RETURN = '''
 from ansible.errors import AnsibleFilterError, AnsibleFilterTypeError
 from ansible.module_utils.six import string_types
 from ansible.module_utils.common._collections_compat import Mapping
-from ansible.module_utils.common.text.converters import to_text
+from ansible.module_utils.common.text.converters import to_text, to_native
 
 
 def substitute_dns(name, substitution_map):
@@ -65,7 +65,7 @@ def substitute_dns(name, substitution_map):
         raise AnsibleFilterTypeError("The substitution map type %s, and not a dictionary" % type(substitution_map))
     name = to_text(name)
     if len(name) > 1 and (name.startswith(u'.') or u'..' in name):
-        raise AnsibleFilterError("Invalid DNS name %r" % name)
+        raise AnsibleFilterError("Invalid DNS name %r" % to_native(name))
 
     suffix = u''
     if name.endswith(u'.'):
