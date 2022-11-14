@@ -321,6 +321,24 @@ argument_specs:
         description:
           - Only obtain a new certificate if the certificate does not yet exist, or if the certificate's expiry date is less than
             I(acme_certificate_remaining_days) days in the future.
+      acme_certificate_dns_substitution:
+        type: dict
+        version_added: 0.6.0
+        description:
+          - Allows to substitute parts of the DNS entry domain names. This can be very useful if
+            certificates are obtained for domain names that are CNAMEs, and the DNS provider for where
+            the CNAME points need to be modified.
+          - The entries in this dictionary should be the names that are to be replaced, and the values
+            the replacements. A single leading wildcard can be used to replace suffixes instead of the complete
+            string, assuming the prefix has no further period (C(.)).
+          - For example, if the key is C(*.example.com) and the value C(*.foo.example.org), the name C(_acme-challenge.example.com)
+            will be replaced by C(*.foo.example.org). If the key is C(*.example.com) and the value C(foo.example.org),
+            the name C(_acme-challenge.example.com) will be replaced by C(foo.example.org). And if the key is C(example.com) and
+            the value C(foo.example.org), C(_acme-challenge.example.com) will not be changed at all, only C(example.com) will be
+            changed to C(foo.example.org).
+          - Note that if you want to obtain certificates with ACME with I(acme_certificate_challenge=dns-01) for C(example.com)
+            whose CNAME is C(foo.example.org), you should create (and provide in this variable) another CNAME record C(*.example.com),
+            or C(_acme-challenge.example.com) if it should be more specialized.
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.

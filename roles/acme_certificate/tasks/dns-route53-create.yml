@@ -7,8 +7,8 @@
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
   community.aws.route53:   # noqa fqcn[canonical]
     state: present
-    zone: "{{ item.key | community.dns.get_registrable_domain }}"
-    record: "{{ item.key }}"
+    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
     type: TXT
     ttl: 60
     value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"

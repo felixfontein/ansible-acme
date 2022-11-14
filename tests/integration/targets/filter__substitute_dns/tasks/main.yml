@@ -1,0 +1,90 @@
+---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2022, Felix Fontein
+
+- name: Validate filter
+  ansible.builtin.assert:
+    that:
+      - >-
+        'example.com' | felixfontein.acme._substitute_dns(substitution_map) == 'com.example.org'
+      - >-
+        '*.example.com' | felixfontein.acme._substitute_dns(substitution_map) == '*.com.example.org'
+      - >-
+        'foo.example.com' | felixfontein.acme._substitute_dns(substitution_map) == '*.com.example.org'
+      - >-
+        'foo.bar.example.com' | felixfontein.acme._substitute_dns(substitution_map) == 'foo.bar.example.com'
+      - >-
+        'nwc.example.net' | felixfontein.acme._substitute_dns(substitution_map) == 'nwc.net.example.org'
+      - >-
+        'foo.nwc.example.net' | felixfontein.acme._substitute_dns(substitution_map) == 'foo.nwc.example.net'
+      - >-
+        'wc.example.net' | felixfontein.acme._substitute_dns(substitution_map) == 'wc.example.net'
+      - >-
+        'foo.wc.example.net' | felixfontein.acme._substitute_dns(substitution_map) == 'wc.net.example.org'
+      - >-
+        'bar.foo.wc.example.net' | felixfontein.acme._substitute_dns(substitution_map) == 'bar.foo.wc.example.net'
+  vars:
+    substitution_map:
+      example.com: com.example.org
+      '*.example.com': '*.com.example.org'
+      nwc.example.net: nwc.net.example.org
+      '*.wc.example.net': wc.net.example.org
+
+- name: Filter errors (1/5)
+  ansible.builtin.set_fact:
+    error_value: >-
+      {{ {} | felixfontein.acme._substitute_dns({}) }}
+  ignore_errors: true
+  register: error_1
+
+- name: Filter errors (2/5)
+  ansible.builtin.set_fact:
+    error_value: >-
+      {{ 'wc.example.net' | felixfontein.acme._substitute_dns([]) }}
+  ignore_errors: true
+  register: error_2
+
+- name: Filter errors (3/5)
+  ansible.builtin.set_fact:
+    error_value: >-
+      {{ '.wc.example.net' | felixfontein.acme._substitute_dns({}) }}
+  ignore_errors: true
+  register: error_3
+
+- name: Filter errors (4/5)
+  ansible.builtin.set_fact:
+    error_value: >-
+      {{ 'wc.example.net' | felixfontein.acme._substitute_dns({'a': 1}) }}
+  ignore_errors: true
+  register: error_4
+
+- name: Filter errors (5/5)
+  ansible.builtin.set_fact:
+    error_value: >-
+      {{ 'wc.example.net' | felixfontein.acme._substitute_dns({1: 'a'}) }}
+  ignore_errors: true
+  register: error_5
+
+- name: Validate errors
+  ansible.builtin.assert:
+    that:
+      - error_1 is failed
+      - >-
+        "The DNS name is of type <class 'dict'>, and not text" in error_1.msg or
+        "The DNS name is of type <type 'dict'>, and not text" in error_1.msg
+      - error_2 is failed
+      - >-
+        "The substitution map type <class 'list'>, and not a dictionary" in error_2.msg or
+        "The substitution map type <type 'list'>, and not a dictionary" in error_2.msg
+      - error_3 is failed
+      - >-
+        "Invalid DNS name '.wc.example.net'" in error_3.msg
+      - error_4 is failed
+      - >-
+        "Key or value of dictionary entry are of type <class 'str'> resp. <class 'int'>, but both must be text" in error_4.msg or
+        "Key or value of dictionary entry are of type <type 'str'> resp. <type 'int'>, but both must be text" in error_4.msg
+      - error_5 is failed
+      - >-
+        "Key or value of dictionary entry are of type <class 'int'> resp. <class 'str'>, but both must be text" in error_5.msg or
+        "Key or value of dictionary entry are of type <type 'int'> resp. <type 'str'>, but both must be text" in error_5.msg
