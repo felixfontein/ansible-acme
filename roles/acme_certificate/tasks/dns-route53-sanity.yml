@@ -10,6 +10,7 @@
       - acme_certificate_aws_secret_key is defined
     msg: "acme_certificate_aws_access_key and acme_certificate_aws_secret_key must be specified for Route53 DNS"
   run_once: true
+  when: acme_certificate_verify_auth
 
 - name: DNS sanity checks (2/2)
   ansible.builtin.assert:
