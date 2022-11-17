@@ -30,6 +30,7 @@ acme_certificate_validate_certs: true
 acme_certificate_verify_certs: true
 acme_certificate_privatekey_mode: '0600'
 acme_certificate_use_sops_for_key: false
+acme_certificate_verify_auth: true
 
 # For HTTP challenges:
 acme_certificate_server_location: /var/www/challenges

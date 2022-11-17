@@ -13,8 +13,8 @@
     ttl: 60
     value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
     overwrite: true
-    aws_access_key: "{{ acme_certificate_aws_access_key }}"
-    aws_secret_key: "{{ acme_certificate_aws_secret_key }}"
+    aws_access_key: "{{ acme_certificate_aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ acme_certificate_aws_secret_key | default(omit) }}"
     wait: false
   delegate_to: localhost
   run_once: true

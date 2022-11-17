@@ -43,6 +43,7 @@ These are the main variables used by this role:
 - ``acme_certificate_privatekey_mode``: Which file mode to use for the private key file. Default value is ``"0600"`` (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly ``root``).
 - ``acme_certificate_select_chain``: Must be in the format described for the ``select_chain`` parameter of :ref:`community.crypto.acme_certificate module <ansible_collections.community.crypto.acme_certificate_module>`. Allows to select the certificate chain to be used; ``acme_certificate_root_certificate`` must be used in conjunction. This can be used for example with `Let's Encrypt <https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516>`__ to select which root certificate to use. See below for concrete examples how to choose between the Let's Encrypt roots.
 - ``acme_certificate_renewal_on_remaining_days``: Only renew the certificate if it does not yet exist, or expires in less than the given amount of days.
+- ``acme_certificate_verify_auth``: Only check whether credentials have been provided for DNS provider as role arguments when this is ``true`` (default).
 
 Selecting which root to use with Let's Encrypt
 ----------------------------------------------
