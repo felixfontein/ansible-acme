@@ -20,7 +20,7 @@ Requires the Python [cryptography](https://pypi.org/project/cryptography/) libra
 
 The `openssl` binary must also be available in the executable path on the controller. It is needed by the `acme_certificate` module in case `cryptography` is not installed, and it is used for certificate chain validation by the `felixfontein.acme.acme_certificate` role.
 
-If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `community.aws.route53` module requires the Python [`boto3`](https://pypi.org/project/boto3/) package. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
+If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `amazon.aws.route53` module requires the Python [`boto3`](https://pypi.org/project/boto3/) package. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
 
 ## Included content
 

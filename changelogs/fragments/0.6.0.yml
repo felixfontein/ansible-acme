@@ -1,0 +1,3 @@
+release_summary: Collection dependency update.
+breaking_changes:
+  - "The collection no longer depends on community.aws >= 1.0.0, but on amazon.aws >= 5.0.0. The community.aws.route53 module was migrated to amazon.aws, which allows us to depend on one collection less. Note that if you use this collection with Ansible, you need Ansible 7.0.0 or newer; also note that Ansible 6.x.0 and before are End of Life by now (https://github.com/felixfontein/ansible-acme/pull/39)."
