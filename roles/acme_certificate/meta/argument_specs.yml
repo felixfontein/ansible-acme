@@ -87,6 +87,7 @@ argument_specs:
           - ns1
           - inwx
           - ansibletest
+          - openstack
         description:
           - Determines which DNS provider is used for DNS challenges.
           - Every DNS provider requires further configuration.

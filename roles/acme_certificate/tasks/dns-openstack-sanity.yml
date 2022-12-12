@@ -1,0 +1,31 @@
+---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2022, Lucca Jiménez Könings (https://github.com/jimkoen)
+
+- name: DNS Sanity Checks (Openstack)
+  block:
+    - openstack.cloud.config:
+      run_once: true
+      delegate_to: localhost
+
+    - name: DNS sanity checks (1/2)
+      ansible.builtin.assert:
+        that:
+          - "'openstack.cloud.recordset' is community.general.a_module"
+        msg: "The openstack.cloud collection with the openstack.cloud.recordset module must be installed for Openstack DNS"
+      run_once: true
+
+    - name: DNS sanity checks (2/2)
+      ansible.builtin.assert:
+        that:
+          - (openstack.clouds | length) >= 1
+          - (openstack.clouds | rejectattr('auth_type', 'equalto', 'password') | list | length) == 0
+        msg: "For Openstack DNS, auth plugins other than the default 'password' plugin are not supported at this time."
+      run_once: true
+  rescue:
+    - ansible.builtin.debug:
+        msg: "The provided OpenStack auth configuration (either via clouds.yaml or environment variables) is not valid."
+
+    
+    

@@ -1,0 +1,18 @@
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2022, Lucca Jiménez Könings (https://github.com/jimkoen)
+
+# Clean up DNS challenges for DNS provider INWX
+
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via OpenStack
+  openstack.cloud.recordset:
+    state: absent
+    # Openstack expects a zone name with a trailing dot
+    zone: "{{ acme_certificate_openstack_zone | default(item.key | community.dns.get_registrable_domain) }}."
+    records: "{{ item.value }}"
+    recordset_type: txt
+    ttl: 60
+    name: "{{ item.key }}."
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) }}"
