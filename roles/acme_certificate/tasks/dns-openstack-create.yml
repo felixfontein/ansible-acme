@@ -3,11 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # SPDX-FileCopyrightText: 2022, Lucca Jiménez Könings (https://github.com/jimkoen)
 
-
 # Create DNS challenges for DNS provider Openstack
-- ansible.builtin.debug:
-    # Print the internal dns challenge data
-    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list | to_nice_json }}"
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via OpenStack
   openstack.cloud.recordset:
     state: present
