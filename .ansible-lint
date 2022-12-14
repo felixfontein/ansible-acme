@@ -9,7 +9,6 @@ skip_list:
   - ignore-errors  # Use failed_when and specify error conditions instead of using ignore_errors
   - var-naming  # Task uses 'set_fact' to define variables that violates variable naming standards
   - jinja[spacing]  # This is not really mature yet and produces wrong recommendations
-  - jinja[invalid]  # TODO: remove this once ansible-lint is fixed (https://github.com/ansible/ansible-lint/issues/2681)
   - name[template]  # I disagree with this one
   - galaxy[version-incorrect]  # Seriously, this rule is completely idiotic!
   - meta-runtime[unsupported-version]  # Seriously, this rule is completely idiotic!
