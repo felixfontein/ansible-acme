@@ -1,5 +1,0 @@
----
-minor_changes:
-  - "acme_certificate role - added new option ``acme_certificate_verify_auth`` which allows to turn of validation that credentials for DNS modules are
-     passed as role arguments. When disabled, you are responsible to pass credentials with module defaults or in other ways supported by the specific
-     modules (https://github.com/felixfontein/ansible-acme/issues/40, https://github.com/felixfontein/ansible-acme/pull/42)."

@@ -1,2 +1,0 @@
-minor_changes:
-  - "acme_certificate role - add new option ``acme_certificate_dns_substitution`` to allow substituting DNS names during DNS record creation for use with CNAMEs (https://github.com/felixfontein/ansible-acme/pull/41)."
