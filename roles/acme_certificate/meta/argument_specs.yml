@@ -339,6 +339,7 @@ argument_specs:
             I(acme_certificate_remaining_days) days in the future.
       acme_certificate_dns_substitution:
         type: dict
+        default: {}
         version_added: 0.6.0
         description:
           - Allows to substitute parts of the DNS entry domain names. This can be very useful if
