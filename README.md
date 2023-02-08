@@ -28,6 +28,8 @@ If DNS challenges are used, there can be other requirements depending on the DNS
 - Role [felixfontein.acme.revoke_old_certificates](https://ansible.fontein.de/collections/felixfontein/acme/docsite/revoke_old_certificates_role.html).
 - Role [felixfontein.acme.account_key_rollover](https://ansible.fontein.de/collections/felixfontein/acme/docsite/account_key_rollover_role.html).
 
+(You can see the documentation corresponding to the latest commits on [GitHub Pages](https://felixfontein.github.io/ansible-acme/branch/main/).)
+
 ## Using this collection
 
 Before using the `felixfontein.acme` collection, you need to install the collection with the `ansible-galaxy` CLI:
