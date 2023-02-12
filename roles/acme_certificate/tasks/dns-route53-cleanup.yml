@@ -5,16 +5,16 @@
 
 # Clean up DNS challenges for DNS provider Amazon Route53
 - name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
-  community.aws.route53:  # noqa fqcn[canonical]
+  amazon.aws.route53:
     state: absent
-    zone: "{{ item.key | community.dns.get_registrable_domain }}"
-    record: "{{ item.key }}"
+    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
     type: TXT
     ttl: 60
     value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
     overwrite: true
-    aws_access_key: "{{ acme_certificate_aws_access_key }}"
-    aws_secret_key: "{{ acme_certificate_aws_secret_key }}"
+    aws_access_key: "{{ acme_certificate_aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ acme_certificate_aws_secret_key | default(omit) }}"
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) }}"

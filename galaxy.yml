@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2020, Felix Fontein
 namespace: felixfontein
 name: acme
-version: 0.5.2
+version: 0.6.0
 readme: README.md
 authors:
   - Felix Fontein (https://github.com/felixfontein)
@@ -22,7 +22,7 @@ tags:
   - web
   - sops
 dependencies:
-  community.aws: '>=1.0.0'
+  amazon.aws: '>=5.0.0'
   community.crypto: '>=1.3.0'
   community.dns: '>=2.0.0'
   community.general: '>=4.0.0'

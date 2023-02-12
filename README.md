@@ -20,13 +20,15 @@ Requires the Python [cryptography](https://pypi.org/project/cryptography/) libra
 
 The `openssl` binary must also be available in the executable path on the controller. It is needed by the `acme_certificate` module in case `cryptography` is not installed, and it is used for certificate chain validation by the `felixfontein.acme.acme_certificate` role.
 
-If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `community.aws.route53` module requires the Python [`boto3`](https://pypi.org/project/boto3/) package. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
+If DNS challenges are used, there can be other requirements depending on the DNS provider. For example, for Amazon's Route 53, the Ansible `amazon.aws.route53` module requires the Python [`boto3`](https://pypi.org/project/boto3/) package. If DNS challenges with NS1 are used, the NS1 modules must be installed. See below for more information.
 
 ## Included content
 
 - Role [felixfontein.acme.acme_certificate](https://ansible.fontein.de/collections/felixfontein/acme/docsite/acme_certificate_role.html).
 - Role [felixfontein.acme.revoke_old_certificates](https://ansible.fontein.de/collections/felixfontein/acme/docsite/revoke_old_certificates_role.html).
 - Role [felixfontein.acme.account_key_rollover](https://ansible.fontein.de/collections/felixfontein/acme/docsite/account_key_rollover_role.html).
+
+(You can see the documentation corresponding to the latest commits on [GitHub Pages](https://felixfontein.github.io/ansible-acme/branch/main/).)
 
 ## Using this collection
 

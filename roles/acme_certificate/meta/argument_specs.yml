@@ -96,10 +96,14 @@ argument_specs:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=route53), the AWS access key for Route53 must be passed in this option.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=route53) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_aws_secret_key:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=route53), the AWS secret key for Route53 must be passed in this option.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=route53) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_hosttech_username:
         type: str
         description:
@@ -107,6 +111,8 @@ argument_specs:
             the API username must be passed in this option.
           - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username)
             and I(acme_certificate_hosttech_password).
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=hosttech) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_hosttech_password:
         type: str
         description:
@@ -114,23 +120,31 @@ argument_specs:
             the API password must be passed in this option.
           - We recommend to use I(acme_certificate_hosttech_token) instead of I(acme_certificate_hosttech_username)
             and I(acme_certificate_hosttech_password).
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=hosttech) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_hosttech_token:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=hosttech) with the new HostTech JSON REST API,
             the API token must be passed in this option.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=hosttech) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_ns1_secret_key:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=ns1), the NS1 account key must be passed in this option.
           - Please note that NS1 support depends on the external module C(ns1_record). Please check out the
             documentation on how to install it.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=ns1) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_inwx_username:
         type: str
         description:
           - When using I(acme_certificate_dns_provider=inwx), the INWX account username must be passed in this option.
           - Please note that INWX support depends on the collection C(inwx.collection). Please check out the
             documentation on how to install it.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=inwx) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_inwx_password:
         type: str
         description:
@@ -139,6 +153,8 @@ argument_specs:
             documentation on how to install it.
           - Please note that the collection C(inwx.collection) does currently not support 2FA (two factor authentication).
             In order to use this module you need to disable it.
+          - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=inwx) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_domains:
         type: str
         description:
@@ -322,6 +338,32 @@ argument_specs:
         description:
           - Only obtain a new certificate if the certificate does not yet exist, or if the certificate's expiry date is less than
             I(acme_certificate_remaining_days) days in the future.
+      acme_certificate_dns_substitution:
+        type: dict
+        default: {}
+        version_added: 0.6.0
+        description:
+          - Allows to substitute parts of the DNS entry domain names. This can be very useful if
+            certificates are obtained for domain names that are CNAMEs, and the DNS provider for where
+            the CNAME points need to be modified.
+          - The entries in this dictionary should be the names that are to be replaced, and the values
+            the replacements. A single leading wildcard can be used to replace suffixes instead of the complete
+            string, assuming the prefix has no further period (C(.)).
+          - For example, if the key is C(*.example.com) and the value C(*.foo.example.org), the name C(_acme-challenge.example.com)
+            will be replaced by C(*.foo.example.org). If the key is C(*.example.com) and the value C(foo.example.org),
+            the name C(_acme-challenge.example.com) will be replaced by C(foo.example.org). And if the key is C(example.com) and
+            the value C(foo.example.org), C(_acme-challenge.example.com) will not be changed at all, only C(example.com) will be
+            changed to C(foo.example.org).
+          - Note that if you want to obtain certificates with ACME with I(acme_certificate_challenge=dns-01) for C(example.com)
+            whose CNAME is C(foo.example.org), you should create (and provide in this variable) another CNAME record C(*.example.com),
+            or C(_acme-challenge.example.com) if it should be more specialized.
+      acme_certificate_verify_auth:
+        type: bool
+        default: true
+        version_added: 0.6.0
+        description:
+          - Whether to check whether authentication credentials are provided as role arguments for the DNS modules.
+          - When disabled, you can also use module default groups or environment variables to provide these credentials.
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.

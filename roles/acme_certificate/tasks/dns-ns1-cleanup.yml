@@ -6,9 +6,9 @@
 
 - name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via NS1 API
   ns1_record:  # noqa: fqcn[action]
-    apiKey: "{{ acme_certificate_ns1_secret_key }}"
-    name: "{{ item.key }}"
-    zone: "{{ item.key | community.dns.get_registrable_domain }}"
+    apiKey: "{{ acme_certificate_ns1_secret_key | default(omit) }}"
+    name: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
+    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
     state: absent
     type: TXT
     answers: []
