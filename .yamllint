@@ -21,12 +21,8 @@ rules:
   truthy:
     level: error
     allowed-values:
-      - 'yes'
-      - 'no'
       - 'true'
       - 'false'
-      - 'True'
-      - 'False'
   indentation:
     spaces: 2
     indent-sequences: consistent

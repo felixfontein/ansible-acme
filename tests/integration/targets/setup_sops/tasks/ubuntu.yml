@@ -24,8 +24,8 @@
 
 - name: Import sops test GPG key
   ansible.builtin.command: gpg --import /tmp/sops_functional_tests_key.asc  # noqa no-changed-when
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Report that sops is installed
   ansible.builtin.set_fact:
-    sops_installed: yes
+    sops_installed: true

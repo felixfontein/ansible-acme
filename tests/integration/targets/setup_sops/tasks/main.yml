@@ -6,7 +6,7 @@
 
 - name: Prepare status variable.
   ansible.builtin.set_fact:
-    sops_installed: no
+    sops_installed: false
 
 - name: Run Ubuntu-specific tasks
   ansible.builtin.include_tasks: ubuntu.yml

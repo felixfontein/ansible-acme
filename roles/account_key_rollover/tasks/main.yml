@@ -33,7 +33,7 @@
            'secp384r1' if acme_certificate_account_algorithm == 'p-384' else
            'secp521r1' if acme_certificate_account_algorithm == 'p-521' else
            'invalid value for acme_certificate_account_algorithm!' }}
-      force: yes
+      force: true
     run_once: true
     delegate_to: localhost
     when: not acme_certificate_account_key_sops_encrypted

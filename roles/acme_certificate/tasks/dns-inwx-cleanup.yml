@@ -19,5 +19,5 @@
   delegate_to: localhost
   run_once: true
   loop_control:
-    extended: yes
+    extended: true
   loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) | dict2items | subelements('value') }}"
