@@ -129,7 +129,7 @@
       delegate_to: localhost
       when: >-
         not acme_certificate_INTERNAL_success
-        and item.changed
+        and item is changed
       run_once: true
 
     - name: Make sure role fails

@@ -50,7 +50,7 @@
     community.sops.sops_encrypt:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join }}"
       content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
-    when: acme_certificate_INTERNAL_private_key.changed
+    when: acme_certificate_INTERNAL_private_key is changed
 
   always:
   - name: Remove private key data from Ansible facts
