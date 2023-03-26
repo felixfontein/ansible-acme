@@ -47,6 +47,7 @@
     register: acme_certificate_INTERNAL_private_key
 
   - name: "Store sops-encrypted private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    # noqa: no-handler
     community.sops.sops_encrypt:
       path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join }}"
       content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
