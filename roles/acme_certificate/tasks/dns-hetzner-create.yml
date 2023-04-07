@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2023, Lucca Jiménez Könings
 
 # Create DNS challenges for DNS provider Hetzner DNS Console
-- name: Creating DNS challenge entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Hetzner DNS Console
+- name: "Creating DNS challenge entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Hetzner DNS Console"
   community.dns.hetzner_dns_record_sets:
     state: present
     zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
