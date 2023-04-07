@@ -87,6 +87,7 @@ argument_specs:
           - ns1
           - inwx
           - ansibletest
+          - hetzner
         description:
           - Determines which DNS provider is used for DNS challenges.
           - Every DNS provider requires further configuration.
@@ -154,6 +155,10 @@ argument_specs:
             In order to use this module you need to disable it.
           - When I(acme_certificate_verify_auth=false), this is not required when I(acme_certificate_dns_provider=inwx) and
             can be provided in other ways, for example with R(module defaults, module_defaults).
+      acme_certificate_hetzner_token:
+        type: str
+        description:
+          - When using I(acme_certificate_dns_provider=hetzner), the Hetzner DNS console API token must be passed in this option.
       acme_certificate_domains:
         type: str
         description:
