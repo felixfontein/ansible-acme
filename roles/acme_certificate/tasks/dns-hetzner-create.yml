@@ -27,5 +27,8 @@
     records: >-
       {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
     timeout: 120
+    query_retry: 15
+    query_timeout: 5
   delegate_to: localhost
   run_once: true
+  
