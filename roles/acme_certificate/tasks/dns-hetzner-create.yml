@@ -7,8 +7,10 @@
 - name: "Creating DNS challenge entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Hetzner DNS Console"
   community.dns.hetzner_dns_record_set:
     state: present
-    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
-    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
+    # zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    # record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
+    zone: "{{ item.key | community.dns.get_registrable_domain }}"
+    record: "{{ item.key }}"
     type: TXT
     ttl: 60
     value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
