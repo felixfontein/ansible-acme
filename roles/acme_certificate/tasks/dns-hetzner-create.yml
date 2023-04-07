@@ -20,7 +20,7 @@
   
 - name: Print acme_certificate_INTERNAL_challenge.challenge_data_dns
   ansible.builtin.debug:
-    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | list }}"  
+    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"  
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
     records: >-
