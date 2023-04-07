@@ -14,7 +14,6 @@
     value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
     on_existing: replace
     hetzner_token: "{{ acme_certificate_hetzner_token }}"
-    wait: false
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
