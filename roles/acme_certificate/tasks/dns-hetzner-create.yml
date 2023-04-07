@@ -11,7 +11,7 @@
     record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
     type: TXT
     ttl: 60
-    value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
+    value: "{{ item.value }}"
     on_existing: replace
     hetzner_token: "{{ acme_certificate_hetzner_token }}"
   delegate_to: localhost
@@ -21,7 +21,7 @@
 - name: Print acme_certificate_INTERNAL_challenge.challenge_data_dns
   ansible.builtin.debug:
     msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"  
-    
+
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
     records: >-
