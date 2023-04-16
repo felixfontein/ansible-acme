@@ -15,6 +15,7 @@ argument_specs:
         you use HTTP challenges, files need to be copied onto your webserver, and afterwards deleted from it. Everything
         else is executed on your local machine! In particular, the account key is B(never) sent to another machine."
       - "This role does not cover installing the certificates, you have to do that yourself in another role."
+      - M(foo).
     author:
       - Felix Fontein (@felixfontein)
     options:
