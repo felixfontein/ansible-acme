@@ -153,8 +153,8 @@
 <h3><a class="toc-backref" href="#id2" role="doc-backlink">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to revoke issued TLS/SSL certificates for your server.</p></li>
-<li><p>This role assumes that the <code class="docutils literal notranslate"><span class="pre">felixfontein.acme.acme_certificate</span></code> has been used with <em>acme_certificate_keys_old_store</em> set to <code class="docutils literal notranslate"><span class="pre">true</span></code>. The role then copies the old certificate into <code class="docutils literal notranslate"><span class="pre">keys/old/</span></code> (or the path configured by <em>acme_certificate_keys_old_path</em>) before renewal. This role iterates over all certificates (respectively their private keys) in this directory and revokes them all with the given reason.</p></li>
-<li><p>This role supports both plaintext private keys and sops-encrypted private keys (see <em>acme_certificate_use_sops_for_key</em> option of the <code class="docutils literal notranslate"><span class="pre">felixfontein.acme.acme_certificate</span></code> role.</p></li>
+<li><p>This role assumes that the <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate</span></a> role has been used with <code class="ansible-option-value docutils literal notranslate"><a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-keys-old-store"><span class="std std-ref"><span class="pre">acme_certificate_keys_old_store=true</span></span></a></code>. The role then copies the old certificate into <code class="ansible-value docutils literal notranslate"><span class="pre">keys/old/</span></code> (or the path configured by <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-keys-old-path"><span class="std std-ref"><span class="pre">acme_certificate_keys_old_path</span></span></a></strong></code>) before renewal. This role iterates over all certificates (respectively their private keys) in this directory and revokes them all with the given reason.</p></li>
+<li><p>This role supports both plaintext private keys and sops-encrypted private keys (see <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-use-sops-for-key"><span class="std std-ref"><span class="pre">acme_certificate_use_sops_for_key</span></span></a></strong></code> option of the <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate</span></a> role.</p></li>
 <li><p>Make sure that you first replace all usages of the old certificates by the new ones before revokation!</p></li>
 </ul>
 </section>
@@ -171,14 +171,14 @@
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_acme_account"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-acme-account"><strong>acme_certificate_acme_account</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_acme_account" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
-<td><div class="ansible-option-cell"><p>Path to the private ACME account key. Either this or <em>acme_certificate_acme_account_content</em> must always be specified.</p>
+<td><div class="ansible-option-cell"><p>Path to the private ACME account key. Either this or <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-acme-account-content"><span class="std std-ref"><span class="pre">acme_certificate_acme_account_content</span></span></a></strong></code> must always be specified.</p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_acme_account_content"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-acme-account-content"><strong>acme_certificate_acme_account_content</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_acme_account_content" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
-<td><div class="ansible-option-cell"><p>Content of the private ACME account key. Either this or <em>acme_certificate_acme_account</em> must always be specified.</p>
+<td><div class="ansible-option-cell"><p>Content of the private ACME account key. Either this or <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-acme-account"><span class="std std-ref"><span class="pre">acme_certificate_acme_account</span></span></a></strong></code> must always be specified.</p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -193,7 +193,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_acme_directory" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The ACME directory to use.</p>
-<p>Default is <code class="docutils literal notranslate"><span class="pre">https://acme-v02.api.letsencrypt.org/directory</span></code>, which is the current production ACME v2 endpoint of Let’s Encrypt.</p>
+<p>Default is <code class="ansible-value docutils literal notranslate"><span class="pre">https://acme-v02.api.letsencrypt.org/directory</span></code>, which is the current production ACME v2 endpoint of Let’s Encrypt.</p>
 <p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://acme-v02.api.letsencrypt.org/directory&quot;</span></code></p>
 </div></td>
 </tr>
@@ -209,7 +209,7 @@
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_keys_old_path"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-keys-old-path"><strong>acme_certificate_keys_old_path</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_keys_old_path" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
-<td><div class="ansible-option-cell"><p>The directory where old keys and certificates were copied to by the <code class="docutils literal notranslate"><span class="pre">felixfontein.acme.acme_certifiate</span></code> role.</p>
+<td><div class="ansible-option-cell"><p>The directory where old keys and certificates were copied to by the <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate</span></a> role.</p>
 <p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;keys/old/&quot;</span></code></p>
 </div></td>
 </tr>
@@ -218,9 +218,9 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_revoke_reason" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Which reason to use for revocation.</p>
-<p>The default value is <code class="docutils literal notranslate"><span class="pre">4</span></code> (<strong>superseeded</strong>, i.e. you issued a new certificate for the same set of domains, this is an old one).</p>
-<p>Another sensible value is <code class="docutils literal notranslate"><span class="pre">5</span></code> (<strong>cessation of operation</strong>, i.e. you don’t want to use this set of domain names in a certificate anymore).</p>
-<p>See the <em>revoke_reason</em> parameter of the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_certificate_revoke_module.html#ansible-collections-community-crypto-acme-certificate-revoke-module" title="(in Ansible vdevel)"><span class="xref std std-ref">community.crypto.acme_certificate_revoke</span></a> module for a full list of reasons.</p>
+<p>The default value is <code class="ansible-value docutils literal notranslate"><span class="pre">4</span></code> (<strong>superseeded</strong>, i.e. you issued a new certificate for the same set of domains, this is an old one).</p>
+<p>Another sensible value is <code class="ansible-value docutils literal notranslate"><span class="pre">5</span></code> (<strong>cessation of operation</strong>, i.e. you don’t want to use this set of domain names in a certificate anymore).</p>
+<p>See the <code class="ansible-option docutils literal notranslate"><strong><a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_certificate_revoke_module.html#ansible-collections-community-crypto-acme-certificate-revoke-module-parameter-revoke-reason" title="(in Ansible vdevel)"><code class="docutils literal notranslate"><span class="pre">revoke_reason</span></code></a></strong></code> parameter of the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_certificate_revoke_module.html#ansible-collections-community-crypto-acme-certificate-revoke-module" title="(in Ansible vdevel)"><span class="xref std std-ref">community.crypto.acme_certificate_revoke</span></a> module for a full list of reasons.</p>
 <p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">4</span></code></p>
 </div></td>
 </tr>
@@ -228,7 +228,7 @@
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_revoke_with_acme_account"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-revoke-old-certificates-role-parameter-main-acme-certificate-revoke-with-acme-account"><strong>acme_certificate_revoke_with_acme_account</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_revoke_with_acme_account" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
-<td><div class="ansible-option-cell"><p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, will not use the private key of the certificate to revoke, but the account key.</p>
+<td><div class="ansible-option-cell"><p>If set to <code class="ansible-value docutils literal notranslate"><span class="pre">true</span></code>, will not use the private key of the certificate to revoke, but the account key.</p>
 <p>This is needed for ACME providers which do not support revocation by private certificate key, like BuyPass.</p>
 <p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
 <ul class="simple">
