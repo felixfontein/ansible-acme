@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2020, Felix Fontein
 namespace: felixfontein
 name: acme
-version: 0.6.0
+version: 0.7.0
 readme: README.md
 authors:
   - Felix Fontein (https://github.com/felixfontein)

@@ -196,10 +196,6 @@
     run_once: true
 
   - name: "Verifying certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    # If you get strange failures here, upgrade to later versions of Ansible 2.9 / ansible-base 2.10.
-    # You need a version which includes the following backports:
-    #  - https://github.com/ansible/ansible/pull/72458 for stable-2.9 [merged for ansible 2.9.16]
-    #  - https://github.com/ansible/ansible/pull/72457 for stable-2.10 [merged for ansible-base 2.10.4]
     ansible.builtin.command:
       argv:
       - openssl
