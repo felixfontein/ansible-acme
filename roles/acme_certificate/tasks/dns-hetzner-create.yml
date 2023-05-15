@@ -1,0 +1,34 @@
+---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2023, Lucca Jiménez Könings
+
+# Create DNS challenges for DNS provider Hetzner DNS Console
+- name: Creating DNS challenge entries via Hetzner DNS Console
+  community.dns.hetzner_dns_record_set:
+    state: present
+    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
+    type: TXT
+    ttl: 60
+    value: "{{ item.value }}"
+    on_existing: replace
+    hetzner_token: "{{ acme_certificate_hetzner_token }}"
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  
+- name: Print acme_certificate_INTERNAL_challenge.challenge_data_dns
+  ansible.builtin.debug:
+    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"  
+
+- name: Wait for DNS entries to propagate
+  community.dns.wait_for_txt:
+    records: >-
+      {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
+    timeout: 120
+    query_retry: 15
+    query_timeout: 5
+  delegate_to: localhost
+  run_once: true
+  

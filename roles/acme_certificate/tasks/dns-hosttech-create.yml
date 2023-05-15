@@ -27,3 +27,4 @@
     timeout: 120
   delegate_to: localhost
   run_once: true
+  become: true
