@@ -5,10 +5,10 @@
 
 # Create DNS challenges for DNS provider Cloudflare
 
-- name: Debug the below task:
+- name: Debug below task
   ansible.builtin.debug:
     msg: "{{ item }}"
-
+    
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare API
   community.general.cloudflare_dns:
     api_token: "{{ acme_certificate_cloudflare_token }}"
