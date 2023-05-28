@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2023, Lucca Jiménez Könings
 
 # Clean up DNS challenges for DNS provider Cloudflare
-- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Route53
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare
   community.general.cloudflare_dns:
     api_token: "{{ acme_certificate_cloudflare_token }}"
     zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
