@@ -6,10 +6,14 @@
 - name: DNS sanity checks (1/2)
   ansible.builtin.assert:
     that:
-      - >-
-        acme_certificate_cloudflare_token is defined
-    msg: >-
-      acme_certificate_cloudflare_token must be specified for Cloudflare
+      - acme_certificate_cloudflare_token is defined
+    msg: acme_certificate_cloudflare_token must be specified for Cloudflare
   run_once: true
   when: acme_certificate_verify_auth
 
+- name: DNS sanity checks (2/2)
+  ansible.builtin.assert:
+    that:
+      - "'community.general.cloudflare_dns' is community.general.a_module"
+    msg: "community.general.cloudflare_dns must be installed for Cloudflare"
+  run_once: true

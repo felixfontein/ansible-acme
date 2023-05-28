@@ -4,12 +4,6 @@
 # SPDX-FileCopyrightText: 2023, Lucca Jiménez Könings
 
 # Create DNS challenges for DNS provider Cloudflare
-
-- name: Debug below task
-  ansible.builtin.debug:
-    msg: "{{ item }}"
-  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
-    
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare API
   community.general.cloudflare_dns:
     api_token: "{{ acme_certificate_cloudflare_token }}"
@@ -22,10 +16,6 @@
     ttl: 60
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
 
-- name: Debug DNS waiting
-  ansible.builtin.debug:
-    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}"
-
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
     records: >-
@@ -33,4 +23,3 @@
     timeout: 120
   delegate_to: localhost
   run_once: true
-
