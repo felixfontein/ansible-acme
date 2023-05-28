@@ -8,6 +8,7 @@
 - name: Debug below task
   ansible.builtin.debug:
     msg: "{{ item }}"
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
     
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare API
   community.general.cloudflare_dns:
