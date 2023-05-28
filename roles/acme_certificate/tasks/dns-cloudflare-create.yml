@@ -8,7 +8,8 @@
   community.general.cloudflare_dns:
     api_token: "{{ acme_certificate_cloudflare_token }}"
     zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
-    record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}"
+    record: >-
+      {{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}
     type: TXT
     value: "{{ item.value[0] }}"
     solo: true
