@@ -22,6 +22,10 @@
     ttl: 60
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
 
+- name: Debug DNS waiting
+  ansible.builtin.debug:
+    msg: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}"
+
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
     records: >-
@@ -29,3 +33,4 @@
     timeout: 120
   delegate_to: localhost
   run_once: true
+
