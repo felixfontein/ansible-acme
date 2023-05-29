@@ -15,5 +15,5 @@
   ansible.builtin.assert:
     that:
       - "'community.general.cloudflare_dns' is community.general.a_module"
-    msg: "community.general.cloudflare_dns must be installed for Cloudflare"
+    msg: "The community.general collection must be installed for Cloudflare"
   run_once: true

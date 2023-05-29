@@ -159,6 +159,7 @@ argument_specs:
         type: str
         description:
           - When using O(acme_certificate_dns_provider=cloudflare), a valid Cloudflare API token must be passed via this option.
+        version_added: 0.7.0
       acme_certificate_domains:
         type: str
         description:

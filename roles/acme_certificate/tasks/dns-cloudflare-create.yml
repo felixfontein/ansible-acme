@@ -6,7 +6,7 @@
 # Create DNS challenges for DNS provider Cloudflare
 - name: Creating challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare API
   community.general.cloudflare_dns:
-    api_token: "{{ acme_certificate_cloudflare_token }}"
+    api_token: "{{ acme_certificate_cloudflare_token | default(omit) }}"
     zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
     record: >-
       {{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}
