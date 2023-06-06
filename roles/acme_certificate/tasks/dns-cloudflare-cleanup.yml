@@ -1,0 +1,20 @@
+---
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileCopyrightText: 2023, Lucca Jiménez Könings
+
+# Clean up DNS challenges for DNS provider Cloudflare
+- name: Cleaning up challenge DNS entries for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} via Cloudflare
+  community.general.cloudflare_dns:
+    api_token: "{{ acme_certificate_cloudflare_token | default(omit) }}"
+    zone: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.get_registrable_domain }}"
+    record: >-
+      {{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) | community.dns.remove_registrable_domain }}
+    type: TXT
+    value: "{{ item.value[0] }}"
+    solo: false
+    state: absent
+    ttl: 60
+  delegate_to: localhost
+  run_once: true
+  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns | default({}) }}"
