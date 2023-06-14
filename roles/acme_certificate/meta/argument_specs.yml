@@ -218,7 +218,7 @@ argument_specs:
         default: false
         description:
           - If set to V(true), will make copies of old keys and certificates.
-          - The copies will be stored in the directory specified by O(acme_certificate_keys_old_store).
+          - The copies will be stored in the directory specified by O(acme_certificate_keys_old_path).
       acme_certificate_keys_old_prepend_timestamp:
         type: bool
         default: false
