@@ -1,2 +1,0 @@
-minor_changes:
-  - "acme_certificate role - add Cloudflare DNS support (https://github.com/felixfontein/ansible-acme/pull/55)."

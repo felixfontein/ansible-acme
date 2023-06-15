@@ -5,6 +5,24 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.7.0
+======
+
+Release Summary
+---------------
+
+New major release dropping compatibility with old Ansible versions, namely Ansible 2.9 and ansible-base 2.10.
+
+Minor Changes
+-------------
+
+- acme_certificate role - add Cloudflare DNS support (https://github.com/felixfontein/ansible-acme/pull/55).
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Drop compatibility for Ansible 2.9 and ansible-base 2.10. These versions of Ansible/ansible-base have been End of Life for some time now. If you are still using them, either stick to an older version of this collection, or upgrade to a newer version of ansible-core/Ansible (https://github.com/felixfontein/ansible-acme/pull/54).
+
 v0.6.0
 ======
 
