@@ -62,7 +62,6 @@ jobs:
           - devel
         python:
           - 2.7
-          - 3.5
           - 3.6
           - 3.7
           - 3.8
@@ -92,7 +91,7 @@ jobs:
           - ansible: stable-2.15
             python: 2.7
           - ansible: stable-2.15
-            python: '3.11'
+            python: '3.5'
 
     steps:
       - name: >-
