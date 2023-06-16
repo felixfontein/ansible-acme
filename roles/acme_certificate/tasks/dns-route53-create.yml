@@ -15,7 +15,7 @@
     overwrite: true
     aws_access_key: "{{ acme_certificate_aws_access_key | default(omit) }}"
     aws_secret_key: "{{ acme_certificate_aws_secret_key | default(omit) }}"
-    wait: false
+    wait: true
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
