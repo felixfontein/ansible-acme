@@ -22,7 +22,7 @@ See :ref:`ansible_collections.felixfontein.acme.docsite.general_role_parameters`
 These are the main variables used by this role:
 
 - ``acme_certificate_keys_old_path``: Where old keys and certificates should be copied to; used in case ``acme_certificate_keys_old_store`` is true. Default value is ``"keys/old/"``.
-- ``acme_certificate_revoke_reason``: which reason to use for revocation. The default value is ``4`` (*superseeded*, i.e. you issued a new certificate for the same set of domains, this is an old one). Other sensible values are ``5`` (*cessation of operation*, i.e. you don't want to use this set of domain names in a certificate anymore). See the ``revoke_reason`` parameter of :ref:`community.crypto.acme_certificate_revoke module <ansible_collections.community.crypto.acme_certificate_revoke_module>` for a full list of reasons.
+- ``acme_certificate_revoke_reason``: which reason to use for revocation. The default value is ``4`` (*superseeded*, i.e. you issued a new certificate for the same set of domains, this is an old one). Other sensible values are ``5`` (*cessation of operation*, i.e. you don't want to use this set of domain names in a certificate anymore). See the ``revoke_reason`` parameter of :ansplugin:`community.crypto.acme_certificate_revoke module <community.crypto.acme_certificate_revoke#module>` for a full list of reasons.
 - ``acme_certificate_revoke_with_acme_account``: if set to ``true``, will not use the private key of the certificate to revoke, but the account key. This is needed for ACME providers which do not support revocation by private certificate key, like BuyPass.
 
 Example playbook

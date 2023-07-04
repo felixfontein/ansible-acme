@@ -13,7 +13,7 @@ To work with ACME servers, you need an account. For an account, you always need 
 For some ACME servers such as the ones by Let's Encrypt and Buypass, an account can be created on-the-fly while using for example the :ref:`ansible_collections.felixfontein.acme.docsite.acme_certificate_role`. The following options are of interest:
 - ``acme_certificate_acme_email``: Your email address which shall be associated to the ACME account.
 - ``acme_certificate_terms_agreed``: Whether the terms of services are accepted or not. Default value is ``false``, usually needs to be set explicitly to ``true`` to allow creating an ACME account. This is only used for ACME v2.
-- ``acme_certificate_modify_account``: Whether the ACME account should be created (if it doesn't exist) and the contact data (email address) should be updated. Default value is ``true``. Set to ``false`` if you want to use the :ref:`community.crypto.acme_account module <ansible_collections.community.crypto.acme_account_module>` to manage your ACME account manually, and prevent accidental modification of the contact information.
+- ``acme_certificate_modify_account``: Whether the ACME account should be created (if it doesn't exist) and the contact data (email address) should be updated. Default value is ``true``. Set to ``false`` if you want to use the :ansplugin:`community.crypto.acme_account module <community.crypto.acme_account#module>` to manage your ACME account manually, and prevent accidental modification of the contact information.
 
 The following shows how to create an account manually with two contact email addresses, which is not possible when using the role:
 
@@ -31,7 +31,7 @@ The following shows how to create an account manually with two contact email add
         - "mailto:me@example.org"
         terms_agreed: yes
 
-For ACME servers that need External Account Binding, for example for ZeroSSL or Sectigo, you must always use :ref:`community.crypto.acme_account module <ansible_collections.community.crypto.acme_account_module>` to set up the account manually. This can look for example like this:
+For ACME servers that need External Account Binding, for example for ZeroSSL or Sectigo, you must always use :ansplugin:`community.crypto.acme_account module <community.crypto.acme_account#module>` to set up the account manually. This can look for example like this:
 
 .. code-block:: yaml+jinja
 
@@ -93,7 +93,7 @@ Account key setup with sops-encrypted account key
 
 For this, you need `Mozilla sops <https://github.com/mozilla/sops>`_ installed and a ``.sops.yaml`` file present in the key directory, or somewhere up the directory hierarchy.
 
-With Ansible, you can use the :ref:`community.crypto.openssl_privatekey module <ansible_collections.community.crypto.openssl_privatekey_module>` as follows:
+With Ansible, you can use the :ansplugin:`community.crypto.openssl_privatekey module <community.crypto.openssl_privatekey#module>` as follows:
 
 .. code-block:: yaml+jinja
 
