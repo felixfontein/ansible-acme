@@ -19,11 +19,12 @@
   delegate_to: localhost
   run_once: true
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  register: acme_certificate_INTERNAL_route53_result
 
 - name: Wait for DNS entries to propagate
-  community.dns.wait_for_txt:
-    records: >-
-      {{ acme_certificate_INTERNAL_challenge.challenge_data_dns | dict2items(key_name='name', value_name='values') | list }}
-    timeout: 120
+  community.aws.route53_wait:
+    results: "{{ acme_certificate_INTERNAL_route53_result }}"
+    aws_access_key: "{{ acme_certificate_aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ acme_certificate_aws_secret_key | default(omit) }}"
   delegate_to: localhost
   run_once: true
