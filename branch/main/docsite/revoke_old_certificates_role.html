@@ -14,11 +14,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="felixfontein.acme._substitute_dns filter – [INTERNAL] Adjust DNS name according to a CNAME substitution map" href="../_substitute_dns_filter.html" />
@@ -124,12 +124,12 @@
            <div itemprop="articleBody">
              
   <section id="felixfontein-acme-revoke-old-certificates-role">
-<span id="ansible-collections-felixfontein-acme-docsite-revoke-old-certificates-role"></span><h1>felixfontein.acme.revoke_old_certificates role<a class="headerlink" href="#felixfontein-acme-revoke-old-certificates-role" title="Permalink to this heading"></a></h1>
+<span id="ansible-collections-felixfontein-acme-docsite-revoke-old-certificates-role"></span><h1>felixfontein.acme.revoke_old_certificates role<a class="headerlink" href="#felixfontein-acme-revoke-old-certificates-role" title="Link to this heading"></a></h1>
 <p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to revoke issued TLS/SSL certificates for your server.</p>
 <p>This role assumes that <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-docsite-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate role</span></a> has been used with <code class="docutils literal notranslate"><span class="pre">acme_certificate_keys_old_store</span></code> set to <code class="docutils literal notranslate"><span class="pre">true</span></code>. It copies the old certificate into <code class="docutils literal notranslate"><span class="pre">keys/old/</span></code> (or the path configured by <code class="docutils literal notranslate"><span class="pre">acme_certificate_keys_old_path</span></code>) before renewal. This role iterates over all certificates (respectively their private keys) in this directory and revokes them all with the given reason. This role supports both plaintext private keys and sops-encrypted private keys (see <code class="docutils literal notranslate"><span class="pre">acme_certificate_use_sops_for_key</span></code> option of <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-docsite-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate role</span></a>).</p>
 <p>Make sure that you first replace all usages of the old certificates by the new ones before revokation!</p>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <p>See <a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">General Role Parameters</span></a> for general parameters, and for challenge-specific parameters. Please note that this role does <strong>not</strong> need an ACME account if not explicitly configured to use it, and relies on the private key of the certificates to revoke them.</p>
 <p>These are the main variables used by this role:</p>
 <ul class="simple">
@@ -139,7 +139,7 @@
 </ul>
 </section>
 <section id="example-playbook">
-<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Permalink to this heading"></a></h2>
+<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
 <p>This role can be used as follows. Note that it obtains several certificates, and defines variables used for all certificates globally:</p>
 <div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">revoking old certificates</span>

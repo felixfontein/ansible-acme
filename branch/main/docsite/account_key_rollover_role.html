@@ -14,11 +14,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="felixfontein.acme.acme_certificate role" href="acme_certificate_role.html" />
@@ -124,11 +124,11 @@
            <div itemprop="articleBody">
              
   <section id="felixfontein-acme-account-key-rollover-role">
-<span id="ansible-collections-felixfontein-acme-docsite-account-key-rollover-role"></span><h1>felixfontein.acme.account_key_rollover role<a class="headerlink" href="#felixfontein-acme-account-key-rollover-role" title="Permalink to this heading"></a></h1>
+<span id="ansible-collections-felixfontein-acme-docsite-account-key-rollover-role"></span><h1>felixfontein.acme.account_key_rollover role<a class="headerlink" href="#felixfontein-acme-account-key-rollover-role" title="Link to this heading"></a></h1>
 <p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to rekey ACME account keys.</p>
 <p>This role will create a backup copy of the existing account key if requested to do so, re-create the account key, and then roll over the ACME account to the new key.</p>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <p>See <a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">General Role Parameters</span></a> for general parameters. Note that for this role, <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account_content</span></code> is <strong>not</strong> supported.</p>
 <p>These are the main variables used by this role:</p>
 <ul class="simple">
@@ -139,7 +139,7 @@
 </ul>
 </section>
 <section id="example-playbook">
-<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Permalink to this heading"></a></h2>
+<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
 <p>This role can be used as follows. Note that it obtains several certificates, and defines variables used for all certificates globally:</p>
 <div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">account key rollover</span>

@@ -14,11 +14,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ACME Accounts" href="acme_account.html" />
@@ -134,7 +134,7 @@
            <div itemprop="articleBody">
              
   <section id="general-role-parameters">
-<span id="ansible-collections-felixfontein-acme-docsite-general-role-parameters"></span><h1>General Role Parameters<a class="headerlink" href="#general-role-parameters" title="Permalink to this heading"></a></h1>
+<span id="ansible-collections-felixfontein-acme-docsite-general-role-parameters"></span><h1>General Role Parameters<a class="headerlink" href="#general-role-parameters" title="Link to this heading"></a></h1>
 <p>These are the main variables used by the roles:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account</span></code>: Path to the private ACME account key. Either this or <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account_content</span></code> must always be specified. See <a class="reference internal" href="acme_account.html#ansible-collections-felixfontein-acme-docsite-acme-account"><span class="std std-ref">ACME Accounts</span></a> for information on creating one.</p></li>
@@ -144,10 +144,10 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_version</span></code>: The ACME directory’s version. Default is 2.</p></li>
 </ul>
 <section id="role-parameters-for-challenges">
-<h2>Role parameters for challenges<a class="headerlink" href="#role-parameters-for-challenges" title="Permalink to this heading"></a></h2>
+<h2>Role parameters for challenges<a class="headerlink" href="#role-parameters-for-challenges" title="Link to this heading"></a></h2>
 <p>These are needed by <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-docsite-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate role</span></a>.</p>
 <section id="http-challenges">
-<h3>HTTP Challenges<a class="headerlink" href="#http-challenges" title="Permalink to this heading"></a></h3>
+<h3>HTTP Challenges<a class="headerlink" href="#http-challenges" title="Link to this heading"></a></h3>
 <p>For HTTP challenges, the following variables define how the challenges can be put onto the (remote) webserver:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_server_location</span></code>: Location where <code class="docutils literal notranslate"><span class="pre">.well-known/acme-challenge/</span></code> will be served from. Default is <code class="docutils literal notranslate"><span class="pre">/var/www/challenges</span></code>.</p></li>
@@ -159,7 +159,7 @@
 </ul>
 <p>The following subsection shows how to configure <a class="reference external" href="https://nginx.org/">nginx</a> for HTTP challenges. Configuring other webservers can be done in a similar way.</p>
 <section id="nginx-configuration">
-<h4>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Permalink to this heading"></a></h4>
+<h4>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Link to this heading"></a></h4>
 <p>Assume that for one of your TLS/SSL protected domains, you use a HTTP-to-HTTPS redirect. Let’s assume it looks like this:</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kn">listen</span><span class="w">       </span><span class="n">example.com</span><span class="p">:</span><span class="mi">80</span><span class="p">;</span>
@@ -204,7 +204,7 @@
 </section>
 </section>
 <section id="dns-challenges">
-<h3>DNS Challenges<a class="headerlink" href="#dns-challenges" title="Permalink to this heading"></a></h3>
+<h3>DNS Challenges<a class="headerlink" href="#dns-challenges" title="Link to this heading"></a></h3>
 <p>If DNS challenges are used, the following variables define how the challenges can be fulfilled:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_dns_provider</span></code>: must be one of <code class="docutils literal notranslate"><span class="pre">route53</span></code>, <code class="docutils literal notranslate"><span class="pre">hosttech</span></code>, <code class="docutils literal notranslate"><span class="pre">ns1</span></code>, <code class="docutils literal notranslate"><span class="pre">inwx</span></code>, and <code class="docutils literal notranslate"><span class="pre">cloudflare</span></code>. Each needs more information:
@@ -216,7 +216,7 @@
 </ul>
 <p>Please note that the DNS challenge code is not perfect. The Route 53, Hosttech, NS1, and INWX functionality has been tested.</p>
 <section id="setting-up-ns1-modules">
-<h4>Setting up NS1 modules<a class="headerlink" href="#setting-up-ns1-modules" title="Permalink to this heading"></a></h4>
+<h4>Setting up NS1 modules<a class="headerlink" href="#setting-up-ns1-modules" title="Link to this heading"></a></h4>
 <p>For <code class="docutils literal notranslate"><span class="pre">ns1</span></code> (<a class="reference external" href="https://ns1.com">ns1.com</a>) the external <code class="docutils literal notranslate"><span class="pre">ns1_record</span></code> module needs to be installed. Assuming default directory structure and settings, you may need to download two files into machine where the playbook is executed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--create-dirs<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>~/.ansible/plugins/module_utils/ns1.py<span class="w"> </span>https://github.com/ns1/ns1-ansible-modules/raw/master/module_utils/ns1.py
 curl<span class="w"> </span>--create-dirs<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>~/.ansible/plugins/modules/ns1_record.py<span class="w"> </span>https://github.com/ns1/ns1-ansible-modules/raw/master/library/ns1_record.py
@@ -225,7 +225,7 @@ curl<span class="w"> </span>--create-dirs<span class="w"> </span>-L<span class="
 <p>Once NS1 converts their <a class="reference external" href="https://github.com/ns1/ns1-ansible-modules">set of modules</a> into a <a class="reference external" href="https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html">collection</a>, it will become a lot easier to install and use them (<a class="reference external" href="https://github.com/ns1/ns1-ansible-modules/issues/32">NS1 tracking issue</a>).</p>
 </section>
 <section id="setting-up-inwx-modules">
-<h4>Setting up INWX modules<a class="headerlink" href="#setting-up-inwx-modules" title="Permalink to this heading"></a></h4>
+<h4>Setting up INWX modules<a class="headerlink" href="#setting-up-inwx-modules" title="Link to this heading"></a></h4>
 <p>For <code class="docutils literal notranslate"><span class="pre">inwx</span></code> (<a class="reference external" href="https://inwx.de">inwx.de</a>) the available Ansible Galaxy collection <code class="docutils literal notranslate"><span class="pre">inwx.collection</span></code> (<a class="reference external" href="https://galaxy.ansible.com/inwx/collection">galaxy.ansible.com</a>) needs to be installed.</p>
 <p>It is as simple as: <code class="docutils literal notranslate"><span class="pre">ansible-galaxy</span> <span class="pre">collection</span> <span class="pre">install</span> <span class="pre">inwx.collection</span></code></p>
 </section>

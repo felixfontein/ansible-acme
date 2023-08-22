@@ -14,11 +14,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="felixfontein.acme.account_key_rollover role" href="account_key_rollover_role.html" />
@@ -125,7 +125,7 @@
            <div itemprop="articleBody">
              
   <section id="acme-accounts">
-<span id="ansible-collections-felixfontein-acme-docsite-acme-account"></span><h1>ACME Accounts<a class="headerlink" href="#acme-accounts" title="Permalink to this heading"></a></h1>
+<span id="ansible-collections-felixfontein-acme-docsite-acme-account"></span><h1>ACME Accounts<a class="headerlink" href="#acme-accounts" title="Link to this heading"></a></h1>
 <p>To work with ACME servers, you need an account. For an account, you always need a private key. We always assume it is stored at a place where the <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account</span></code> variable points to, or it is provided with the <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account_content</span></code> variable (<a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">more information on general parameters</span></a>). The next subsections describe how to create or convert one.</p>
 <p>For some ACME servers such as the ones by Let’s Encrypt and Buypass, an account can be created on-the-fly while using for example the <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-docsite-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate role</span></a>. The following options are of interest:
 - <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_email</span></code>: Your email address which shall be associated to the ACME account.
@@ -164,7 +164,7 @@
 </div>
 <p>The values for <code class="docutils literal notranslate"><span class="pre">kid</span></code> and <code class="docutils literal notranslate"><span class="pre">key</span></code> will be provided by the ACME server operator, for example in the ZeroSSL account interface. The value for <code class="docutils literal notranslate"><span class="pre">alg</span></code> is usually <code class="docutils literal notranslate"><span class="pre">HS256</span></code> if not explicitly mentioned.</p>
 <section id="account-key-setup">
-<h2>Account key setup<a class="headerlink" href="#account-key-setup" title="Permalink to this heading"></a></h2>
+<h2>Account key setup<a class="headerlink" href="#account-key-setup" title="Link to this heading"></a></h2>
 <p>You can create an account key using the <code class="docutils literal notranslate"><span class="pre">openssl</span></code> binary as follows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># RSA 4096 bit key</span>
 openssl<span class="w"> </span>genrsa<span class="w"> </span><span class="m">4096</span><span class="w"> </span>-out<span class="w"> </span>keys/acme-account.key
@@ -195,7 +195,7 @@ openssl<span class="w"> </span>ecparam<span class="w"> </span>-name<span class="
 <p>Make sure you store the account key safely. As opposed to certificate private keys, there is no need to regenerate it frequently, and it makes recovation of certificates issued with it very simple if you no longer have the certificate’s private key.</p>
 </section>
 <section id="account-key-setup-with-sops-encrypted-account-key">
-<h2>Account key setup with sops-encrypted account key<a class="headerlink" href="#account-key-setup-with-sops-encrypted-account-key" title="Permalink to this heading"></a></h2>
+<h2>Account key setup with sops-encrypted account key<a class="headerlink" href="#account-key-setup-with-sops-encrypted-account-key" title="Link to this heading"></a></h2>
 <p>For this, you need <a class="reference external" href="https://github.com/mozilla/sops">Mozilla sops</a> installed and a <code class="docutils literal notranslate"><span class="pre">.sops.yaml</span></code> file present in the key directory, or somewhere up the directory hierarchy.</p>
 <p>With Ansible, you can use the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/openssl_privatekey_module.html#ansible-collections-community-crypto-openssl-privatekey-module" title="(in Ansible vdevel)"><span>community.crypto.openssl_privatekey module</span></a> as follows:</p>
 <div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span>
@@ -217,7 +217,7 @@ openssl<span class="w"> </span>ecparam<span class="w"> </span>-name<span class="
 </div>
 </section>
 <section id="account-key-conversion">
-<h2>Account key conversion<a class="headerlink" href="#account-key-conversion" title="Permalink to this heading"></a></h2>
+<h2>Account key conversion<a class="headerlink" href="#account-key-conversion" title="Link to this heading"></a></h2>
 <p>Note that the Ansible ACME modules expect the Let’s Encrypt account key to be in PEM format and not in JWK format, which is used by the <a class="reference external" href="https://github.com/certbot/certbot">official Let’s Encrypt client Certbot</a>. If you have created an account key with the official client and now want to use this key with this ansible role, you have to convert it. One tool which can do this is <a class="reference external" href="https://github.com/dannycoates/pem-jwk">pem-jwk</a>.</p>
 </section>
 </section>

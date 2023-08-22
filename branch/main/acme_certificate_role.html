@@ -14,11 +14,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7f41d439"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="felixfontein.acme.revoke_old_certificates role – Revoke old certificates" href="revoke_old_certificates_role.html" />
@@ -132,7 +132,7 @@
            <div itemprop="articleBody">
              
   <span class="target" id="ansible-collections-felixfontein-acme-acme-certificate-role"></span><section id="felixfontein-acme-acme-certificate-role-issue-tls-ssl-certificates-from-an-acme-ca">
-<h1>felixfontein.acme.acme_certificate role – Issue TLS/SSL certificates from an ACME CA<a class="headerlink" href="#felixfontein-acme-acme-certificate-role-issue-tls-ssl-certificates-from-an-acme-ca" title="Permalink to this heading"></a></h1>
+<h1>felixfontein.acme.acme_certificate role – Issue TLS/SSL certificates from an ACME CA<a class="headerlink" href="#felixfontein-acme-acme-certificate-role-issue-tls-ssl-certificates-from-an-acme-ca" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This role is part of the <a class="reference external" href="https://galaxy.ansible.com/felixfontein/acme">felixfontein.acme collection</a> (version 0.7.0).</p>
@@ -152,10 +152,10 @@
 </ul>
 </nav>
 <section id="entry-point-main-issue-tls-ssl-certificates-from-an-acme-ca">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Entry point <code class="docutils literal notranslate"><span class="pre">main</span></code> – Issue TLS/SSL certificates from an ACME CA</a><a class="headerlink" href="#entry-point-main-issue-tls-ssl-certificates-from-an-acme-ca" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Entry point <code class="docutils literal notranslate"><span class="pre">main</span></code> – Issue TLS/SSL certificates from an ACME CA</a><a class="headerlink" href="#entry-point-main-issue-tls-ssl-certificates-from-an-acme-ca" title="Link to this heading"></a></h2>
 <p class="ansible-version-added">New in felixfontein.acme 0.1.0</p>
 <section id="synopsis">
-<h3><a class="toc-backref" href="#id2" role="doc-backlink">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Synopsis</a><a class="headerlink" href="#synopsis" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to issue TLS/SSL certificates for your server.</p></li>
 <li><p>The main advantage of this approach over others is that <strong>almost no code is executed on your webserver</strong>: only when you use HTTP challenges, files need to be copied onto your webserver, and afterwards deleted from it. Everything else is executed on your local machine! In particular, the account key is <strong>never</strong> sent to another machine.</p></li>
@@ -163,7 +163,7 @@
 </ul>
 </section>
 <section id="parameters">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
 <table class="ansible-option-table docutils align-default" style="width: 100%">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -686,7 +686,7 @@
 </table>
 </section>
 <section id="see-also">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">See Also</a><a class="headerlink" href="#see-also" title="Link to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
@@ -698,12 +698,12 @@
 </div>
 </section>
 <section id="authors">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Authors</a><a class="headerlink" href="#authors" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Authors</a><a class="headerlink" href="#authors" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Felix Fontein (&#64;felixfontein)</p></li>
 </ul>
 <section id="collection-links">
-<h4>Collection links<a class="headerlink" href="#collection-links" title="Permalink to this heading"></a></h4>
+<h4>Collection links<a class="headerlink" href="#collection-links" title="Link to this heading"></a></h4>
 <p class="ansible-links">
   <a href="https://github.com/felixfontein/ansible-acme/issues" aria-role="button" target="_blank" rel="noopener external">Issue Tracker</a>
   <a href="https://github.com/felixfontein/ansible-acme" aria-role="button" target="_blank" rel="noopener external">Repository (Sources)</a>

@@ -14,11 +14,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="felixfontein.acme.revoke_old_certificates role" href="revoke_old_certificates_role.html" />
@@ -126,12 +126,12 @@
            <div itemprop="articleBody">
              
   <section id="felixfontein-acme-acme-certificate-role">
-<span id="ansible-collections-felixfontein-acme-docsite-acme-certificate-role"></span><h1>felixfontein.acme.acme_certificate role<a class="headerlink" href="#felixfontein-acme-acme-certificate-role" title="Permalink to this heading"></a></h1>
+<span id="ansible-collections-felixfontein-acme-docsite-acme-certificate-role"></span><h1>felixfontein.acme.acme_certificate role<a class="headerlink" href="#felixfontein-acme-acme-certificate-role" title="Link to this heading"></a></h1>
 <p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to issue TLS/SSL certificates for your server.</p>
 <p>The main advantage of this approach over others is that <em>almost no code is executed on your webserver</em>: only when you use HTTP challenges, files need to be copied onto your webserver, and afterwards deleted from it. Everything else is executed on your local machine! In particular, the account key is <em>never</em> sent to another machine.</p>
 <p>This role does not cover installing the certificates, you have to do that yourself in another role.</p>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <p>See <a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">General Role Parameters</span></a> for general parameters, and for challenge-specific parameters.</p>
 <p>These are the main variables used by this role:</p>
 <ul class="simple">
@@ -161,7 +161,7 @@
 </ul>
 </section>
 <section id="selecting-which-root-to-use-with-let-s-encrypt">
-<h2>Selecting which root to use with Let’s Encrypt<a class="headerlink" href="#selecting-which-root-to-use-with-let-s-encrypt" title="Permalink to this heading"></a></h2>
+<h2>Selecting which root to use with Let’s Encrypt<a class="headerlink" href="#selecting-which-root-to-use-with-let-s-encrypt" title="Link to this heading"></a></h2>
 <p>The following configuration makes sure that the IdenTrust cross-signed intermediate is used, which is more compatible for example for older Android versions than the new IRSG root:</p>
 <div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="nt">acme_certificate_root_certificate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://letsencrypt.org/certs/trustid-x3-root.pem.txt</span>
 <span class="nt">acme_certificate_select_chain</span><span class="p">:</span>
@@ -184,7 +184,7 @@
 </div>
 </section>
 <section id="generated-files">
-<h2>Generated files<a class="headerlink" href="#generated-files" title="Permalink to this heading"></a></h2>
+<h2>Generated files<a class="headerlink" href="#generated-files" title="Link to this heading"></a></h2>
 <p>Let’s assume you created TLS keys for <code class="docutils literal notranslate"><span class="pre">www.example.com</span></code>. You have to copy the relevant files to your webserver. The ansible role created the following files:</p>
 <blockquote>
 <div><ul class="simple">
@@ -284,7 +284,7 @@
 </div>
 </section>
 <section id="example-playbook">
-<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Permalink to this heading"></a></h2>
+<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
 <p>This role can be used as follows. Note that it obtains several certificates, and defines variables used for all certificates globally:</p>
 <div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">getting certificates for webserver</span>
