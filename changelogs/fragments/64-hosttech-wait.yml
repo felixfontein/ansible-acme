@@ -1,2 +1,0 @@
-minor_changes:
-  - "acme_certificate role - increase maximum wait for Hosttech DNS records from 2 to 5 minutes (https://github.com/felixfontein/ansible-acme/pull/64)."

@@ -185,3 +185,22 @@ releases:
     - 0.7.0.yml
     - 55-cloudflare.yml
     release_date: '2023-06-15'
+  0.8.0:
+    changes:
+      major_changes:
+      - The collection now depends on community.aws >= 6.3.0 and amazon.aws >= 6.3.0
+        to improve stability of the acme_certificate role with Amazon's Route 53 DNS
+        (https://github.com/felixfontein/ansible-acme/pull/62).
+      minor_changes:
+      - acme_certificate role - increase maximum wait for Hosttech DNS records from
+        2 to 5 minutes (https://github.com/felixfontein/ansible-acme/pull/64).
+      - acme_certificate role - use community.aws.route53_wait instead of community.dns.wait_for_txt
+        when using Amazon's Route 53 DNS to improve stability (https://github.com/felixfontein/ansible-acme/issues/57,
+        https://github.com/felixfontein/ansible-acme/pull/62).
+      release_summary: Feature release with improved creation of DNS records for Route53
+        and Hosttech.
+    fragments:
+    - 0.8.0.yml
+    - 62-route53_wait.yml
+    - 64-hosttech-wait.yml
+    release_date: '2023-09-07'

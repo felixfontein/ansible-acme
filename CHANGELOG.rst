@@ -5,6 +5,25 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.8.0
+======
+
+Release Summary
+---------------
+
+Feature release with improved creation of DNS records for Route53 and Hosttech.
+
+Major Changes
+-------------
+
+- The collection now depends on community.aws >= 6.3.0 and amazon.aws >= 6.3.0 to improve stability of the acme_certificate role with Amazon's Route 53 DNS (https://github.com/felixfontein/ansible-acme/pull/62).
+
+Minor Changes
+-------------
+
+- acme_certificate role - increase maximum wait for Hosttech DNS records from 2 to 5 minutes (https://github.com/felixfontein/ansible-acme/pull/64).
+- acme_certificate role - use community.aws.route53_wait instead of community.dns.wait_for_txt when using Amazon's Route 53 DNS to improve stability (https://github.com/felixfontein/ansible-acme/issues/57, https://github.com/felixfontein/ansible-acme/pull/62).
+
 v0.7.0
 ======
 
