@@ -22,7 +22,8 @@ tags:
   - web
   - sops
 dependencies:
-  amazon.aws: '>=5.0.0'
+  amazon.aws: '>=6.3.0'
+  community.aws: '>=6.3.0'
   community.crypto: '>=1.3.0'
   community.dns: '>=2.0.0'
   community.general: '>=4.0.0'

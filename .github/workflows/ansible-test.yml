@@ -137,6 +137,7 @@ jobs:
       - name: Install all collection dependencies
         run: |
           git clone --depth=1 --single-branch https://github.com/ansible-collections/amazon.aws.git ./ansible_collections/amazon/aws
+          git clone --depth=1 --single-branch https://github.com/ansible-collections/community.aws.git ./ansible_collections/community/aws
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.crypto.git ./ansible_collections/community/crypto
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.dns.git ./ansible_collections/community/dns
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.general.git ./ansible_collections/community/general
@@ -144,7 +145,7 @@ jobs:
           git clone --depth=1 --single-branch https://github.com/ansible-collections/community.internal_test_tools.git ./ansible_collections/community/internal_test_tools
         # NOTE: we're installing with git to work around Galaxy being a huge PITA (https://github.com/ansible/galaxy/issues/2429)
         # run: |
-        #   ansible-galaxy collection install amazon.aws community.crypto community.dns community.general community.sops -p .
+        #   ansible-galaxy collection install amazon.aws community.aws community.crypto community.dns community.general community.sops -p .
 
       - name: Run ansible-lint
         run: ansible-lint --offline

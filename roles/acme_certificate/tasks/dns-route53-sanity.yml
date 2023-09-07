@@ -16,5 +16,10 @@
   ansible.builtin.assert:
     that:
       - "'amazon.aws.route53' is community.general.a_module"
-    msg: "The amazon.aws collection (>= 5.0.0) with the community.aws.route53 module must be installed for Route53 DNS"
+      - "'community.aws.route53_wait' is community.general.a_module"
+      - "lookup('community.general.collection_version', 'amazon.aws') is version('6.3.0', '>=')"
+    msg: >-
+      The amazon.aws collection (>= 6.3.0) and community.aws collection (>= 6.3.0)
+      with the amazon.aws.route53 and community.aws.route53_wait modules
+      must be installed for Route53 DNS.
   run_once: true
