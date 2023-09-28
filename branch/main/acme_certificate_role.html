@@ -2,6 +2,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta content="2.4.0" name="antsibull-docs" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>felixfontein.acme.acme_certificate role – Issue TLS/SSL certificates from an ACME CA &mdash; Felixfontein.Acme Collection  documentation</title>
@@ -136,6 +137,8 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This role is part of the <a class="reference external" href="https://galaxy.ansible.com/felixfontein/acme">felixfontein.acme collection</a> (version 0.8.0).</p>
+<p>It is not included in <code class="docutils literal notranslate"><span class="pre">ansible-core</span></code>.
+To check whether it is installed, run <code class="code docutils literal notranslate"><span class="pre">ansible-galaxy</span> <span class="pre">collection</span> <span class="pre">list</span></code>.</p>
 <p>To install it use: <code class="code docutils literal notranslate"><span class="pre">ansible-galaxy</span> <span class="pre">collection</span> <span class="pre">install</span> <span class="pre">felixfontein.acme</span></code>.</p>
 <p>To use it in a playbook, specify: <code class="code docutils literal notranslate"><span class="pre">felixfontein.acme.acme_certificate</span></code>.</p>
 </div>
@@ -164,7 +167,7 @@
 </section>
 <section id="parameters">
 <h3><a class="toc-backref" href="#id3" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
-<table class="ansible-option-table docutils align-default" style="width: 100%">
+<table class="longtable ansible-option-table docutils align-default" style="width: 100%">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
 <th class="head"><p>Comments</p></th>
@@ -198,7 +201,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>The ACME directory to use.</p>
 <p>Default is <code class="ansible-value docutils literal notranslate"><span class="pre">https://acme-v02.api.letsencrypt.org/directory</span></code>, which is the current production ACME v2 endpoint of Let’s Encrypt.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://acme-v02.api.letsencrypt.org/directory&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://acme-v02.api.letsencrypt.org/directory&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -213,7 +216,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_acme_version" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The ACME directory’s version.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">2</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">2</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -223,9 +226,9 @@
 <td><div class="ansible-option-cell"><p>The algorithm used for creating private keys.</p>
 <p>The default is <code class="ansible-value docutils literal notranslate"><span class="pre">rsa</span></code> for RSA keys.</p>
 <p>Other choices are <code class="ansible-value docutils literal notranslate"><span class="pre">p-256</span></code>, <code class="ansible-value docutils literal notranslate"><span class="pre">p-384</span></code> or <code class="ansible-value docutils literal notranslate"><span class="pre">p-521</span></code> for the NIST elliptic curves <code class="docutils literal notranslate"><span class="pre">prime256v1</span></code>, <code class="docutils literal notranslate"><span class="pre">secp384r1</span></code> and <code class="docutils literal notranslate"><span class="pre">secp521r1</span></code>, respectively.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">&quot;rsa&quot;</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">&quot;rsa&quot;</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;p-256&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;p-384&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;p-521&quot;</span></code></p></li>
@@ -254,7 +257,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>The challenge type to use.</p>
 <p>Should be <code class="ansible-value docutils literal notranslate"><span class="pre">http-01</span></code> for HTTP challenges (needs access to web server) or <code class="ansible-value docutils literal notranslate"><span class="pre">dns-01</span></code> for DNS challenges (needs access to DNS provider).</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;http-01&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;dns-01&quot;</span></code></p></li>
@@ -264,7 +267,7 @@
 <tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_cloudflare_token"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-cloudflare-token"><strong>acme_certificate_cloudflare_token</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_cloudflare_token" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
-<p><span class="ansible-option-versionadded">added in felixfontein.acme 0.7.0</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.7.0</em></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>When using <code class="ansible-option-value docutils literal notranslate"><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-provider"><span class="std std-ref"><span class="pre">acme_certificate_dns_provider=cloudflare</span></span></a></code>, a valid Cloudflare API token must be passed via this option.</p>
 </div></td>
@@ -275,10 +278,10 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether <code class="docutils literal notranslate"><span class="pre">authz</span></code> objects (authorizations) should be deactivated afterwards.</p>
 <p>Set to <code class="ansible-value docutils literal notranslate"><span class="pre">false</span></code> to be able to re-use <code class="docutils literal notranslate"><span class="pre">authz</span></code> objects. This should mostly be used when issuing multiple certificates for the same domain names.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">true</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">true</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
@@ -289,7 +292,7 @@
 <td><div class="ansible-option-cell"><p>Determines which DNS provider is used for DNS challenges.</p>
 <p>Every DNS provider requires further configuration.</p>
 <p>The value <code class="ansible-value docutils literal notranslate"><span class="pre">ansibletest</span></code> must not be used outside of integration tests. It will <strong>not</strong> work.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;route53&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;hosttech&quot;</span></code></p></li>
@@ -303,13 +306,13 @@
 <tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_dns_substitution"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-substitution"><strong>acme_certificate_dns_substitution</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_dns_substitution" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">dictionary</span></p>
-<p><span class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</em></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Allows to substitute parts of the DNS entry domain names. This can be very useful if certificates are obtained for domain names that are CNAMEs, and the DNS provider for where the CNAME points need to be modified.</p>
 <p>The entries in this dictionary should be the names that are to be replaced, and the values the replacements. A single leading wildcard can be used to replace suffixes instead of the complete string, assuming the prefix has no further period (<code class="ansible-value docutils literal notranslate"><span class="pre">.</span></code>).</p>
 <p>For example, if the key is <code class="ansible-value docutils literal notranslate"><span class="pre">*.example.com</span></code> and the value <code class="ansible-value docutils literal notranslate"><span class="pre">*.foo.example.org</span></code>, the name <code class="ansible-value docutils literal notranslate"><span class="pre">_acme-challenge.example.com</span></code> will be replaced by <code class="ansible-value docutils literal notranslate"><span class="pre">*.foo.example.org</span></code>. If the key is <code class="ansible-value docutils literal notranslate"><span class="pre">*.example.com</span></code> and the value <code class="ansible-value docutils literal notranslate"><span class="pre">foo.example.org</span></code>, the name <code class="ansible-value docutils literal notranslate"><span class="pre">_acme-challenge.example.com</span></code> will be replaced by <code class="ansible-value docutils literal notranslate"><span class="pre">foo.example.org</span></code>. And if the key is <code class="ansible-value docutils literal notranslate"><span class="pre">example.com</span></code> and the value <code class="ansible-value docutils literal notranslate"><span class="pre">foo.example.org</span></code>, <code class="ansible-value docutils literal notranslate"><span class="pre">_acme-challenge.example.com</span></code> will not be changed at all, only <code class="ansible-value docutils literal notranslate"><span class="pre">example.com</span></code> will be changed to <code class="ansible-value docutils literal notranslate"><span class="pre">foo.example.org</span></code>.</p>
 <p>Note that if you want to obtain certificates with ACME with <code class="ansible-option-value docutils literal notranslate"><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-challenge"><span class="std std-ref"><span class="pre">acme_certificate_challenge=dns-01</span></span></a></code> for <code class="ansible-value docutils literal notranslate"><span class="pre">example.com</span></code> whose CNAME is <code class="ansible-value docutils literal notranslate"><span class="pre">foo.example.org</span></code>, you should create (and provide in this variable) another CNAME record <code class="ansible-value docutils literal notranslate"><span class="pre">*.example.com</span></code>, or <code class="ansible-value docutils literal notranslate"><span class="pre">_acme-challenge.example.com</span></code> if it should be more specialized.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">{}</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">{}</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -352,9 +355,9 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_http_become" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Argument for <code class="ansible-value docutils literal notranslate"><span class="pre">become:</span></code> for the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/ansible/builtin/file_module.html#ansible-collections-ansible-builtin-file-module" title="(in Ansible vdevel)"><span class="xref std std-ref">ansible.builtin.file</span></a> and <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/ansible/builtin/copy_module.html#ansible-collections-ansible-builtin-copy-module" title="(in Ansible vdevel)"><span class="xref std std-ref">ansible.builtin.copy</span></a> tasks.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -364,7 +367,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_http_challenge_file_mode" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The mode to use for the challenge files.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0640&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0640&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -372,7 +375,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_http_challenge_folder_mode" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The mode to use for the challenge folder.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0750&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0750&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -380,7 +383,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_http_challenge_group" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The group the challenge files are owned by.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;http&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;http&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -388,7 +391,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_http_challenge_user" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The user the challenge files are owned by.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;root&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;root&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -425,7 +428,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>The bit-size to use for RSA private keys.</p>
 <p>Should not be less than 2048. Also values above 4096 might not be supported by all TLS/SSL clients.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">4096</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">4096</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -442,7 +445,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Where old keys and certificates should be copied to.</p>
 <p>Used in case <code class="ansible-option-value docutils literal notranslate"><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-keys-old-store"><span class="std std-ref"><span class="pre">acme_certificate_keys_old_store=true</span></span></a></code>.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;keys/old/&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;keys/old/&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -450,9 +453,9 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_keys_old_prepend_timestamp" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether copies of old keys and certificates should be prepended by the current date and time.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -463,9 +466,9 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>If set to <code class="ansible-value docutils literal notranslate"><span class="pre">true</span></code>, will make copies of old keys and certificates.</p>
 <p>The copies will be stored in the directory specified by <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-keys-old-path"><span class="std std-ref"><span class="pre">acme_certificate_keys_old_path</span></span></a></strong></code>.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -475,7 +478,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_keys_path" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Where the keys and certificates are stored.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;keys/&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;keys/&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -484,10 +487,10 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether the ACME account should be created (if it doesn’t exist) and the contact data (email address) should be updated.</p>
 <p>Set to <code class="ansible-value docutils literal notranslate"><span class="pre">false</span></code> if you want to use the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_account_module.html#ansible-collections-community-crypto-acme-account-module" title="(in Ansible vdevel)"><span class="xref std std-ref">community.crypto.acme_account</span></a> module to manage your ACME account (not done by this role).</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">true</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">true</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
@@ -505,9 +508,9 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_ocsp_must_staple" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether a certificate with the OCSP Must Staple extension is requested.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -518,7 +521,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Which file mode to use for the private key file.</p>
 <p>Default value is <code class="ansible-value docutils literal notranslate"><span class="pre">'0600'</span></code> (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly <code class="docutils literal notranslate"><span class="pre">root</span></code>).</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0600&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;0600&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -528,17 +531,17 @@
 <td><div class="ansible-option-cell"><p>Whether to regenerate private keys.</p>
 <p>It is recommended to regularly create new private keys instead of re-using the existing ones forever. The easiest way to ensure this is to simply regenerate them when the certificates are regenerated.</p>
 <p>If you use public key pinning, make sure to set this to <code class="ansible-value docutils literal notranslate"><span class="pre">false</span></code>!</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">true</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">true</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_renewal_on_remaining_days"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><strong>acme_certificate_renewal_on_remaining_days</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_renewal_on_remaining_days" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
-<p><span class="ansible-option-versionadded">added in felixfontein.acme 0.5.0</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.5.0</em></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Only obtain a new certificate if the certificate does not yet exist, or if the certificate’s expiry date is less than <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_days</span></span></a></strong></code> days in the future.</p>
 </div></td>
@@ -549,7 +552,7 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>The root certificate for the ACME directory.</p>
 <p>Default value is <code class="docutils literal notranslate"><span class="pre">https://letsencrypt.org/certs/isrgrootx1.pem</span></code> for the root certificate of Let’s Encrypt.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://letsencrypt.org/certs/isrgrootx1.pem&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://letsencrypt.org/certs/isrgrootx1.pem&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -612,11 +615,11 @@
 <p><code class="ansible-value docutils literal notranslate"><span class="pre">all</span></code> tests all certificates in the chain (excluding the leaf, which is identical in all chains).</p>
 <p><code class="ansible-value docutils literal notranslate"><span class="pre">first</span></code> only tests the first certificate in the chain, i.e. the one which signed the leaf.</p>
 <p><code class="ansible-value docutils literal notranslate"><span class="pre">last</span></code> only tests the last certificate in the chain, i.e. the one furthest away from the leaf. Its issuer is the root certificate of this chain.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">&quot;all&quot;</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
@@ -625,7 +628,7 @@
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_server_location" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Location where <code class="ansible-value docutils literal notranslate"><span class="pre">.well-known/acme-challenge/</span></code> will be served from.</p>
-<p class="ansible-option-line"><span class="ansible-option-default-bold">Default:</span> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;/var/www/challenges&quot;</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;/var/www/challenges&quot;</span></code></p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
@@ -635,9 +638,9 @@
 <td><div class="ansible-option-cell"><p>Whether the terms of services are accepted or not.</p>
 <p>Usually needs to be set explicitly to <code class="ansible-value docutils literal notranslate"><span class="pre">true</span></code> to allow creating an ACME account.</p>
 <p>This is only used for ACME v2.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -648,9 +651,9 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Use <a class="reference external" href="https://github.com/mozilla/sops">Mozilla sops</a> to encrypt private key.</p>
 <p>Needs <code class="docutils literal notranslate"><span class="pre">.sops.yaml</span></code> file inside the keys directory or somewhere up the directory chain.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">false</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
 </ul>
 </div></td>
@@ -658,14 +661,14 @@
 <tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_verify_auth"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-verify-auth"><strong>acme_certificate_verify_auth</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_verify_auth" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
-<p><span class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</em></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether to check whether authentication credentials are provided as role arguments for the DNS modules.</p>
 <p>When disabled, you can also use module default groups or environment variables to provide these credentials.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">true</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">true</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
@@ -675,10 +678,10 @@
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether to try to validate the generated certificate chain or not.</p>
 <p>Will use <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-root-certificate-for-verification"><span class="std std-ref"><span class="pre">acme_certificate_root_certificate_for_verification</span></span></a></strong></code> for the root certificate, or if that is not set, use <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-root-certificate"><span class="std std-ref"><span class="pre">acme_certificate_root_certificate</span></span></a></strong></code>.</p>
-<p class="ansible-option-line"><span class="ansible-option-choices">Choices:</span></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
-<li><p><code class="ansible-option-default-bold docutils literal notranslate"><span class="pre">true</span></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">true</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
 </ul>
 </div></td>
 </tr>
@@ -704,10 +707,11 @@
 </ul>
 <section id="collection-links">
 <h4>Collection links<a class="headerlink" href="#collection-links" title="Link to this heading"></a></h4>
-<p class="ansible-links">
-  <a href="https://github.com/felixfontein/ansible-acme/issues" aria-role="button" target="_blank" rel="noopener external">Issue Tracker</a>
-  <a href="https://github.com/felixfontein/ansible-acme" aria-role="button" target="_blank" rel="noopener external">Repository (Sources)</a>
-</p></section>
+<ul class="ansible-links">
+<li><span><a aria-role="button" class="ansible-link reference external" href="https://github.com/felixfontein/ansible-acme/issues" rel="noopener external" target="_blank">Issue Tracker</a></span></li>
+<li><span><a aria-role="button" class="ansible-link reference external" href="https://github.com/felixfontein/ansible-acme" rel="noopener external" target="_blank">Repository (Sources)</a></span></li>
+</ul>
+</section>
 </section>
 </section>
 </section>
