@@ -116,6 +116,6 @@ Once NS1 converts their `set of modules <https://github.com/ns1/ns1-ansible-modu
 Setting up INWX modules
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-For ``inwx`` (`inwx.de <https://inwx.de>`_) the available Ansible Galaxy collection ``inwx.collection`` (`galaxy.ansible.com <https://galaxy.ansible.com/inwx/collection>`_) needs to be installed.
+For ``inwx`` (`inwx.de <https://inwx.de>`_) the available Ansible Galaxy collection ``inwx.collection`` (`galaxy.ansible.com <https://galaxy.ansible.com/ui/repo/published/inwx/collection/>`_) needs to be installed.
   
 It is as simple as: ``ansible-galaxy collection install inwx.collection``
