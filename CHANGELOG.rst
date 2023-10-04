@@ -5,6 +5,14 @@ Tools for ACME Release Notes
 .. contents:: Topics
 
 
+v0.8.1
+======
+
+Release Summary
+---------------
+
+Maintenance release with slightly updated documentation and no functional changes.
+
 v0.8.0
 ======
 

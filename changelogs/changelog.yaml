@@ -204,3 +204,10 @@ releases:
     - 62-route53_wait.yml
     - 64-hosttech-wait.yml
     release_date: '2023-09-07'
+  0.8.1:
+    changes:
+      release_summary: Maintenance release with slightly updated documentation and
+        no functional changes.
+    fragments:
+    - 0.8.1.yml
+    release_date: '2023-10-04'
