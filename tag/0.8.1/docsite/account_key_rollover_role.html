@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>felixfontein.acme.account_key_rollover role &mdash; Felixfontein.Acme Collection  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/ansible.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/antsibull-minimal.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/rtd-ethical-ads.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/images/Ansible-Mark-RGB_Black.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7f41d439"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="felixfontein.acme.acme_certificate role" href="acme_certificate_role.html" />
+    <link rel="prev" title="ACME Accounts" href="acme_account.html" /><!-- extra head elements for Ansible beyond RTD Sphinx Theme -->
+
+
+
+
+</head>
+
+<body class="wy-body-for-nav"><!-- extra body elements for Ansible beyond RTD Sphinx Theme -->
+
+<div class="DocSite-globalNav ansibleNav">
+  <ul>
+    <li><a href="https://www.ansible.com/ansiblefest" target="_blank">AnsibleFest</a></li>
+    <li><a href="https://www.ansible.com/tower" target="_blank">Products</a></li>
+    <li><a href="https://www.ansible.com/community" target="_blank">Community</a></li>
+    <li><a href="https://www.ansible.com/webinars-training" target="_blank">Webinars & Training</a></li>
+    <li><a href="https://www.ansible.com/blog" target="_blank">Blog</a></li>
+  </ul>
+</div>
+
+<a class="DocSite-nav" href="https://felixfontein.github.io/ansible-acme/branch/main/" style="padding-bottom: 30px;">
+
+  <img class="DocSiteNav-logo"
+    src="../_static/images/Ansible-Mark-RGB_White.png"
+    alt="Ansible Logo">
+  <div class="DocSiteNav-title">Felixfontein.Acme Collection Docs</div>
+</a>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Felixfontein.Acme Collection
+          </a><!--- Based on https://github.com/rtfd/sphinx_rtd_theme/pull/438/files -->
+
+<div class="version">
+  
+    
+  
+</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <label class="sr-only" for="q">Search docs:</label>
+    <input type="text" class="st-default-search-input" id="q" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general_role_parameters.html">General Role Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acme_account.html">ACME Accounts</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">felixfontein.acme.account_key_rollover role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-playbook">Example playbook</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="acme_certificate_role.html">felixfontein.acme.acme_certificate role</a></li>
+<li class="toctree-l1"><a class="reference internal" href="revoke_old_certificates_role.html">felixfontein.acme.revoke_old_certificates role</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_substitute_dns_filter.html">felixfontein.acme._substitute_dns filter – [INTERNAL] Adjust DNS name according to a CNAME substitution map</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../account_key_rollover_role.html">felixfontein.acme.account_key_rollover role – Do account key rollover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acme_certificate_role.html">felixfontein.acme.acme_certificate role – Issue TLS/SSL certificates from an ACME CA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../revoke_old_certificates_role.html">felixfontein.acme.revoke_old_certificates role – Revoke old certificates</a></li>
+</ul>
+<!-- extra nav elements for Ansible beyond RTD Sphinx Theme -->
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Felixfontein.Acme Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">felixfontein.acme.account_key_rollover role</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+  
+           <div itemprop="articleBody">
+             
+  <section id="felixfontein-acme-account-key-rollover-role">
+<span id="ansible-collections-felixfontein-acme-docsite-account-key-rollover-role"></span><h1>felixfontein.acme.account_key_rollover role<a class="headerlink" href="#felixfontein-acme-account-key-rollover-role" title="Link to this heading"></a></h1>
+<p>This is a role which can use any CA supporting the ACME protocol, such as <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>, <a class="reference external" href="https://www.buypass.com/ssl/products/acme">Buypass</a> or <a class="reference external" href="https://zerossl.com/features/acme/">ZeroSSL</a>, to rekey ACME account keys.</p>
+<p>This role will create a backup copy of the existing account key if requested to do so, re-create the account key, and then roll over the ACME account to the new key.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<p>See <a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">General Role Parameters</span></a> for general parameters. Note that for this role, <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account_content</span></code> is <strong>not</strong> supported.</p>
+<p>These are the main variables used by this role:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_account_algorithm</span></code>: The algorithm used for creating private keys. The default is <code class="docutils literal notranslate"><span class="pre">&quot;rsa&quot;</span></code>; other choices are <code class="docutils literal notranslate"><span class="pre">&quot;p-256&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;p-384&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;p-521&quot;</span></code> for the NIST elliptic curves <code class="docutils literal notranslate"><span class="pre">prime256v1</span></code>, <code class="docutils literal notranslate"><span class="pre">secp384r1</span></code> and <code class="docutils literal notranslate"><span class="pre">secp521r1</span></code>, respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_account_key_length</span></code>: The bitlength to use for RSA private keys. The default is 4096.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_account_key_backup</span></code>: Whether to create a backup of the old account key before rolling over. Default value is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acme_certificate_account_key_sops_encrypted</span></code>: Use <a class="reference external" href="https://github.com/mozilla/sops">Mozilla sops</a> to encrypt private key. Needs <code class="docutils literal notranslate"><span class="pre">.sops.yaml</span></code> file inside the keys directory or somewhere up the directory chain. Default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+</ul>
+</section>
+<section id="example-playbook">
+<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
+<p>This role can be used as follows. Note that it obtains several certificates, and defines variables used for all certificates globally:</p>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">account key rollover</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webserver</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">acme_certificate_acme_account</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;keys/acme-account.key&#39;</span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">felixfontein.acme.account_key_rollover</span>
+<span class="w">      </span><span class="nt">acme_certificate_account_key_backup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="acme_account.html" class="btn btn-neutral float-left" title="ACME Accounts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="acme_certificate_role.html" class="btn btn-neutral float-right" title="felixfontein.acme.acme_certificate role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Felixfontein.Acme Contributors.</p>
+  </div>
+
+  
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script><!-- extra footer elements for Ansible beyond RTD Sphinx Theme -->
+
+</body>
+</html>
