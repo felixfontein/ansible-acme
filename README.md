@@ -50,7 +50,7 @@ For using this collection, you always also need an ACME account. See [the docume
 
 ## Release notes
 
-See [the changelog](https://github.com/felixfontein/ansible-acme/tree/main/CHANGELOG.rst).
+See [the changelog](https://github.com/felixfontein/ansible-acme/tree/main/CHANGELOG.md).
 
 ## Releasing, Deprecation and Versioning
 
