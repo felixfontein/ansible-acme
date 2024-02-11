@@ -4,7 +4,6 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
-
 v0.8.1
 ======
 

@@ -67,3 +67,11 @@ argument_specs:
             a certificate anymore).
           - See the O(community.crypto.acme_certificate_revoke#module:revoke_reason) parameter of the
             M(community.crypto.acme_certificate_revoke) module for a full list of reasons.
+
+    examples: |
+      ---
+      - name: revoking old certificates
+        hosts: webserver
+        roles:
+          - role: felixfontein.acme.revoke_old_certificates
+            acme_certificate_revoke_reason: 4  # superseeded
