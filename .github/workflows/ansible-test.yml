@@ -28,6 +28,7 @@ jobs:
           - stable-2.14
           - stable-2.15
           - stable-2.16
+          - stable-2.17
           - devel
     # Ansible-test on various stable branches does not yet work well with cgroups v2.
     # Since ubuntu-latest now uses Ubuntu 22.04, we need to fall back to the ubuntu-20.04
@@ -62,7 +63,6 @@ jobs:
         ansible:
           - devel
         python:
-          - 3.7
           - 3.8
           - 3.9
           - '3.10'
@@ -95,6 +95,9 @@ jobs:
           # 2.16
           - ansible: stable-2.16
             python: '3.6'
+          # 2.17
+          - ansible: stable-2.17
+            python: '3.7'
 
     steps:
       - name: >-
@@ -129,7 +132,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install ansible-core and ansible-lint
         run: |
@@ -166,7 +169,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install yamllint
         run: |
