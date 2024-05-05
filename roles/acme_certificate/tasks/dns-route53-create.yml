@@ -11,7 +11,7 @@
     record: "{{ item.key | felixfontein.acme._substitute_dns(acme_certificate_dns_substitution) }}"
     type: TXT
     ttl: 60
-    value: "{{ item.value | map('regex_replace', '^(.*)$', '\"\\1\"') | list }}"
+    value: "{{ item.value | map('community.dns.quote_txt', always_quote=true) | list }}"
     overwrite: true
     aws_access_key: "{{ acme_certificate_aws_access_key | default(omit) }}"
     aws_secret_key: "{{ acme_certificate_aws_secret_key | default(omit) }}"
