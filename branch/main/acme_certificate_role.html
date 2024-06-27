@@ -286,6 +286,16 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_dns_propagation_timeout"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-propagation-timeout"><strong>acme_certificate_dns_propagation_timeout</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_dns_propagation_timeout" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.9.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>Default timeout when waiting for DNS entries to propagate for <code class="docutils literal notranslate"><span class="pre">dns-01</span></code> challenges.</p>
+<p>This is passed to the <code class="ansible-option docutils literal notranslate"><strong><a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/dns/wait_for_txt_module.html#ansible-collections-community-dns-wait-for-txt-module-parameter-timeout" title="(in Ansible vdevel)"><span><span class="pre">timeout</span></span></a></strong></code> option of <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/dns/wait_for_txt_module.html#ansible-collections-community-dns-wait-for-txt-module" title="(in Ansible vdevel)"><span class="xref std std-ref">community.dns.wait_for_txt</span></a>.</p>
+<p>The default depends on <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-provider"><span class="std std-ref"><span class="pre">acme_certificate_dns_provider</span></span></a></strong></code>.</p>
+</div></td>
+</tr>
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_dns_provider"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-provider"><strong>acme_certificate_dns_provider</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_dns_provider" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -301,6 +311,16 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;cloudflare&quot;</span></code></p></li>
 <li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">&quot;ansibletest&quot;</span></code></p></li>
 </ul>
+</div></td>
+</tr>
+<tr class="row-even"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_dns_servers"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-dns-servers"><strong>acme_certificate_dns_servers</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_dns_servers" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">list</span> / <span class="ansible-option-elements">elements=string</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.9.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>DNS servers to use to lookup the name servers of the domains. These are queried to ensure that the <code class="docutils literal notranslate"><span class="pre">dns-01</span></code> challenges propagated before the ACME CA is asked to validate the challenges.</p>
+<p>If not provided, the system’s standard resolver is used.</p>
+<p>This is passed to the <code class="ansible-option docutils literal notranslate"><strong><a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/dns/wait_for_txt_module.html#ansible-collections-community-dns-wait-for-txt-module-parameter-server" title="(in Ansible vdevel)"><span><span class="pre">server</span></span></a></strong></code> option of <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/dns/wait_for_txt_module.html#ansible-collections-community-dns-wait-for-txt-module" title="(in Ansible vdevel)"><span class="xref std std-ref">community.dns.wait_for_txt</span></a>.</p>
 </div></td>
 </tr>
 <tr class="row-odd"><td><div class="ansible-option-cell">
