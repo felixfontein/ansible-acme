@@ -1,3 +1,4 @@
+---
 ancestor: null
 releases:
   0.1.0:
@@ -6,208 +7,208 @@ releases:
         role converted to a collection, with two new roles `revoke_old_certificates`
         and `account_key_rollover`.
     fragments:
-    - 0.1.0.yml
+      - 0.1.0.yml
     objects:
       role:
-      - description: Rollover for the ACME account key
-        name: account_key_rollover
-        namespace: null
-      - description: Retrieve a certificate for a set of domains and/or IP addresses
-        name: acme_certificate
-        namespace: null
-      - description: Revoke old certificates copied aside by acme_certificate
-        name: revoke_old_certificates
-        namespace: null
+        - description: Rollover for the ACME account key
+          name: account_key_rollover
+          namespace: null
+        - description: Retrieve a certificate for a set of domains and/or IP addresses
+          name: acme_certificate
+          namespace: null
+        - description: Revoke old certificates copied aside by acme_certificate
+          name: revoke_old_certificates
+          namespace: null
     release_date: '2020-12-16'
   0.2.0:
     changes:
       minor_changes:
-      - revoke_old_certificates role - allow to revoke by ACME account key instead
-        of certificate private key by setting ``acme_certificate_revoke_with_acme_account``
-        to ``true``. This allows to revoke certificates with BuyPass, which does not
-        support revocation by certificate private key.
+        - revoke_old_certificates role - allow to revoke by ACME account key instead
+          of certificate private key by setting ``acme_certificate_revoke_with_acme_account``
+          to ``true``. This allows to revoke certificates with BuyPass, which does
+          not support revocation by certificate private key.
       release_summary: Feature and repository maintenance release.
     fragments:
-    - 0.2.0.yml
-    - revoke-by-acme-account.yml
+      - 0.2.0.yml
+      - revoke-by-acme-account.yml
     release_date: '2021-02-08'
   0.3.0:
     changes:
       breaking_changes:
-      - Replace ``felixfontein.hosttech_dns`` and ``felixfontein.tools`` collection
-        dependencies by ``community.dns >= 1.0.0`` and ``community.general >= 2.5.0``.
-      - acme_certificate role - remove usage of tags ``issue-tls-certs``, ``issue-tls-certs-newkey``
-        and ``verify-tls-certs``. By default, new private keys are generated. This
-        can be disabled by setting ``acme_certificate_regenerate_private_keys`` to
-        ``false`` (https://github.com/felixfontein/ansible-acme/pull/15).
+        - Replace ``felixfontein.hosttech_dns`` and ``felixfontein.tools`` collection
+          dependencies by ``community.dns >= 1.0.0`` and ``community.general >= 2.5.0``.
+        - acme_certificate role - remove usage of tags ``issue-tls-certs``, ``issue-tls-certs-newkey``
+          and ``verify-tls-certs``. By default, new private keys are generated. This
+          can be disabled by setting ``acme_certificate_regenerate_private_keys``
+          to ``false`` (https://github.com/felixfontein/ansible-acme/pull/15).
       bugfixes:
-      - account_key_rollover role - when using sops-encrypted keys, ``community.sops.sops_encrypt``
-        was run on the remote node and not the controller node (https://github.com/felixfontein/ansible-acme/pull/7).
+        - account_key_rollover role - when using sops-encrypted keys, ``community.sops.sops_encrypt``
+          was run on the remote node and not the controller node (https://github.com/felixfontein/ansible-acme/pull/7).
       minor_changes:
-      - Add documentation for the roles to the `collection's docsite <https://ansible.fontein.de/collections/felixfontein/acme/>`_
-        (https://github.com/felixfontein/ansible-acme/pull/9).
-      - Adding support for ansible-core's new role argument spec feature. This makes
-        ansible-core 2.11.1 or newer validate the parameters passed to the roles in
-        this collection (https://github.com/felixfontein/ansible-acme/pull/13).
-      - Use ``community.dns.wait_for_txt`` to speed up waiting for DNS challenges
-        to propagate.
-      - acme_certificate - add ``acme_certificate_hosttech_token`` option to use HostTech's
-        new JSON API instead of old WSDL API (https://github.com/felixfontein/ansible-acme/pull/12).
-      - acme_certificate - check whether credentials for DNS provider are set before
-        starting certificate retrieval (https://github.com/felixfontein/ansible-acme/pull/12).
+        - Add documentation for the roles to the `collection's docsite <https://ansible.fontein.de/collections/felixfontein/acme/>`_
+          (https://github.com/felixfontein/ansible-acme/pull/9).
+        - Adding support for ansible-core's new role argument spec feature. This makes
+          ansible-core 2.11.1 or newer validate the parameters passed to the roles
+          in this collection (https://github.com/felixfontein/ansible-acme/pull/13).
+        - Use ``community.dns.wait_for_txt`` to speed up waiting for DNS challenges
+          to propagate.
+        - acme_certificate - add ``acme_certificate_hosttech_token`` option to use
+          HostTech's new JSON API instead of old WSDL API (https://github.com/felixfontein/ansible-acme/pull/12).
+        - acme_certificate - check whether credentials for DNS provider are set before
+          starting certificate retrieval (https://github.com/felixfontein/ansible-acme/pull/12).
       release_summary: Major revamp of the collection with new dependencies, better
         documentation, and several features and bugfixes.
     fragments:
-    - 0.3.0.yml
-    - 12-hosttech-token.yml
-    - 13-argspec.yml
-    - 7-account-key-rollover.yml
-    - dns-challenges.yml
-    - improve-docs.yml
-    - replace-dependencies.yml
-    - tags.yml
+      - 0.3.0.yml
+      - 12-hosttech-token.yml
+      - 13-argspec.yml
+      - 7-account-key-rollover.yml
+      - dns-challenges.yml
+      - improve-docs.yml
+      - replace-dependencies.yml
+      - tags.yml
     release_date: '2021-07-04'
   0.3.1:
     changes:
       bugfixes:
-      - 'Hosttech DNS support: restrict required version of community.dns to < 2.0.0.
-        A later version will bump the requirement to >= 2.0.0 and switch to the new
-        API.'
+        - 'Hosttech DNS support: restrict required version of community.dns to < 2.0.0.
+          A later version will bump the requirement to >= 2.0.0 and switch to the
+          new API.'
       release_summary: Update dependencies.
     fragments:
-    - 0.3.1.yml
-    - hosttech.yml
+      - 0.3.1.yml
+      - hosttech.yml
     release_date: '2021-07-12'
   0.4.0:
     changes:
       minor_changes:
-      - The collection now requires community.dns >= 2.0.0 for Hosttech DNS support.
-      - The collection now requires community.general >= 4.0.0.
-      - acme_certificate role - an alternative root certificate URL can be specified
-        in ``acme_certificate_root_certificate_for_verification`` that is only used
-        for validating the retrieved chain (https://github.com/felixfontein/ansible-acme/pull/22).
-      - acme_certificate role - the role can now handle the DNS provider INWX (https://github.com/felixfontein/ansible-acme/pull/19).
+        - The collection now requires community.dns >= 2.0.0 for Hosttech DNS support.
+        - The collection now requires community.general >= 4.0.0.
+        - acme_certificate role - an alternative root certificate URL can be specified
+          in ``acme_certificate_root_certificate_for_verification`` that is only used
+          for validating the retrieved chain (https://github.com/felixfontein/ansible-acme/pull/22).
+        - acme_certificate role - the role can now handle the DNS provider INWX (https://github.com/felixfontein/ansible-acme/pull/19).
       release_summary: This release bumps some requirements and adds some features.
     fragments:
-    - 0.4.0.yml
-    - 19-add-inwx-dns-provider.yaml
-    - 22-validation-root.yml
-    - community.dns-2.0.0.yml
-    - community.general-4.0.0.yml
+      - 0.4.0.yml
+      - 19-add-inwx-dns-provider.yaml
+      - 22-validation-root.yml
+      - community.dns-2.0.0.yml
+      - community.general-4.0.0.yml
     release_date: '2021-11-04'
   0.5.0:
     changes:
       breaking_changes:
-      - Officially drop support for Ansible 2.9.10 to 2.9.16, and ansible-base 2.10.0
-        to 2.10.3. These versions did not work with the ``felixfontein.acme.acme_certificate``
-        role for some time now, so this should not really affect any regular user
-        of this collection (https://github.com/felixfontein/ansible-acme/pull/23).
+        - Officially drop support for Ansible 2.9.10 to 2.9.16, and ansible-base 2.10.0
+          to 2.10.3. These versions did not work with the ``felixfontein.acme.acme_certificate``
+          role for some time now, so this should not really affect any regular user
+          of this collection (https://github.com/felixfontein/ansible-acme/pull/23).
       minor_changes:
-      - In case an error happens before a certificate is issued, restore private key,
-        and remove certificate and key backups if these were made (``acme_certificate_keys_old_store``
-        option) (https://github.com/felixfontein/ansible-acme/pull/30).
-      - The collection repository conforms to the `REUSE specification <https://reuse.software/spec/>`__
-        (https://github.com/felixfontein/ansible-acme/pull/30).
-      - Use FQCN for builtin actions and lookup plugins (https://github.com/felixfontein/ansible-acme/pull/23).
-      - acme_certificate role - add ``acme_certificate_renewal_on_remaining_days``
-        option which allows to only renew certificates that expire in a certain amount
-        of days (https://github.com/felixfontein/ansible-acme/pull/28).
+        - In case an error happens before a certificate is issued, restore private
+          key, and remove certificate and key backups if these were made (``acme_certificate_keys_old_store``
+          option) (https://github.com/felixfontein/ansible-acme/pull/30).
+        - The collection repository conforms to the `REUSE specification <https://reuse.software/spec/>`__
+          (https://github.com/felixfontein/ansible-acme/pull/30).
+        - Use FQCN for builtin actions and lookup plugins (https://github.com/felixfontein/ansible-acme/pull/23).
+        - acme_certificate role - add ``acme_certificate_renewal_on_remaining_days``
+          option which allows to only renew certificates that expire in a certain
+          amount of days (https://github.com/felixfontein/ansible-acme/pull/28).
       release_summary: Feature release dropping support for some specific old Ansible/ansible-base
         versions.
     fragments:
-    - 0.5.0.yml
-    - 23-ansible.builtin-fqcn.yml
-    - 28-renewal-days.yml
-    - 30-reuse.yml
-    - 31-rescue.yml
+      - 0.5.0.yml
+      - 23-ansible.builtin-fqcn.yml
+      - 28-renewal-days.yml
+      - 30-reuse.yml
+      - 31-rescue.yml
     release_date: '2022-09-13'
   0.5.1:
     changes:
       bugfixes:
-      - When cleaning up after failures in the ``acme_certificate`` role, make sure
-        that an undefined ``ansible_failed_task`` does not cause another error (https://github.com/felixfontein/ansible-acme/pull/32).
+        - When cleaning up after failures in the ``acme_certificate`` role, make sure
+          that an undefined ``ansible_failed_task`` does not cause another error (https://github.com/felixfontein/ansible-acme/pull/32).
       release_summary: Bugfix release.
     fragments:
-    - 0.5.1.yml
-    - 32-fail-task.yml
+      - 0.5.1.yml
+      - 32-fail-task.yml
     release_date: '2022-09-13'
   0.5.2:
     changes:
       release_summary: Maintenance release.
     fragments:
-    - 0.5.2.yml
+      - 0.5.2.yml
     release_date: '2022-09-18'
   0.6.0:
     changes:
       breaking_changes:
-      - The collection no longer depends on community.aws >= 1.0.0, but on amazon.aws
-        >= 5.0.0. The community.aws.route53 module was migrated to amazon.aws, which
-        allows us to depend on one collection less. Note that if you use this collection
-        with Ansible, you need Ansible 7.0.0 or newer; also note that Ansible 6.x.0
-        and before are End of Life by now (https://github.com/felixfontein/ansible-acme/pull/39).
+        - The collection no longer depends on community.aws >= 1.0.0, but on amazon.aws
+          >= 5.0.0. The community.aws.route53 module was migrated to amazon.aws, which
+          allows us to depend on one collection less. Note that if you use this collection
+          with Ansible, you need Ansible 7.0.0 or newer; also note that Ansible 6.x.0
+          and before are End of Life by now (https://github.com/felixfontein/ansible-acme/pull/39).
       bugfixes:
-      - Avoid double failure of acme_certificate rescue task when first task in block
-        fails (https://github.com/felixfontein/ansible-acme/pull/38).
+        - Avoid double failure of acme_certificate rescue task when first task in
+          block fails (https://github.com/felixfontein/ansible-acme/pull/38).
       minor_changes:
-      - acme_certificate role - add new option ``acme_certificate_dns_substitution``
-        to allow substituting DNS names during DNS record creation for use with CNAMEs
-        (https://github.com/felixfontein/ansible-acme/pull/41).
-      - acme_certificate role - added new option ``acme_certificate_verify_auth``
-        which allows to turn of validation that credentials for DNS modules are passed
-        as role arguments. When disabled, you are responsible to pass credentials
-        with module defaults or in other ways supported by the specific modules (https://github.com/felixfontein/ansible-acme/issues/40,
-        https://github.com/felixfontein/ansible-acme/pull/42).
+        - acme_certificate role - add new option ``acme_certificate_dns_substitution``
+          to allow substituting DNS names during DNS record creation for use with
+          CNAMEs (https://github.com/felixfontein/ansible-acme/pull/41).
+        - acme_certificate role - added new option ``acme_certificate_verify_auth``
+          which allows to turn of validation that credentials for DNS modules are
+          passed as role arguments. When disabled, you are responsible to pass credentials
+          with module defaults or in other ways supported by the specific modules
+          (https://github.com/felixfontein/ansible-acme/issues/40, https://github.com/felixfontein/ansible-acme/pull/42).
       release_summary: Collection dependency update with bugfixes and new features.
     fragments:
-    - 0.6.0.yml
-    - 38-acme-fail.yml
-    - 41-cname-subs.yml
-    - 42-auth.yml
+      - 0.6.0.yml
+      - 38-acme-fail.yml
+      - 41-cname-subs.yml
+      - 42-auth.yml
     plugins:
       filter:
-      - description: '[INTERNAL] Adjust DNS name according to a CNAME substitution
-          map'
-        name: _substitute_dns
-        namespace: null
+        - description: '[INTERNAL] Adjust DNS name according to a CNAME substitution
+            map'
+          name: _substitute_dns
+          namespace: null
     release_date: '2023-01-02'
   0.7.0:
     changes:
       breaking_changes:
-      - Drop compatibility for Ansible 2.9 and ansible-base 2.10. These versions of
-        Ansible/ansible-base have been End of Life for some time now. If you are still
-        using them, either stick to an older version of this collection, or upgrade
-        to a newer version of ansible-core/Ansible (https://github.com/felixfontein/ansible-acme/pull/54).
+        - Drop compatibility for Ansible 2.9 and ansible-base 2.10. These versions
+          of Ansible/ansible-base have been End of Life for some time now. If you
+          are still using them, either stick to an older version of this collection,
+          or upgrade to a newer version of ansible-core/Ansible (https://github.com/felixfontein/ansible-acme/pull/54).
       minor_changes:
-      - acme_certificate role - add Cloudflare DNS support (https://github.com/felixfontein/ansible-acme/pull/55).
+        - acme_certificate role - add Cloudflare DNS support (https://github.com/felixfontein/ansible-acme/pull/55).
       release_summary: New major release dropping compatibility with old Ansible versions,
         namely Ansible 2.9 and ansible-base 2.10.
     fragments:
-    - 0.7.0.yml
-    - 55-cloudflare.yml
+      - 0.7.0.yml
+      - 55-cloudflare.yml
     release_date: '2023-06-15'
   0.8.0:
     changes:
       major_changes:
-      - The collection now depends on community.aws >= 6.3.0 and amazon.aws >= 6.3.0
-        to improve stability of the acme_certificate role with Amazon's Route 53 DNS
-        (https://github.com/felixfontein/ansible-acme/pull/62).
+        - The collection now depends on community.aws >= 6.3.0 and amazon.aws >= 6.3.0
+          to improve stability of the acme_certificate role with Amazon's Route 53
+          DNS (https://github.com/felixfontein/ansible-acme/pull/62).
       minor_changes:
-      - acme_certificate role - increase maximum wait for Hosttech DNS records from
-        2 to 5 minutes (https://github.com/felixfontein/ansible-acme/pull/64).
-      - acme_certificate role - use community.aws.route53_wait instead of community.dns.wait_for_txt
-        when using Amazon's Route 53 DNS to improve stability (https://github.com/felixfontein/ansible-acme/issues/57,
-        https://github.com/felixfontein/ansible-acme/pull/62).
+        - acme_certificate role - increase maximum wait for Hosttech DNS records from
+          2 to 5 minutes (https://github.com/felixfontein/ansible-acme/pull/64).
+        - acme_certificate role - use community.aws.route53_wait instead of community.dns.wait_for_txt
+          when using Amazon's Route 53 DNS to improve stability (https://github.com/felixfontein/ansible-acme/issues/57,
+          https://github.com/felixfontein/ansible-acme/pull/62).
       release_summary: Feature release with improved creation of DNS records for Route53
         and Hosttech.
     fragments:
-    - 0.8.0.yml
-    - 62-route53_wait.yml
-    - 64-hosttech-wait.yml
+      - 0.8.0.yml
+      - 62-route53_wait.yml
+      - 64-hosttech-wait.yml
     release_date: '2023-09-07'
   0.8.1:
     changes:
       release_summary: Maintenance release with slightly updated documentation and
         no functional changes.
     fragments:
-    - 0.8.1.yml
+      - 0.8.1.yml
     release_date: '2023-10-04'
