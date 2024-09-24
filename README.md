@@ -12,7 +12,7 @@ This collection provides some useful roles for retrieving ACME certificates.
 
 ## Tested with Ansible
 
-Tested with the current ansible-core 2.11, ansible-core 2.12, ansible-core 2.13, ansible-core 2.14, ansible-core 2.15, ansible-core 2.16 releases and the current development version of ansible-core. Ansible-core versions before 2.11.0 are not supported.
+Tested with the current ansible-core 2.11, ansible-core 2.12, ansible-core 2.13, ansible-core 2.14, ansible-core 2.15, ansible-core 2.16, ansible-core 2.17, and ansible-core 2.18 releases and the current development version of ansible-core. Ansible-core versions before 2.11.0 are not supported.
 
 ## External requirements
 
