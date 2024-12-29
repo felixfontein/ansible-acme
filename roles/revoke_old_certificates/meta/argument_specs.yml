@@ -67,3 +67,21 @@ argument_specs:
             a certificate anymore).
           - See the O(community.crypto.acme_certificate_revoke#module:revoke_reason) parameter of the
             M(community.crypto.acme_certificate_revoke) module for a full list of reasons.
+    attributes:
+      check_mode:
+        description: Can run in C(check_mode) and return changed status prediction without modifying target.
+        support: full
+      idempotent:
+        description: When run twice in a row with the same arguments, the second invocation indicates no change.
+        support: full
+    examples: |
+      ---
+      - name: Revoking old certificates
+        hosts: webservers
+        vars:
+          acme_certificate_acme_directory: https://acme-v02.api.letsencrypt.org/directory
+          acme_certificate_acme_version: 2
+          acme_certificate_keys_old_path: "keys/old/letsencrypt/"
+        roles:
+          - role: felixfontein.acme.revoke_old_certificates
+            acme_certificate_revoke_reason: 4  # superseeded

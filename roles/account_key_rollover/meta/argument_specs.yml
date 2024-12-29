@@ -65,3 +65,26 @@ argument_specs:
         description:
           - "Use L(Mozilla sops,https://github.com/mozilla/sops) to encrypt private key. Needs C(.sops.yaml) file
             inside the directory containing the account key or somewhere up the directory chain."
+    attributes:
+      check_mode:
+        description: Can run in C(check_mode) and return changed status prediction without modifying target.
+        support: full
+      idempotent:
+        description: When run twice in a row with the same arguments, the second invocation indicates no change.
+        support: none
+    examples: |
+      ---
+      - name: Account key rollover
+        hosts: webservers
+        vars:
+          acme_certificate_acme_directory: https://acme-v02.api.letsencrypt.org/directory
+          acme_certificate_acme_version: 2
+          # While 4096 is on the paranoid side, note that for something as important
+          # as the account key a bit of paranoia does not hurt. (After all, the account
+          # key's size does not impact the speed of regular TLS handshakes.)
+          key_length: 4096
+        roles:
+        - role: felixfontein.acme.account_key_rollover
+          # We store the key encrypted with SOPS
+          acme_certificate_acme_account: 'keys/letsencrypt-account.key.sops'
+          acme_certificate_account_key_sops_encrypted: true
