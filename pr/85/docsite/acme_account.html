@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACME Accounts &mdash; Felixfontein.Acme Collection  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5707b69d" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/ansible.css?v=c5b67dd2" />
+      <link rel="stylesheet" type="text/css" href="../_static/antsibull-minimal.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/rtd-ethical-ads.css?v=289b023e" />
+
+  
+    <link rel="shortcut icon" href="../_static/images/Ansible-Mark-RGB_Black.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7f41d439"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="felixfontein.acme.account_key_rollover role" href="account_key_rollover_role.html" />
+    <link rel="prev" title="General Role Parameters" href="general_role_parameters.html" /><!-- extra head elements for Ansible beyond RTD Sphinx Theme -->
+
+
+
+
+</head>
+
+<body class="wy-body-for-nav"><!-- extra body elements for Ansible beyond RTD Sphinx Theme -->
+
+<div class="DocSite-globalNav ansibleNav">
+  <ul>
+    <li><a href="https://www.ansible.com/blog" target="_blank">Blog</a></li>
+    <li><a href="https://forum.ansible.com/" target="_blank">Ansible community forum</a></li>
+    <li><a href="https://docs.ansible.com/" target="_blank">Documentation</a></li>
+  </ul>
+</div>
+
+<a class="DocSite-nav" href="https://felixfontein.github.io/ansible-acme/branch/main/" style="padding-bottom: 30px;">
+
+  <img class="DocSiteNav-logo"
+    src="../_static/images/Ansible-Mark-RGB_White.png"
+    alt="Ansible Logo">
+  <div class="DocSiteNav-title">Felixfontein.Acme Collection Docs</div>
+</a>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Felixfontein.Acme Collection
+          </a><!--- Based on https://github.com/rtfd/sphinx_rtd_theme/pull/438/files -->
+
+<div class="version">
+  
+    
+  
+</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <label class="sr-only" for="q">Search docs:</label>
+    <input type="text" class="st-default-search-input" id="q" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general_role_parameters.html">General Role Parameters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ACME Accounts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#account-key-setup">Account key setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#account-key-setup-with-sops-encrypted-account-key">Account key setup with sops-encrypted account key</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#account-key-conversion">Account key conversion</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="account_key_rollover_role.html">felixfontein.acme.account_key_rollover role</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acme_certificate_role.html">felixfontein.acme.acme_certificate role</a></li>
+<li class="toctree-l1"><a class="reference internal" href="revoke_old_certificates_role.html">felixfontein.acme.revoke_old_certificates role</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_substitute_dns_filter.html">felixfontein.acme._substitute_dns filter – [INTERNAL] Adjust DNS name according to a CNAME substitution map</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../account_key_rollover_role.html">felixfontein.acme.account_key_rollover role – Do account key rollover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acme_certificate_role.html">felixfontein.acme.acme_certificate role – Issue TLS/SSL certificates from an ACME CA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../revoke_old_certificates_role.html">felixfontein.acme.revoke_old_certificates role – Revoke old certificates</a></li>
+</ul>
+<!-- extra nav elements for Ansible beyond RTD Sphinx Theme -->
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Felixfontein.Acme Collection</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ACME Accounts</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+  
+           <div itemprop="articleBody">
+             
+  <section id="acme-accounts">
+<span id="ansible-collections-felixfontein-acme-docsite-acme-account"></span><h1>ACME Accounts<a class="headerlink" href="#acme-accounts" title="Link to this heading"></a></h1>
+<p>To work with ACME servers, you need an account. For an account, you always need a private key. We always assume it is stored at a place where the <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account</span></code> variable points to, or it is provided with the <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_account_content</span></code> variable (<a class="reference internal" href="general_role_parameters.html#ansible-collections-felixfontein-acme-docsite-general-role-parameters"><span class="std std-ref">more information on general parameters</span></a>). The next subsections describe how to create or convert one.</p>
+<p>For some ACME servers such as the ones by Let’s Encrypt and Buypass, an account can be created on-the-fly while using for example the <a class="reference internal" href="acme_certificate_role.html#ansible-collections-felixfontein-acme-docsite-acme-certificate-role"><span class="std std-ref">felixfontein.acme.acme_certificate role</span></a>. The following options are of interest:
+- <code class="docutils literal notranslate"><span class="pre">acme_certificate_acme_email</span></code>: Your email address which shall be associated to the ACME account.
+- <code class="docutils literal notranslate"><span class="pre">acme_certificate_terms_agreed</span></code>: Whether the terms of services are accepted or not. Default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>, usually needs to be set explicitly to <code class="docutils literal notranslate"><span class="pre">true</span></code> to allow creating an ACME account. This is only used for ACME v2.
+- <code class="docutils literal notranslate"><span class="pre">acme_certificate_modify_account</span></code>: Whether the ACME account should be created (if it doesn’t exist) and the contact data (email address) should be updated. Default value is <code class="docutils literal notranslate"><span class="pre">true</span></code>. Set to <code class="docutils literal notranslate"><span class="pre">false</span></code> if you want to use the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_account_module.html#ansible-collections-community-crypto-acme-account-module" title="(in Ansible vdevel)"><span>community.crypto.acme_account module</span></a> to manage your ACME account manually, and prevent accidental modification of the contact information.</p>
+<p>The following shows how to create an account manually with two contact email addresses, which is not possible when using the role:</p>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create ACME account</span>
+<span class="w">  </span><span class="nt">community.crypto.acme_account</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">acme_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_directory</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">acme_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_version</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">account_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_account</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="nv">omit</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">account_key_content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_account_content</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="nv">omit</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+<span class="w">    </span><span class="nt">contact</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mailto:me@example.com&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mailto:me@example.org&quot;</span>
+<span class="w">    </span><span class="nt">terms_agreed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+</pre></div>
+</div>
+<p>For ACME servers that need External Account Binding, for example for ZeroSSL or Sectigo, you must always use <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/acme_account_module.html#ansible-collections-community-crypto-acme-account-module" title="(in Ansible vdevel)"><span>community.crypto.acme_account module</span></a> to set up the account manually. This can look for example like this:</p>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">acme_account</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">acme_directory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_directory</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">acme_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_version</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">account_key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_account</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="nv">omit</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">account_key_content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">acme_certificate_acme_account_content</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="nv">omit</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+<span class="w">    </span><span class="nt">contact</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mailto:me@example.com&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;mailto:me@example.org&quot;</span>
+<span class="w">    </span><span class="nt">terms_agreed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">external_account_binding</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">kid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abcdef0123456789abcdef</span>
+<span class="w">      </span><span class="nt">alg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HS256</span>
+<span class="w">      </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aBzFf13298sadsfalkj345nnsfaflkj5lkj245lkj324lkjlkjasflklkjatlkj354lkj43lkj54</span>
+</pre></div>
+</div>
+<p>The values for <code class="docutils literal notranslate"><span class="pre">kid</span></code> and <code class="docutils literal notranslate"><span class="pre">key</span></code> will be provided by the ACME server operator, for example in the ZeroSSL account interface. The value for <code class="docutils literal notranslate"><span class="pre">alg</span></code> is usually <code class="docutils literal notranslate"><span class="pre">HS256</span></code> if not explicitly mentioned.</p>
+<section id="account-key-setup">
+<h2>Account key setup<a class="headerlink" href="#account-key-setup" title="Link to this heading"></a></h2>
+<p>You can create an account key using the <code class="docutils literal notranslate"><span class="pre">openssl</span></code> binary as follows:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># RSA 4096 bit key</span>
+openssl<span class="w"> </span>genrsa<span class="w"> </span><span class="m">4096</span><span class="w"> </span>-out<span class="w"> </span>keys/acme-account.key
+<span class="c1"># ECC 256 bit key (P-256)</span>
+openssl<span class="w"> </span>ecparam<span class="w"> </span>-name<span class="w"> </span>prime256v1<span class="w"> </span>-genkey<span class="w"> </span>-out<span class="w"> </span>keys/acme-account.key
+<span class="c1"># ECC 384 bit key (P-384)</span>
+openssl<span class="w"> </span>ecparam<span class="w"> </span>-name<span class="w"> </span>secp384r1<span class="w"> </span>-genkey<span class="w"> </span>-out<span class="w"> </span>keys/acme-account.key
+</pre></div>
+</div>
+<p>With Ansible, you can use the <code class="docutils literal notranslate"><span class="pre">community.crypto.openssl_privatekey</span></code> module as follows:</p>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Generate RSA 4096 key</span>
+<span class="w">  </span><span class="nt">community.crypto.openssl_privatekey</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keys/acme-account.key</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RSA</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Generate ECC 256 bit key (P-256)</span>
+<span class="w">  </span><span class="nt">community.crypto.openssl_privatekey</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keys/acme-account.key</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECC</span>
+<span class="w">    </span><span class="nt">curve</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secp256r1</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Generate ECC 384 bit key (P-384)</span>
+<span class="w">  </span><span class="nt">community.crypto.openssl_privatekey</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keys/acme-account.key</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ECC</span>
+<span class="w">    </span><span class="nt">curve</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secp384r1</span>
+</pre></div>
+</div>
+<p>Make sure you store the account key safely. As opposed to certificate private keys, there is no need to regenerate it frequently, and it makes recovation of certificates issued with it very simple if you no longer have the certificate’s private key.</p>
+</section>
+<section id="account-key-setup-with-sops-encrypted-account-key">
+<h2>Account key setup with sops-encrypted account key<a class="headerlink" href="#account-key-setup-with-sops-encrypted-account-key" title="Link to this heading"></a></h2>
+<p>For this, you need <a class="reference external" href="https://github.com/mozilla/sops">Mozilla sops</a> installed and a <code class="docutils literal notranslate"><span class="pre">.sops.yaml</span></code> file present in the key directory, or somewhere up the directory hierarchy.</p>
+<p>With Ansible, you can use the <a class="reference external" href="https://docs.ansible.com/ansible/devel/collections/community/crypto/openssl_privatekey_module.html#ansible-collections-community-crypto-openssl-privatekey-module" title="(in Ansible vdevel)"><span>community.crypto.openssl_privatekey module</span></a> as follows:</p>
+<div class="highlight-yaml+jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">block</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Generate RSA 4096 key</span>
+<span class="w">      </span><span class="nt">community.crypto.openssl_privatekey_pipe</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RSA</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
+<span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">account_key_data</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">community.sops.sops_encrypt</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keys/acme-account.key.sops</span>
+<span class="w">        </span><span class="nt">content_text</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">account_key_data.privatekey</span> <span class="cp">}}</span><span class="s">&quot;</span>
+
+<span class="w">  </span><span class="nt">always</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Make sure to wipe the account_key_data variable</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">set_fact</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">account_key_data</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="account-key-conversion">
+<h2>Account key conversion<a class="headerlink" href="#account-key-conversion" title="Link to this heading"></a></h2>
+<p>Note that the Ansible ACME modules expect the Let’s Encrypt account key to be in PEM format and not in JWK format, which is used by the <a class="reference external" href="https://github.com/certbot/certbot">official Let’s Encrypt client Certbot</a>. If you have created an account key with the official client and now want to use this key with this ansible role, you have to convert it. One tool which can do this is <a class="reference external" href="https://github.com/dannycoates/pem-jwk">pem-jwk</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="general_role_parameters.html" class="btn btn-neutral float-left" title="General Role Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="account_key_rollover_role.html" class="btn btn-neutral float-right" title="felixfontein.acme.account_key_rollover role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Felixfontein.Acme Contributors.</p>
+  </div>
+
+  
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script><!-- extra footer elements for Ansible beyond RTD Sphinx Theme -->
+
+</body>
+</html>
