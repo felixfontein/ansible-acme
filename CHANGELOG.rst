@@ -4,6 +4,20 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
+v0.9.0
+======
+
+Release Summary
+---------------
+
+Feature release.
+
+Minor Changes
+-------------
+
+- The dependency on community.dns has been bumped to >= 2.9.0 to be able to use the ``community.dns.quote_txt`` filter when using the Route53 module (https://github.com/felixfontein/ansible-acme/pull/76).
+- acme_certificate role - allow to configure the timeout and the DNS servers to use for validating DNS entry propagation for ``dns-01`` challenges (https://github.com/felixfontein/ansible-acme/issues/79, https://github.com/felixfontein/ansible-acme/pull/80).
+
 v0.8.1
 ======
 

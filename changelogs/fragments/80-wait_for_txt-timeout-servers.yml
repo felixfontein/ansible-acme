@@ -1,2 +1,0 @@
-minor_changes:
-  - "acme_certificate role - allow to configure the timeout and the DNS servers to use for validating DNS entry propagation for ``dns-01`` challenges (https://github.com/felixfontein/ansible-acme/issues/79, https://github.com/felixfontein/ansible-acme/pull/80)."
