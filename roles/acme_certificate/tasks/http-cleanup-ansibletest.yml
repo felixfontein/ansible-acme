@@ -8,9 +8,9 @@
   ansible.builtin.uri:
     # noqa jinja[spacing] - The problem is that the space eating in the following YAML string will result in `{{item...`
     url: >-
-      http://{{ acme_host }}:5000/http/{{ item.key }}/{{
-        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):] }}
+      http://{{ acme_host }}:5000/http/{{ item.identifier }}/{{
+        item.challenges[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):] }}
     method: DELETE
   delegate_to: localhost
   run_once: true
-  with_dict: "{{ acme_certificate_INTERNAL_challenge.get('challenge_data', {}) }}"
+  loop: "{{ acme_certificate_INTERNAL_challenge.get('challenge_data', []) }}"

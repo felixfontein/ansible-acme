@@ -33,6 +33,8 @@ argument_specs:
       acme_certificate_acme_version:
         type: int
         default: 2
+        choices:
+          - 2
         description:
           - The ACME directory's version.
       acme_certificate_account_algorithm:

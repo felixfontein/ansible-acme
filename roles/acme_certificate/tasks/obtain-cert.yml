@@ -89,24 +89,34 @@
   delegate_to: localhost
   run_once: true
 
+- name: Update/create ACME account
+  community.crypto.acme_account:
+    account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+    account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+    account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+    allow_creation: true
+    contact: "{{ ['mailto:' ~ acme_certificate_acme_email] if acme_certificate_acme_email | default(false) else [] }}"
+    terms_agreed: "{{ acme_certificate_terms_agreed }}"
+    state: present
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+  when: acme_certificate_modify_account
+  delegate_to: localhost
+  run_once: true
+
 - block:  # noqa name[missing]
   - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    community.crypto.acme_certificate:
+    community.crypto.acme_certificate_order_create:
       account_key: "{{ acme_certificate_acme_account | default(omit) }}"
       account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
       account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
-      modify_account: "{{ acme_certificate_modify_account }}"
       csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
-      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
-      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
-      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
-      account_email: "{{ acme_certificate_acme_email | default(omit) }}"
-      terms_agreed: "{{ acme_certificate_terms_agreed }}"
-      challenge: "{{ acme_certificate_challenge }}"
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
-      force: true
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      # TODO: support profile
+      # TODO: support replaces_cert_id
     delegate_to: localhost
     run_once: true
     register: acme_certificate_INTERNAL_challenge
@@ -130,24 +140,33 @@
     ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-create.yml
     when: "acme_certificate_challenge == 'dns-01'"
 
-  - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    community.crypto.acme_certificate:
+  - name: "Validate challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    community.crypto.acme_certificate_order_validate:
       account_key: "{{ acme_certificate_acme_account | default(omit) }}"
       account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
       account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
-      modify_account: "{{ acme_certificate_modify_account }}"
-      csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
-      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
-      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
-      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
-      account_email: "{{ acme_certificate_acme_email | default(omit) }}"
-      terms_agreed: "{{ acme_certificate_terms_agreed }}"
+      order_uri: "{{ acme_certificate_INTERNAL_challenge.order_uri }}"
       challenge: "{{ acme_certificate_challenge }}"
+      deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
-      force: true
-      data: "{{ acme_certificate_INTERNAL_challenge }}"
-      deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+    delegate_to: localhost
+    run_once: true
+
+  - name: "Getting certificates for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+    community.crypto.acme_certificate_order_finalize:
+      account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+      account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+      order_uri: "{{ acme_certificate_INTERNAL_challenge.order_uri }}"
+      csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
+      cert_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
+      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
+      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
+      acme_directory: "{{ acme_certificate_acme_directory }}"
+      acme_version: "{{ acme_certificate_acme_version }}"
+      deactivate_authzs: "{{ 'always' if acme_certificate_deactivate_authzs else 'never' }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
       select_chain: "{{ acme_certificate_select_chain | default(omit) }}"
     delegate_to: localhost

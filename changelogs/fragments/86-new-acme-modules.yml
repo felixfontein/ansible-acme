@@ -1,0 +1,6 @@
+minor_changes:
+  - "The acme_certificate role new uses the new ``community.crypto.acme_account_order_*`` modules added in community.crypto 2.24.0 (https://github.com/felixfontein/ansible-acme/pull/86)."
+  - "The collection now depends on community.crypto 2.24.0 or newer (https://github.com/felixfontein/ansible-acme/pull/86)."
+
+breaking_changes:
+  - "The collection no longer supports ``acme_certificate_acme_version == 1``. ACME v2 must always be used (https://github.com/felixfontein/ansible-acme/pull/86)."
