@@ -5,7 +5,7 @@
 
 - name: "Creating private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   community.crypto.openssl_privatekey:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | ansible.builtin.path_join }}"
+    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | community.general.path_join }}"
     mode: "{{ acme_certificate_privatekey_mode }}"
     type: "{{ 'RSA' if acme_certificate_algorithm == 'rsa' else 'ECC' }}"
     size: "{{ acme_certificate_key_length if acme_certificate_algorithm == 'rsa' else omit }}"
@@ -31,7 +31,7 @@
         {{
           lookup(
               'community.sops.sops',
-              [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | ansible.builtin.path_join,
+              [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join,
               empty_on_not_exist=true
           ) | default(omit, true)
           if not acme_certificate_regenerate_private_keys else omit }}
@@ -49,7 +49,7 @@
   - name: "Store sops-encrypted private key for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     # noqa: no-handler
     community.sops.sops_encrypt:
-      path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | ansible.builtin.path_join }}"
+      path: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops'] | community.general.path_join }}"
       content_text: "{{ acme_certificate_INTERNAL_private_key.privatekey }}"
     when: acme_certificate_INTERNAL_private_key is changed
 
@@ -63,11 +63,11 @@
     privatekey_content: >-
       {{ lookup(
            'community.sops.sops', [acme_certificate_keys_path, acme_certificate_key_name ~ '.key.sops']
-           | ansible.builtin.path_join)
+           | community.general.path_join)
          if acme_certificate_use_sops_for_key else omit }}
     privatekey_path: >-
       {{ omit if acme_certificate_use_sops_for_key else
-         [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | ansible.builtin.path_join }}
+         [acme_certificate_keys_path, acme_certificate_key_name ~ '.key'] | community.general.path_join }}
     # noqa jinja[spacing] - The problem is that the space eating in the following YAML string will result in `{{(acme...`
     subject_alt_name: |
         {{
@@ -83,7 +83,7 @@
 - name: "Get root certificate for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
   ansible.builtin.get_url:  # noqa risky-file-permissions
     url: "{{ acme_certificate_root_certificate }}"
-    dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | ansible.builtin.path_join }}"
+    dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join }}"
     force: true
     validate_certs: "{{ acme_certificate_validate_certs }}"
   delegate_to: localhost
@@ -116,7 +116,7 @@
       acme_version: "{{ acme_certificate_acme_version }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
       # TODO: support profile
-      # TODO: support replaces_cert_id
+      # TODO: support replaces_cert_id (acme_certificate_INTERNAL_old_certificate_info.cert_id)
     delegate_to: localhost
     run_once: true
     register: acme_certificate_INTERNAL_challenge
@@ -161,9 +161,9 @@
       account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
       order_uri: "{{ acme_certificate_INTERNAL_challenge.order_uri }}"
       csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
-      cert_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | ansible.builtin.path_join }}"
-      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | ansible.builtin.path_join }}"
-      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | ansible.builtin.path_join }}"
+      cert_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
+      fullchain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-fullchain.pem'] | community.general.path_join }}"
+      chain_dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
       deactivate_authzs: "{{ 'always' if acme_certificate_deactivate_authzs else 'never' }}"
@@ -180,7 +180,7 @@
 
   - name: "Form root chain for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
     ansible.builtin.template:  # noqa risky-file-permissions - use the user's umask
-      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | ansible.builtin.path_join }}"
+      dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-rootchain.pem'] | community.general.path_join }}"
       src: root-chain.pem.j2
     delegate_to: localhost
     run_once: true
@@ -224,13 +224,13 @@
       - "-CAfile"
       - >-
         {{
-          [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | ansible.builtin.path_join
+          [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join
           if acme_certificate_root_certificate == acme_certificate_root_certificate_for_verification
           else acme_certificate_INTERNAL_tempfile.path
         }}
       - "-untrusted"
-      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | ansible.builtin.path_join }}"
-      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | ansible.builtin.path_join }}"
+      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-chain.pem'] | community.general.path_join }}"
+      - "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '.pem'] | community.general.path_join }}"
     changed_when: false
     delegate_to: localhost
     run_once: true

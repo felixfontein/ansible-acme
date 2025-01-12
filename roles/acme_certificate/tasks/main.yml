@@ -19,26 +19,16 @@
   ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-sanity.yml
   when: "acme_certificate_challenge == 'dns-01'"
 
-- name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
-  ansible.builtin.stat:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
-  delegate_to: localhost
-  register: acme_certificate_INTERNAL_old_certificate_exists
-  when: >-
-    acme_certificate_keys_old_store
-    or acme_certificate_renewal_on_remaining_days is defined
-  run_once: true
-
-- name: Determine expiry of certificate file
-  community.crypto.x509_certificate_info:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
-    valid_at:
-      soon: "+{{ acme_certificate_renewal_on_remaining_days }}d"
+- name: Determine expiry of certificate file, and whether it exists
+  community.crypto.acme_certificate_renewal_info:
+    certificate_path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
+    use_ari: false  # TODO: support ARI
+    remaining_days: "{{ acme_certificate_renewal_on_remaining_days | default(omit) }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    validate_certs: "{{ acme_certificate_validate_certs }}"
   delegate_to: localhost
   register: acme_certificate_INTERNAL_old_certificate_info
-  when: >-
-    acme_certificate_renewal_on_remaining_days is defined
-    and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
   run_once: true
 
 - name: Prepare memory
@@ -60,9 +50,8 @@
 # been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
 - name: Renew certificate
   when: >-
-    not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
-    or acme_certificate_renewal_on_remaining_days is not defined
-    or not (acme_certificate_INTERNAL_old_certificate_info.valid_at.soon | default(true))
+    acme_certificate_INTERNAL_old_certificate_info.should_renew or
+    acme_certificate_renewal_on_remaining_days is not defined
   vars:
     acme_certificate_INTERNAL_key_extension: "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
   block:
@@ -100,7 +89,7 @@
         - "{{ acme_certificate_INTERNAL_key_extension }}"
         - ".pem"
       register: acme_certificate_INTERNAL_backup_copies
-      when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
+      when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_info.exists"
       run_once: true
 
     - name: Obtain certificate
