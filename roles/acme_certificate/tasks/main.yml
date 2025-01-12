@@ -21,7 +21,7 @@
 
 - name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
   ansible.builtin.stat:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
+    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
   delegate_to: localhost
   register: acme_certificate_INTERNAL_old_certificate_exists
   when: >-
@@ -31,7 +31,7 @@
 
 - name: Determine expiry of certificate file
   community.crypto.x509_certificate_info:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
+    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
     valid_at:
       soon: "+{{ acme_certificate_renewal_on_remaining_days }}d"
   delegate_to: localhost
@@ -52,7 +52,7 @@
           (ansible_date_time.date ~ '-' ~ ansible_date_time.hour ~ ansible_date_time.minute ~ ansible_date_time.second ~ '-')
           if acme_certificate_keys_old_prepend_timestamp else ''
         ) ~ acme_certificate_key_name
-      ] | community.general.path_join }}
+      ] | ansible.builtin.path_join }}
   delegate_to: localhost
   run_once: true
 
@@ -70,7 +70,7 @@
       ansible.builtin.stat:
         path: >-
           {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-             | community.general.path_join }}
+             | ansible.builtin.path_join }}
       delegate_to: localhost
       register: acme_certificate_INTERNAL_old_privatekey_exists
       run_once: true
@@ -80,7 +80,7 @@
         acme_certificate_INTERNAL_private_key_copy: >-
           {{ lookup('ansible.builtin.file',
                     [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-                      | community.general.path_join,
+                      | ansible.builtin.path_join,
                     rstrip=false) | b64encode }}
       when: acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
       delegate_to: localhost
@@ -88,7 +88,7 @@
 
     - name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       ansible.builtin.copy:
-        src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}{{ item }}"
+        src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}{{ item }}"
         dest: "{{ acme_certificate_INTERNAL_backup_prefix ~ item }}"
         mode: preserve
       delegate_to: localhost
@@ -111,7 +111,7 @@
         src: key.j2
         dest: >-
           {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-             | community.general.path_join }}
+             | ansible.builtin.path_join }}
         mode: preserve
       delegate_to: localhost
       when: >-
