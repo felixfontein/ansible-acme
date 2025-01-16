@@ -531,6 +531,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_ocsp_must_staple" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether a certificate with the OCSP Must Staple extension is requested.</p>
+<p>Note that not all CAs support this. For example, Let’s Encrypt will drop support for this during 2025.</p>
 <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
@@ -548,6 +549,14 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_profile"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-profile"><strong>acme_certificate_profile</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_profile" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.10.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>Use the specified profile to obtain a new certificate.</p>
+</div></td>
+</tr>
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_regenerate_private_keys"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-regenerate-private-keys"><strong>acme_certificate_regenerate_private_keys</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_regenerate_private_keys" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
@@ -561,7 +570,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_renewal_on_remaining_days"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><strong>acme_certificate_renewal_on_remaining_days</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_renewal_on_remaining_days" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
 <p><em class="ansible-option-versionadded">added in felixfontein.acme 0.5.0</em></p>
@@ -569,7 +578,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <td><div class="ansible-option-cell"><p>Only obtain a new certificate if the certificate does not yet exist, or if the certificate’s expiry date is less than <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_days</span></span></a></strong></code> days in the future.</p>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_root_certificate"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-root-certificate"><strong>acme_certificate_root_certificate</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_root_certificate" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -578,7 +587,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;https://letsencrypt.org/certs/isrgrootx1.pem&quot;</span></code></p>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_root_certificate_for_verification"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-root-certificate-for-verification"><strong>acme_certificate_root_certificate_for_verification</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_root_certificate_for_verification" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -587,7 +596,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>By default uses the same value as <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-root-certificate"><span class="std std-ref"><span class="pre">acme_certificate_root_certificate</span></span></a></strong></code>.</p>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain"><strong>acme_certificate_select_chain</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">list</span> / <span class="ansible-option-elements">elements=dictionary</span></p>
 </div></td>
@@ -596,7 +605,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>This can be used for example with <a class="reference external" href="https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516">Let’s Encrypt</a> to select which root certificate to use. See the documentation for concrete examples how to choose between the Let’s Encrypt roots.</p>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain/authority_key_identifier"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain-authority-key-identifier"><strong>authority_key_identifier</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain/authority_key_identifier" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -604,7 +613,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>The identifier must be of the form <code class="ansible-value docutils literal notranslate"><span class="pre">C4:A7:B1:A4:7B:2C:71:FA:DB:E1:4B:90:75:FF:C4:15:60:85:89:10</span></code>.</p>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain/issuer"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain-issuer"><strong>issuer</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain/issuer" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">dictionary</span></p>
 </div></td>
@@ -613,7 +622,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>An example value would be <code class="ansible-value docutils literal notranslate"><span class="pre">{&quot;commonName&quot;:</span> <span class="pre">&quot;My</span> <span class="pre">Preferred</span> <span class="pre">CA</span> <span class="pre">Root&quot;}</span></code>.</p>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain/subject"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain-subject"><strong>subject</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain/subject" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">dictionary</span></p>
 </div></td>
@@ -622,7 +631,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>An example value would be <code class="ansible-value docutils literal notranslate"><span class="pre">{&quot;CN&quot;:</span> <span class="pre">&quot;My</span> <span class="pre">Preferred</span> <span class="pre">CA</span> <span class="pre">Intermediate&quot;}</span></code></p>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain/subject_key_identifier"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain-subject-key-identifier"><strong>subject_key_identifier</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain/subject_key_identifier" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -630,7 +639,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p>The identifier must be of the form <code class="ansible-value docutils literal notranslate"><span class="pre">A8:4A:6A:63:04:7D:DD:BA:E6:D1:39:B7:A6:45:65:EF:F3:A8:EC:A1</span></code>.</p>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-indent"></div><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_select_chain/test_certificates"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-select-chain-test-certificates"><strong>test_certificates</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_select_chain/test_certificates" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -646,7 +655,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_server_location"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-server-location"><strong>acme_certificate_server_location</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_server_location" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
 </div></td>
@@ -654,7 +663,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">&quot;/var/www/challenges&quot;</span></code></p>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_terms_agreed"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-terms-agreed"><strong>acme_certificate_terms_agreed</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_terms_agreed" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
@@ -668,7 +677,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_use_sops_for_key"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-use-sops-for-key"><strong>acme_certificate_use_sops_for_key</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_use_sops_for_key" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
@@ -681,7 +690,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_verify_auth"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-verify-auth"><strong>acme_certificate_verify_auth</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_verify_auth" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 <p><em class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</em></p>
@@ -695,7 +704,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_verify_certs"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-verify-certs"><strong>acme_certificate_verify_certs</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_verify_certs" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
