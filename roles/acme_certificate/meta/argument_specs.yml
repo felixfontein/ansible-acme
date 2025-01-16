@@ -396,6 +396,11 @@ argument_specs:
           - If not provided, the system's standard resolver is used.
           - This is passed to the O(community.dns.wait_for_txt#module:server) option of M(community.dns.wait_for_txt).
         version_added: 0.9.0
+      acme_certificate_profile:
+        type: str
+        description:
+          - Use the specified profile to obtain a new certificate.
+        version_added: 0.10.0
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.

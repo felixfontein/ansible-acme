@@ -45,6 +45,7 @@ These are the main variables used by this role:
 - ``acme_certificate_renewal_on_remaining_days``: Only renew the certificate if it does not yet exist, or expires in less than the given amount of days.
 - ``acme_certificate_verify_auth``: Only check whether credentials have been provided for DNS provider as role arguments when this is ``true`` (default).
 - ``acme_certificate_dns_servers`` and ``acme_certificate_dns_propagation_timeout``: Configure the DNS servers and the timeout for checking DNS record propagation.
+- ``acme_certificate_profile``: Select the ACME profile to request for the new certificate. The available profiles depend on the CA and should be documented by the CA.
 
 Selecting which root to use with Let's Encrypt
 ----------------------------------------------
