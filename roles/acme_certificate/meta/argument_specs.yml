@@ -237,6 +237,7 @@ argument_specs:
         default: false
         description:
           - Whether a certificate with the OCSP Must Staple extension is requested.
+          - Note that not all CAs support this. For example, Let's Encrypt will drop support for this during 2025.
       acme_certificate_terms_agreed:
         type: bool
         default: false

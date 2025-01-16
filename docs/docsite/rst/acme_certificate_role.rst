@@ -33,7 +33,7 @@ These are the main variables used by this role:
 - ``acme_certificate_keys_old_prepend_timestamp``: Whether copies of old keys and certificates should be prepended by the current date and time. Default value is ``false``.
 - ``acme_certificate_regenerate_private_keys``: Whether to regenerate private keys. Default value is ``true``.
 - ``acme_certificate_use_sops_for_key``: Use `Mozilla sops <https://github.com/mozilla/sops>`_ to encrypt private key. Needs ``.sops.yaml`` file inside the keys directory or somewhere up the directory chain. Default value is ``false``.
-- ``acme_certificate_ocsp_must_staple``: Whether a certificate with the OCSP Must Staple extension is requested. Default value is ``false``.
+- ``acme_certificate_ocsp_must_staple``: Whether a certificate with the OCSP Must Staple extension is requested. Default value is ``false``. Note that not all CAs support this.
 - ``acme_certificate_terms_agreed``: Whether the terms of services are accepted or not. Default value is ``false``, usually needs to be set explicitly to ``true`` to allow creating an ACME account. This is only used for ACME v2.
 - ``acme_certificate_challenge``: The challenge type to use. Should be ``http-01`` for HTTP challenges (needs access to web server) or ``dns-01`` for DNS challenges (needs access to DNS provider).
 - ``acme_certificate_root_certificate``: The root certificate for the ACME directory. Default value is ``https://letsencrypt.org/certs/isrgrootx1.pem`` for the root certificate of Let's Encrypt.
