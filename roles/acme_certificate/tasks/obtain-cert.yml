@@ -111,12 +111,18 @@
     account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
     account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
     csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
+    order_creation_error_strategy: auto
+    replaces_cert_id: >-
+      {{
+        acme_certificate_INTERNAL_old_certificate_info.cert_id | default(omit, true)
+        if acme_certificate_INTERNAL_old_certificate_info.supports_ari
+        else omit
+      }}
     profile: "{{ acme_certificate_profile | default(omit) }}"
     deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
-    # TODO: support replaces_cert_id (acme_certificate_INTERNAL_old_certificate_info.cert_id)
   delegate_to: localhost
   run_once: true
   register: acme_certificate_INTERNAL_challenge
