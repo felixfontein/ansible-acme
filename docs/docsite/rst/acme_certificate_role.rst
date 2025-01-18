@@ -50,7 +50,7 @@ These are the main variables used by this role:
 .. _ansible_collections.felixfontein.acme.docsite.acme_certificate_role_renewal:
 
 Determine whether the certificate should be obtained
----------------------------------------------------
+----------------------------------------------------
 
 By default, the role always tries to obtain the certificate.
 

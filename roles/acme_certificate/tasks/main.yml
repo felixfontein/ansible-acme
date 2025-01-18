@@ -76,7 +76,8 @@
         {% else %}
           will obtain a new one because: {{ acme_certificate_INTERNAL_old_certificate_info.msg }}.
         {% endif %}
-        {% if acme_certificate_INTERNAL_old_certificate_info.supports_ari and acme_certificate_INTERNAL_old_certificate_info.cert_id | default(false) %}
+        {% if acme_certificate_INTERNAL_old_certificate_info.supports_ari and
+              acme_certificate_INTERNAL_old_certificate_info.cert_id | default(false) %}
           Will use ACME ARI 'replaces' to replace existing certificate.
         {% endif %}
         {% if acme_certificate_profile | default(false) %}
