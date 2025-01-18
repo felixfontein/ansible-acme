@@ -105,29 +105,28 @@
   delegate_to: localhost
   run_once: true
 
-- block:  # noqa name[missing]
-  - name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
-    community.crypto.acme_certificate_order_create:
-      account_key: "{{ acme_certificate_acme_account | default(omit) }}"
-      account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
-      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
-      csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
-      profile: "{{ acme_certificate_profile | default(omit) }}"
-      acme_directory: "{{ acme_certificate_acme_directory }}"
-      acme_version: "{{ acme_certificate_acme_version }}"
-      validate_certs: "{{ acme_certificate_validate_certs }}"
-      # TODO: support replaces_cert_id (acme_certificate_INTERNAL_old_certificate_info.cert_id)
-    delegate_to: localhost
-    run_once: true
-    register: acme_certificate_INTERNAL_challenge
+- name: "Preparing challenges for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
+  community.crypto.acme_certificate_order_create:
+    account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+    account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+    account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+    csr_content: "{{ acme_certificate_INTERNAL_csr.csr }}"
+    profile: "{{ acme_certificate_profile | default(omit) }}"
+    deactivate_authzs: "{{ acme_certificate_deactivate_authzs }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    validate_certs: "{{ acme_certificate_validate_certs }}"
+    # TODO: support replaces_cert_id (acme_certificate_INTERNAL_old_certificate_info.cert_id)
+  delegate_to: localhost
+  run_once: true
+  register: acme_certificate_INTERNAL_challenge
 
-  always:
-  - name: Show account and order URI
-    ansible.builtin.debug:
-      msg: >-
-        account URI: {{ acme_certificate_INTERNAL_challenge.get('account_uri') }};
-        order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
-    run_once: true
+- name: Show account and order URI
+  ansible.builtin.debug:
+    msg: >-
+      account URI: {{ acme_certificate_INTERNAL_challenge.get('account_uri') }};
+      order URI: {{ acme_certificate_INTERNAL_challenge.get('order_uri') }}
+  run_once: true
 
 - name: Get certificate
   when: acme_certificate_INTERNAL_challenge is changed  # noqa no-handler
@@ -185,6 +184,19 @@
     delegate_to: localhost
     run_once: true
   always:
+  - name: Deactivate authzs
+    community.crypto.acme_certificate_deactivate_authz:
+      account_key: "{{ acme_certificate_acme_account | default(omit) }}"
+      account_key_content: "{{ acme_certificate_acme_account_content | default(omit) }}"
+      account_uri: "{{ acme_certificate_acme_account_uri | default(omit) }}"
+      order_uri: "{{ acme_certificate_INTERNAL_challenge.order_uri }}"
+      acme_directory: "{{ acme_certificate_acme_directory }}"
+      acme_version: "{{ acme_certificate_acme_version }}"
+      validate_certs: "{{ acme_certificate_validate_certs }}"
+    when: acme_certificate_deactivate_authzs
+    delegate_to: localhost
+    run_once: true
+
   - name: Clean up HTTP challenges
     ansible.builtin.include_tasks: http-cleanup{{ '-ansibletest' if acme_certificate_INTERNAL_ansibletest | default(false) else '' }}.yml
     when: "acme_certificate_challenge == 'http-01'"
