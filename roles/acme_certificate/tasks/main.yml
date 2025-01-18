@@ -114,6 +114,7 @@
       when: acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
       delegate_to: localhost
       run_once: true
+      no_log: true
 
     - name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       ansible.builtin.copy:

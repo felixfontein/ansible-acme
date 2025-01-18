@@ -8,3 +8,7 @@ minor_changes:
 
 breaking_changes:
   - "The collection no longer supports ``acme_certificate_acme_version == 1``. ACME v2 must always be used (https://github.com/felixfontein/ansible-acme/pull/86)."
+
+security_fixes:
+  - "Properly apply ``no_log: true`` to task that reads private key file for backup. When not using SOPS encrypted private keys,
+     the private key was visible in verbose mode or in the logs in plain text (https://github.com/felixfontein/ansible-acme/pull/86)."
