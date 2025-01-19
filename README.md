@@ -5,8 +5,8 @@ SPDX-FileCopyrightText: 2020, Felix Fontein
 -->
 
 # Tools for ACME
-[![Doc](https://img.shields.io/badge/docs-brightgreen.svg)](https://ansible.fontein.de/collections/felixfontein/acme/)
-[![CI](https://github.com/felixfontein/ansible-acme/workflows/CI/badge.svg?branch=main)](https://github.com/felixfontein/ansible-acme/actions?query=workflow%3A%22CI%22+branch%3Amain)
+[![Documentation](https://img.shields.io/badge/docs-brightgreen.svg)](https://ansible.fontein.de/collections/felixfontein/acme/)
+[![CI](https://github.com/felixfontein/ansible-acme/actions/workflows/ansible-test.yml/badge.svg?branch=main)](https://github.com/felixfontein/ansible-acme/actions)
 
 This collection provides some useful roles for retrieving ACME certificates.
 
