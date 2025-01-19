@@ -216,7 +216,10 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_acme_version" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>The ACME directory’s version.</p>
-<p class="ansible-option-line"><strong class="ansible-option-default-bold">Default:</strong> <code class="ansible-option-default docutils literal notranslate"><span class="pre">2</span></code></p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+<ul class="simple">
+<li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">2</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
+</ul>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -528,6 +531,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_ocsp_must_staple" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Whether a certificate with the OCSP Must Staple extension is requested.</p>
+<p>Note that not all CAs support this. For example, Let’s Encrypt will drop support for this during 2025.</p>
 <p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
 <ul class="simple">
 <li><p><code class="ansible-option-default-bold docutils literal notranslate"><strong><span class="pre">false</span></strong></code> <span class="ansible-option-choices-default-mark">← (default)</span></p></li>
@@ -545,6 +549,14 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_profile"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-profile"><strong>acme_certificate_profile</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_profile" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">string</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.10.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>Use the specified profile to obtain a new certificate.</p>
+</div></td>
+</tr>
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_regenerate_private_keys"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-regenerate-private-keys"><strong>acme_certificate_regenerate_private_keys</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_regenerate_private_keys" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
@@ -558,12 +570,23 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_renewal_on_remaining_days"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><strong>acme_certificate_renewal_on_remaining_days</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_renewal_on_remaining_days" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">integer</span></p>
 <p><em class="ansible-option-versionadded">added in felixfontein.acme 0.5.0</em></p>
 </div></td>
 <td><div class="ansible-option-cell"><p>Only obtain a new certificate if the certificate does not yet exist, or if the certificate’s expiry date is less than <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_days</span></span></a></strong></code> days in the future.</p>
+<p>Can be combined with <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-percentage"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_percentage</span></span></a></strong></code>.</p>
+</div></td>
+</tr>
+<tr class="row-odd"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_renewal_on_remaining_percentage"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-percentage"><strong>acme_certificate_renewal_on_remaining_percentage</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_renewal_on_remaining_percentage" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">float</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.10.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>Only obtain a new certificate if the certificate does not yet exist, or less than <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-percentage"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_percentage</span></span></a></strong></code> percent of the certificate’s validity period are left.</p>
+<p>Can be combined with <code class="ansible-option docutils literal notranslate"><strong><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-renewal-on-remaining-days"><span class="std std-ref"><span class="pre">acme_certificate_renewal_on_remaining_days</span></span></a></strong></code>. Here <code class="ansible-value docutils literal notranslate"><span class="pre">0</span></code> indicates 0%, and <code class="ansible-value docutils literal notranslate"><span class="pre">1</span></code> indicates 100%.</p>
+<p>If specified, <code class="ansible-option-value docutils literal notranslate"><a class="reference internal" href="#ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-use-ari"><span class="std std-ref"><span class="pre">acme_certificate_use_ari=true</span></span></a></code>, and ARI information indicates the certificate should be renewed, then the certificate will be renewed even if the percentage has not yet been reached.</p>
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
@@ -666,6 +689,19 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </div></td>
 </tr>
 <tr class="row-even"><td><div class="ansible-option-cell">
+<div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_use_ari"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-use-ari"><strong>acme_certificate_use_ari</strong></p>
+<a class="ansibleOptionLink" href="#parameter-main--acme_certificate_use_ari" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
+<p><em class="ansible-option-versionadded">added in felixfontein.acme 0.10.0</em></p>
+</div></td>
+<td><div class="ansible-option-cell"><p>When set to <code class="ansible-value docutils literal notranslate"><span class="pre">true</span></code> and the ACME CA supports ARI (see <a class="reference external" href="https://www.ietf.org/archive/id/draft-ietf-acme-ari-07.html">draft-ietf-acme-ari</a>), will also query ARI information to determine whether the certificate should be renewed, and on renewal passes the <code class="docutils literal notranslate"><span class="pre">replaces</span></code> field when creating an ACME order to indicate which certificate it replaces.</p>
+<p class="ansible-option-line"><strong class="ansible-option-choices">Choices:</strong></p>
+<ul class="simple">
+<li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p><code class="ansible-option-choices-entry docutils literal notranslate"><span class="pre">true</span></code></p></li>
+</ul>
+</div></td>
+</tr>
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_use_sops_for_key"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-use-sops-for-key"><strong>acme_certificate_use_sops_for_key</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_use_sops_for_key" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
@@ -678,7 +714,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-odd"><td><div class="ansible-option-cell">
+<tr class="row-even"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_verify_auth"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-verify-auth"><strong>acme_certificate_verify_auth</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_verify_auth" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 <p><em class="ansible-option-versionadded">added in felixfontein.acme 0.6.0</em></p>
@@ -692,7 +728,7 @@ To check whether it is installed, run <code class="code docutils literal notrans
 </ul>
 </div></td>
 </tr>
-<tr class="row-even"><td><div class="ansible-option-cell">
+<tr class="row-odd"><td><div class="ansible-option-cell">
 <div class="ansibleOptionAnchor" id="parameter-main--acme_certificate_verify_certs"></div><p class="ansible-option-title" id="ansible-collections-felixfontein-acme-acme-certificate-role-parameter-main-acme-certificate-verify-certs"><strong>acme_certificate_verify_certs</strong></p>
 <a class="ansibleOptionLink" href="#parameter-main--acme_certificate_verify_certs" title="Permalink to this option"></a><p class="ansible-option-type-line"><span class="ansible-option-type">boolean</span></p>
 </div></td>
