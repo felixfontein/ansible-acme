@@ -85,6 +85,7 @@ argument_specs:
         type: str
         choices:
           - route53
+          - hetzner
           - hosttech
           - ns1
           - inwx
@@ -93,6 +94,7 @@ argument_specs:
         description:
           - Determines which DNS provider is used for DNS challenges.
           - Every DNS provider requires further configuration.
+          - The value V(hetzner) is supported since felixfontein.acme 0.10.0.
           - The value V(ansibletest) must not be used outside of integration tests. It will B(not) work.
       acme_certificate_aws_access_key:
         type: str
@@ -130,6 +132,12 @@ argument_specs:
           - When using O(acme_certificate_dns_provider=hosttech) with the new HostTech JSON REST API,
             the API token must be passed in this option.
           - When O(acme_certificate_verify_auth=false), this is not required when O(acme_certificate_dns_provider=hosttech) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
+      acme_certificate_hetzner_token:
+        type: str
+        description:
+          - When using O(acme_certificate_dns_provider=hetzner) with the Hetzner API, the API token must be passed in this option.
+          - When O(acme_certificate_verify_auth=false), this is not required when O(acme_certificate_dns_provider=hetzner) and
             can be provided in other ways, for example with R(module defaults, module_defaults).
       acme_certificate_ns1_secret_key:
         type: str

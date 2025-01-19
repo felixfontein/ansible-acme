@@ -25,6 +25,6 @@
     that:
       - >
         lookup('community.general.collection_version', 'community.dns',
-               result_not_found='0.0.0', result_no_version='2.0.0') is version('2.0.0', '>=')
-    msg: "community.dns 2.0.0 or newer must be installed for HostTech DNS"
+               result_not_found='0.0.0', result_no_version='2.9.0') is version('2.9.0', '>=')
+    msg: "community.dns 2.9.0 or newer must be installed for HostTech DNS"
   run_once: true
