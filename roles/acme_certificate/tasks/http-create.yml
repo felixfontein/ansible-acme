@@ -19,11 +19,11 @@
     dest: >-
       {{ [
         acme_certificate_server_location,
-        item.value[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):]
-      ] | community.general.path_join }}
+        item.challenges[acme_certificate_challenge].resource[('.well-known/acme-challenge/' | length):]
+      ] | ansible.builtin.path_join }}
     src: http-challenge.j2
     owner: "{{ acme_certificate_http_challenge_user }}"
     group: "{{ acme_certificate_http_challenge_group }}"
     mode: "{{ acme_certificate_http_challenge_file_mode }}"
-  with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data }}"
+  loop: "{{ acme_certificate_INTERNAL_challenge.challenge_data }}"
   become: "{{ acme_certificate_http_become }}"

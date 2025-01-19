@@ -39,6 +39,8 @@ argument_specs:
       acme_certificate_acme_version:
         type: int
         default: 2
+        choices:
+          - 2
         description:
           - The ACME directory's version.
       acme_certificate_server_location:
@@ -235,6 +237,7 @@ argument_specs:
         default: false
         description:
           - Whether a certificate with the OCSP Must Staple extension is requested.
+          - Note that not all CAs support this. For example, Let's Encrypt will drop support for this during 2025.
       acme_certificate_terms_agreed:
         type: bool
         default: false
@@ -344,6 +347,16 @@ argument_specs:
         description:
           - Only obtain a new certificate if the certificate does not yet exist, or if the certificate's expiry date is less than
             O(acme_certificate_renewal_on_remaining_days) days in the future.
+          - Can be combined with O(acme_certificate_renewal_on_remaining_percentage).
+      acme_certificate_renewal_on_remaining_percentage:
+        type: float
+        version_added: 0.10.0
+        description:
+          - Only obtain a new certificate if the certificate does not yet exist, or less than
+            O(acme_certificate_renewal_on_remaining_percentage) percent of the certificate's validity period are left.
+          - Can be combined with O(acme_certificate_renewal_on_remaining_days). Here V(0) indicates 0%, and V(1) indicates 100%.
+          - If specified, O(acme_certificate_use_ari=true), and ARI information indicates the certificate should be renewed,
+            then the certificate will be renewed even if the percentage has not yet been reached.
       acme_certificate_dns_substitution:
         type: dict
         default: {}
@@ -393,6 +406,19 @@ argument_specs:
           - If not provided, the system's standard resolver is used.
           - This is passed to the O(community.dns.wait_for_txt#module:server) option of M(community.dns.wait_for_txt).
         version_added: 0.9.0
+      acme_certificate_profile:
+        type: str
+        description:
+          - Use the specified profile to obtain a new certificate.
+        version_added: 0.10.0
+      acme_certificate_use_ari:
+        type: bool
+        description:
+          - When set to V(true) and the ACME CA supports ARI (see L(draft-ietf-acme-ari,
+            https://www.ietf.org/archive/id/draft-ietf-acme-ari-07.html)), will also query ARI information to determine
+            whether the certificate should be renewed, and on renewal passes the C(replaces) field when creating an ACME
+            order to indicate which certificate it replaces.
+        version_added: 0.10.0
     seealso:
       - module: community.crypto.openssl_privatekey
         description: You can create ACME account keys with this module.

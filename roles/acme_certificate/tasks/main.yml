@@ -19,26 +19,17 @@
   ansible.builtin.include_tasks: dns-{{ acme_certificate_dns_provider }}-sanity.yml
   when: "acme_certificate_challenge == 'dns-01'"
 
-- name: "Test whether old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }} exist"
-  ansible.builtin.stat:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
-  delegate_to: localhost
-  register: acme_certificate_INTERNAL_old_certificate_exists
-  when: >-
-    acme_certificate_keys_old_store
-    or acme_certificate_renewal_on_remaining_days is defined
-  run_once: true
-
-- name: Determine expiry of certificate file
-  community.crypto.x509_certificate_info:
-    path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}.pem"
-    valid_at:
-      soon: "+{{ acme_certificate_renewal_on_remaining_days }}d"
+- name: Determine expiry of certificate file, and whether it exists
+  community.crypto.acme_certificate_renewal_info:
+    certificate_path: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}.pem"
+    use_ari: "{{ acme_certificate_use_ari | default(false) }}"
+    remaining_days: "{{ acme_certificate_renewal_on_remaining_days | default(omit) }}"
+    remaining_percentage: "{{ acme_certificate_renewal_on_remaining_percentage | default(omit) }}"
+    acme_directory: "{{ acme_certificate_acme_directory }}"
+    acme_version: "{{ acme_certificate_acme_version }}"
+    validate_certs: "{{ acme_certificate_validate_certs }}"
   delegate_to: localhost
   register: acme_certificate_INTERNAL_old_certificate_info
-  when: >-
-    acme_certificate_renewal_on_remaining_days is defined
-    and (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
   run_once: true
 
 - name: Prepare memory
@@ -52,17 +43,56 @@
           (ansible_date_time.date ~ '-' ~ ansible_date_time.hour ~ ansible_date_time.minute ~ ansible_date_time.second ~ '-')
           if acme_certificate_keys_old_prepend_timestamp else ''
         ) ~ acme_certificate_key_name
-      ] | community.general.path_join }}
+      ] | ansible.builtin.path_join }}
   delegate_to: localhost
   run_once: true
 
-# Only renew certificate when a) it does not yet exist, or b) when acme_certificate_renewal_on_remaining_days has not
-# been specified, or c) when the certificate expires in less than acme_certificate_renewal_on_remaining_days days.
+- name: Show info
+  ansible.builtin.debug:
+    msg: "{{ message | replace('\n', ' ') | trim | ansible.builtin.regex_replace(' +', ' ') }}"
+  run_once: true
+  vars:
+    force_renew: >-
+      {{
+        acme_certificate_renewal_on_remaining_days is not defined and
+        acme_certificate_renewal_on_remaining_percentage is not defined and
+        not (acme_certificate_use_ari | default(false))
+      }}
+    will_renew: >-
+      {{ acme_certificate_INTERNAL_old_certificate_info.should_renew or force_renew }}
+    message: >-
+      {% if acme_certificate_INTERNAL_old_certificate_info.exists %}
+        Certificate does exist,
+      {% else %}
+        Certificate does not exist,
+      {% endif %}
+      {% if acme_certificate_INTERNAL_old_certificate_info.exists and not (force_renew or will_renew) %}
+        will not obtain a new one.
+      {% else %}
+        {% if not acme_certificate_INTERNAL_old_certificate_info.exists %}
+          will obtain one.
+        {% elif force_renew %}
+          will obtain a new one.
+        {% else %}
+          will obtain a new one because: {{ acme_certificate_INTERNAL_old_certificate_info.msg }}.
+        {% endif %}
+        {% if acme_certificate_INTERNAL_old_certificate_info.supports_ari and
+              acme_certificate_INTERNAL_old_certificate_info.cert_id | default(false) %}
+          Will use ACME ARI 'replaces' to replace existing certificate.
+        {% endif %}
+        {% if acme_certificate_profile | default(false) %}
+          Will use ACME profile '{{ acme_certificate_profile }}'.
+        {% endif %}
+      {% endif %}
+
 - name: Renew certificate
   when: >-
-    not (acme_certificate_INTERNAL_old_certificate_exists.stat.exists | default(true))
-    or acme_certificate_renewal_on_remaining_days is not defined
-    or not (acme_certificate_INTERNAL_old_certificate_info.valid_at.soon | default(true))
+    acme_certificate_INTERNAL_old_certificate_info.should_renew
+    or (
+      acme_certificate_renewal_on_remaining_days is not defined and
+      acme_certificate_renewal_on_remaining_percentage is not defined and
+      not (acme_certificate_use_ari | default(false))
+    )
   vars:
     acme_certificate_INTERNAL_key_extension: "{{ '.key.sops' if acme_certificate_use_sops_for_key else '.key' }}"
   block:
@@ -70,7 +100,7 @@
       ansible.builtin.stat:
         path: >-
           {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-             | community.general.path_join }}
+             | ansible.builtin.path_join }}
       delegate_to: localhost
       register: acme_certificate_INTERNAL_old_privatekey_exists
       run_once: true
@@ -80,15 +110,16 @@
         acme_certificate_INTERNAL_private_key_copy: >-
           {{ lookup('ansible.builtin.file',
                     [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-                      | community.general.path_join,
+                      | ansible.builtin.path_join,
                     rstrip=false) | b64encode }}
       when: acme_certificate_INTERNAL_old_privatekey_exists.stat.exists
       delegate_to: localhost
       run_once: true
+      no_log: true
 
     - name: "Copying old certificate files for {{ ', '.join(acme_certificate_domains + acme_certificate_ips) }}"
       ansible.builtin.copy:
-        src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | community.general.path_join }}{{ item }}"
+        src: "{{ [acme_certificate_keys_path, acme_certificate_key_name] | ansible.builtin.path_join }}{{ item }}"
         dest: "{{ acme_certificate_INTERNAL_backup_prefix ~ item }}"
         mode: preserve
       delegate_to: localhost
@@ -100,7 +131,7 @@
         - "{{ acme_certificate_INTERNAL_key_extension }}"
         - ".pem"
       register: acme_certificate_INTERNAL_backup_copies
-      when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_exists.stat.exists"
+      when: "acme_certificate_keys_old_store and acme_certificate_INTERNAL_old_certificate_info.exists"
       run_once: true
 
     - name: Obtain certificate
@@ -111,7 +142,7 @@
         src: key.j2
         dest: >-
           {{ [acme_certificate_keys_path, acme_certificate_key_name + acme_certificate_INTERNAL_key_extension]
-             | community.general.path_join }}
+             | ansible.builtin.path_join }}
         mode: preserve
       delegate_to: localhost
       when: >-

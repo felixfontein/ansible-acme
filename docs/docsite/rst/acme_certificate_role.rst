@@ -18,6 +18,7 @@ Parameters
 ----------
 
 See :ref:`ansible_collections.felixfontein.acme.docsite.general_role_parameters` for general parameters, and for challenge-specific parameters.
+See :ref:`the next section <ansible_collections.felixfontein.acme.docsite.acme_certificate_role_renewal>` for parameters related to when to renew certificates.
 
 These are the main variables used by this role:
 
@@ -33,7 +34,7 @@ These are the main variables used by this role:
 - ``acme_certificate_keys_old_prepend_timestamp``: Whether copies of old keys and certificates should be prepended by the current date and time. Default value is ``false``.
 - ``acme_certificate_regenerate_private_keys``: Whether to regenerate private keys. Default value is ``true``.
 - ``acme_certificate_use_sops_for_key``: Use `Mozilla sops <https://github.com/mozilla/sops>`_ to encrypt private key. Needs ``.sops.yaml`` file inside the keys directory or somewhere up the directory chain. Default value is ``false``.
-- ``acme_certificate_ocsp_must_staple``: Whether a certificate with the OCSP Must Staple extension is requested. Default value is ``false``.
+- ``acme_certificate_ocsp_must_staple``: Whether a certificate with the OCSP Must Staple extension is requested. Default value is ``false``. Note that not all CAs support this.
 - ``acme_certificate_terms_agreed``: Whether the terms of services are accepted or not. Default value is ``false``, usually needs to be set explicitly to ``true`` to allow creating an ACME account. This is only used for ACME v2.
 - ``acme_certificate_challenge``: The challenge type to use. Should be ``http-01`` for HTTP challenges (needs access to web server) or ``dns-01`` for DNS challenges (needs access to DNS provider).
 - ``acme_certificate_root_certificate``: The root certificate for the ACME directory. Default value is ``https://letsencrypt.org/certs/isrgrootx1.pem`` for the root certificate of Let's Encrypt.
@@ -42,8 +43,23 @@ These are the main variables used by this role:
 - ``acme_certificate_modify_account``: Whether the ACME account should be created (if it doesn't exist) and the contact data (email address) should be updated. Default value is ``true``. Set to ``false`` if you want to use the :ansplugin:`community.crypto.acme_account module <community.crypto.acme_account#module>` module to manage your ACME account (not done by this role).
 - ``acme_certificate_privatekey_mode``: Which file mode to use for the private key file. Default value is ``"0600"`` (octal string), which means read- and writeable by the owner, but not accessible by anyone else (except possibly ``root``).
 - ``acme_certificate_select_chain``: Must be in the format described for the ``select_chain`` parameter of :ansplugin:`community.crypto.acme_certificate module <community.crypto.acme_certificate#module>`. Allows to select the certificate chain to be used; ``acme_certificate_root_certificate`` must be used in conjunction. This can be used for example with `Let's Encrypt <https://community.letsencrypt.org/t/transition-to-isrgs-root-delayed-until-sep-29/125516>`__ to select which root certificate to use. See below for concrete examples how to choose between the Let's Encrypt roots.
-- ``acme_certificate_renewal_on_remaining_days``: Only renew the certificate if it does not yet exist, or expires in less than the given amount of days.
 - ``acme_certificate_verify_auth``: Only check whether credentials have been provided for DNS provider as role arguments when this is ``true`` (default).
+- ``acme_certificate_dns_servers`` and ``acme_certificate_dns_propagation_timeout``: Configure the DNS servers and the timeout for checking DNS record propagation.
+- ``acme_certificate_profile``: Select the ACME profile to request for the new certificate. The available profiles depend on the CA and should be documented by the CA.
+
+.. _ansible_collections.felixfontein.acme.docsite.acme_certificate_role_renewal:
+
+Determine whether the certificate should be obtained
+----------------------------------------------------
+
+By default, the role always tries to obtain the certificate.
+
+If the certificate exists and is not yet expired, and if at least one of the following options is specified, it will not do that by default.
+Instead, it will only obtain a new certificate if one of the conditions implied by the following parameters is satisfied:
+
+- ``acme_certificate_renewal_on_remaining_days`` specified (integer): Renew the certificate if it expires in less than the given amount of days.
+- ``acme_certificate_renewal_on_remaining_percentage`` specified (decimal value between ``0`` for 0% and ``1`` for 100%): Renew the certificate if less than this number of the validity period is left.
+- ``acme_certificate_use_ari`` set to ``true``: Renew the certificate if ARI information indicates that the renewal should happen.
 
 Selecting which root to use with Let's Encrypt
 ----------------------------------------------
