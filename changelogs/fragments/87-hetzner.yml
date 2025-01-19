@@ -1,2 +1,0 @@
-minor_changes:
-  - "acme_certificate role - add support for Hetzner's DNS (https://github.com/felixfontein/ansible-acme/pull/87)."

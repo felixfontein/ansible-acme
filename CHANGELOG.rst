@@ -4,6 +4,33 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
+v0.10.0
+=======
+
+Release Summary
+---------------
+
+Feature release.
+
+Minor Changes
+-------------
+
+- The collection now depends on community.crypto 2.24.0 or newer (https://github.com/felixfontein/ansible-acme/pull/86).
+- acme_certificate role - add support for Hetzner's DNS (https://github.com/felixfontein/ansible-acme/pull/87).
+- acme_certificate role - now uses the new ``community.crypto.acme_account_order_*`` modules added in community.crypto 2.24.0 (https://github.com/felixfontein/ansible-acme/pull/86).
+- acme_certificate role - support ACME profile selection with the ``acme_certificate_profile`` parameter (https://github.com/felixfontein/ansible-acme/pull/86).
+- acme_certificate role - support determining whether to renew by remaining percentage of the validity period (``acme_certificate_renewal_on_remaining_percentage`` option) or ARI information (``acme_certificate_use_ari`` option) (https://github.com/felixfontein/ansible-acme/pull/86).
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- acme_certificate role - the role no longer supports ``acme_certificate_acme_version == 1``. ACME v2 must always be used (https://github.com/felixfontein/ansible-acme/pull/86).
+
+Security Fixes
+--------------
+
+- acme_certificate role - properly apply ``no_log: true`` to task that reads private key file for backup. When not using SOPS encrypted private keys, the private key was visible in verbose mode or in the logs in plain text (https://github.com/felixfontein/ansible-acme/pull/86).
+
 v0.9.0
 ======
 
