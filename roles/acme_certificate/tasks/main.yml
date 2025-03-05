@@ -11,7 +11,7 @@
 
 - name: Sanity checks (2/2)
   ansible.builtin.assert:
-    that: "acme_certificate_domains or acme_certificate_ips"
+    that: "acme_certificate_domains is truthy or acme_certificate_ips is truthy"
     msg: "acme_certificate_domains or acme_certificate_ips must be specified"
   run_once: true
 
