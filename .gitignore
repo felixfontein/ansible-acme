@@ -7,5 +7,6 @@
 /felixfontein-acme-*.tar.gz
 /tests/output
 /.cache
+/.nox
 
 __pycache__
