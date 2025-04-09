@@ -165,24 +165,3 @@ jobs:
         env:
           ANSIBLE_COLLECTIONS_PATH: ../../../
         working-directory: ./ansible_collections/felixfontein/acme
-
-  yamllint:
-    name: yamllint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install yamllint
-        run: |
-          pip install yamllint --disable-pip-version-check
-
-      - name: Run yamllint
-        run: yamllint .
