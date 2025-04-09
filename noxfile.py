@@ -23,6 +23,16 @@ except ImportError:
 IN_CI = "GITHUB_ACTIONS" in os.environ
 
 
+antsibull_nox.add_lint_sessions(
+    run_isort=False,
+    run_black=False,
+    run_flake8=False,
+    run_pylint=False,
+    run_yamllint=True,
+    yamllint_config=".yamllint",
+    run_mypy=False,
+)
+
 antsibull_nox.add_docs_check(
     validate_collection_refs="all",
 )

@@ -8,29 +8,31 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = '''
-  name: _substitute_dns
-  short_description: "[INTERNAL] Adjust DNS name according to a CNAME substitution map"
-  version_added: 0.6.0
-  author: Felix Fontein (@felixfontein)
-  description:
-    - B(This is an internal tool and must only be used from roles in this collection!)
-      If you use it from outside this collection, be warned that its behavior can change
-      and it can be removed at any time, even in bugfix releases!
-  options:
-    _input:
-      description: A DNS name.
-      type: string
-      required: true
-    substitution_map:
-      description:
-        - A map mapping DNS names to other DNS names.
-        - You can use a single wildcard C(*) as the first component of a DNS name.
-        - Trailing dots are ignored.
-      type: dict
-      required: true
+---
+name: _substitute_dns
+short_description: "[INTERNAL] Adjust DNS name according to a CNAME substitution map"
+version_added: 0.6.0
+author: Felix Fontein (@felixfontein)
+description:
+  - B(This is an internal tool and must only be used from roles in this collection!)
+    If you use it from outside this collection, be warned that its behavior can change
+    and it can be removed at any time, even in bugfix releases!
+options:
+  _input:
+    description: A DNS name.
+    type: string
+    required: true
+  substitution_map:
+    description:
+      - A map mapping DNS names to other DNS names.
+      - You can use a single wildcard C(*) as the first component of a DNS name.
+      - Trailing dots are ignored.
+    type: dict
+    required: true
 '''
 
 EXAMPLES = '''
+---
 - name: Simple replace
   ansible.builtin.set_fact:
     name: "{{ 'www.example.com' | felixfontein.acme._substitute_dns({'www.example.com': 'www.com.example.org'}) }}"
@@ -48,9 +50,10 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-  _value:
-    description: The transformed input.
-    type: string
+---
+_value:
+  description: The transformed input.
+  type: string
 '''
 
 from ansible.errors import AnsibleFilterError, AnsibleFilterTypeError
