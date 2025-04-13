@@ -62,6 +62,8 @@ antsibull_nox.add_build_import_check(
     run_galaxy_importer=True,
 )
 
+antsibull_nox.add_ansible_lint()
+
 
 # Allow to run the noxfile with `python noxfile.py`, `pipx run noxfile.py`, or similar.
 # Requires nox >= 2025.02.09
