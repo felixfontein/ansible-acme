@@ -23,6 +23,19 @@ except ImportError:
 IN_CI = "GITHUB_ACTIONS" in os.environ
 
 
+antsibull_nox.setup(
+    collection_sources={
+        "amazon.aws": "git+https://github.com/ansible-collections/amazon.aws.git,main",
+        "community.aws": "git+https://github.com/ansible-collections/community.aws.git,main",
+        "community.crypto": "git+https://github.com/ansible-collections/community.crypto.git,main",
+        "community.dns": "git+https://github.com/ansible-collections/community.dns.git,main",
+        "community.general": "git+https://github.com/ansible-collections/community.general.git,main",
+        "community.sops": "git+https://github.com/ansible-collections/community.sops.git,main",
+        "community.internal_test_tools": "git+https://github.com/ansible-collections/community.internal_test_tools.git,main",
+        "community.library_inventory_filtering": "git+https://github.com/ansible-collections/community.library_inventory_filtering.git,stable-1",
+    },
+)
+
 antsibull_nox.add_lint_sessions(
     run_isort=False,
     run_black=False,
