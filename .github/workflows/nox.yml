@@ -18,21 +18,16 @@ name: nox
 jobs:
   nox:
     runs-on: ubuntu-latest
-    name: "Run nox"
+    name: "Run extra sanity tests"
     steps:
       - name: Check out collection
         uses: actions/checkout@v4
         with:
-          path: ansible_collections/felixfontein/acme
           persist-credentials: false
       - name: Run nox
         uses: ansible-community/antsibull-nox@main
-        with:
-          working-directory: ansible_collections/felixfontein/acme
 
   ansible-test:
     uses: ansible-community/antsibull-nox/.github/workflows/reusable-nox-matrix.yml@main
     with:
-      collection-namespace: felixfontein
-      collection-name: acme
       upload-codecov: false
