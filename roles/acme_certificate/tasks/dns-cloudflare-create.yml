@@ -16,6 +16,8 @@
     state: present
     ttl: 60
   with_dict: "{{ acme_certificate_INTERNAL_challenge.challenge_data_dns }}"
+  delegate_to: localhost
+  run_once: true
 
 - name: Wait for DNS entries to propagate
   community.dns.wait_for_txt:
