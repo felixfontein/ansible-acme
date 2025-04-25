@@ -1,0 +1,2 @@
+bugfixes:
+  - "acme_certificate role - if ``acme_certificate_dns_provider=cloudflare``, DNS entries were created on all targets instead of only on localhost (https://github.com/felixfontein/ansible-acme/pull/97)."
