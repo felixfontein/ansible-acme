@@ -25,6 +25,7 @@
     - name: Download SOPS test GPG key
       ansible.builtin.get_url:
         headers:
+          Accept: application/vnd.github+json
           Authorization: "{{ ('Bearer ' ~ github_token) if github_token is defined and github_token else '' }}"
         url: https://raw.githubusercontent.com/mozilla/sops/master/pgp/sops_functional_tests_key.asc
         dest: "{{ _tempfile.path }}"
