@@ -14,15 +14,19 @@
 
 [collection_sources_per_ansible.'2.11']
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
+"community.sops" = "git+https://github.com/ansible-collections/community.sops.git,stable-1"
 
 [collection_sources_per_ansible.'2.12']
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
+"community.sops" = "git+https://github.com/ansible-collections/community.sops.git,stable-1"
 
 [collection_sources_per_ansible.'2.13']
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
+"community.sops" = "git+https://github.com/ansible-collections/community.sops.git,stable-1"
 
 [collection_sources_per_ansible.'2.14']
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
+"community.sops" = "git+https://github.com/ansible-collections/community.sops.git,stable-1"
 
 [collection_sources_per_ansible.'2.15']
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
@@ -58,6 +62,9 @@ include_devel = true
 
 [sessions.ansible_test_integration_w_default_container]
 include_devel = true
+
+[sessions.ansible_test_integration_w_default_container.ansible_vars_from_env_vars]
+"github_token" = "GITHUB_TOKEN"
 
 [sessions.ansible_test_integration_w_default_container.core_python_versions]
 "2.11" = ["2.6", "2.7", "3.5", "3.6"]

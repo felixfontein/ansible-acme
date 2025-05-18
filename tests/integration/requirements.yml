@@ -5,3 +5,4 @@
 
 collections:
   - community.internal_test_tools
+  - community.sops

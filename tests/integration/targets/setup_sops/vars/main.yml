@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # SPDX-FileCopyrightText: 2020, Felix Fontein
 
-sops_version: 3.7.0
+sops_version: latest

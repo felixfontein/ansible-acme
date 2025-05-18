@@ -1,13 +1,40 @@
 ---
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
-# SPDX-FileCopyrightText: 2018-2020, Edoardo Tenani <e.tenani@arduino.cc> [@endorama]
-# SPDX-FileCopyrightText: 2022, Felix Fontein
+# SPDX-FileCopyrightText: 2025, Felix Fontein
 
-- name: Prepare status variable.
+- name: Prepare status variable
   ansible.builtin.set_fact:
     sops_installed: false
 
-- name: Run Ubuntu-specific tasks
-  ansible.builtin.include_tasks: ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- name: Install SOPS
+  when: ansible_facts.distribution in ['Ubuntu']
+  block:
+    - name: Use role from SOPS collection
+      ansible.builtin.include_role:
+        name: community.sops.install
+      vars:
+        sops_github_token: "{{ github_token | default('') }}"
+
+    - name: Get temporary filename for SOPS test GPG key
+      ansible.builtin.tempfile:
+        prefix: sops-functional-tests-key.
+        suffix: .asc
+      register: _tempfile
+
+    - name: Download SOPS test GPG key
+      ansible.builtin.get_url:
+        headers:
+          Authorization: "{{ ('Bearer ' ~ github_token) if github_token is defined and github_token else '' }}"
+        url: https://raw.githubusercontent.com/mozilla/sops/master/pgp/sops_functional_tests_key.asc
+        dest: "{{ _tempfile.path }}"
+        mode: "0600"
+        force: true
+
+    - name: Import SOPS test GPG key
+      ansible.builtin.command: gpg --import {{ _tempfile.path | ansible.builtin.quote }}  # noqa no-changed-when
+      ignore_errors: true
+
+    - name: Report that SOPS is installed
+      ansible.builtin.set_fact:
+        sops_installed: true
