@@ -8,5 +8,6 @@
 /tests/output
 /.cache
 /.nox
+/.ansible
 
 __pycache__
