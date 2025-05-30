@@ -56,7 +56,7 @@ _value:
   type: string
 '''
 
-from ansible.errors import AnsibleFilterError, AnsibleFilterTypeError
+from ansible.errors import AnsibleFilterError
 from ansible.module_utils.six import string_types
 from ansible.module_utils.common._collections_compat import Mapping
 from ansible.module_utils.common.text.converters import to_text, to_native
@@ -64,9 +64,9 @@ from ansible.module_utils.common.text.converters import to_text, to_native
 
 def substitute_dns(name, substitution_map):
     if not isinstance(name, string_types):
-        raise AnsibleFilterTypeError("The DNS name is of type %s, and not text" % type(name))
+        raise AnsibleFilterError("The DNS name is of type %s, and not text" % type(name))
     if not isinstance(substitution_map, Mapping):
-        raise AnsibleFilterTypeError("The substitution map type %s, and not a dictionary" % type(substitution_map))
+        raise AnsibleFilterError("The substitution map type %s, and not a dictionary" % type(substitution_map))
     name = to_text(name)
     if len(name) > 1 and (name.startswith(u'.') or u'..' in name):
         raise AnsibleFilterError("Invalid DNS name %r" % to_native(name))
@@ -80,7 +80,7 @@ def substitute_dns(name, substitution_map):
     result_wc = True
     for src, dst in substitution_map.items():
         if not isinstance(src, string_types) or not isinstance(dst, string_types):
-            raise AnsibleFilterTypeError("Key or value of dictionary entry are of type {0} resp. {1}, but both must be text".format(type(src), type(dst)))
+            raise AnsibleFilterError("Key or value of dictionary entry are of type {0} resp. {1}, but both must be text".format(type(src), type(dst)))
         src = to_text(src)
         dst = to_text(dst)
         src_wildcard = False

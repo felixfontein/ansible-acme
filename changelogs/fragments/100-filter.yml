@@ -1,0 +1,2 @@
+bugfixes:
+  - "Avoid deprecation message with ansible-core 2.19 when creating or removing DNS entries (https://github.com/felixfontein/ansible-acme/pull/100)."
