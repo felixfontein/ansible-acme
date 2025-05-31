@@ -4,6 +4,20 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
+v0.10.1
+=======
+
+Release Summary
+---------------
+
+Bugfix release.
+
+Bugfixes
+--------
+
+- Avoid deprecation message with ansible-core 2.19 when creating or removing DNS entries (https://github.com/felixfontein/ansible-acme/pull/100).
+- acme_certificate role - if ``acme_certificate_dns_provider=cloudflare``, DNS entries were created on all targets instead of only on localhost (https://github.com/felixfontein/ansible-acme/pull/97).
+
 v0.10.0
 =======
 

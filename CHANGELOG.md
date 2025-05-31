@@ -2,62 +2,79 @@
 
 **Topics**
 
-- <a href="#v0-10-0">v0\.10\.0</a>
+- <a href="#v0-10-1">v0\.10\.1</a>
     - <a href="#release-summary">Release Summary</a>
+    - <a href="#bugfixes">Bugfixes</a>
+- <a href="#v0-10-0">v0\.10\.0</a>
+    - <a href="#release-summary-1">Release Summary</a>
     - <a href="#minor-changes">Minor Changes</a>
     - <a href="#breaking-changes--porting-guide">Breaking Changes / Porting Guide</a>
     - <a href="#security-fixes">Security Fixes</a>
 - <a href="#v0-9-0">v0\.9\.0</a>
-    - <a href="#release-summary-1">Release Summary</a>
+    - <a href="#release-summary-2">Release Summary</a>
     - <a href="#minor-changes-1">Minor Changes</a>
 - <a href="#v0-8-1">v0\.8\.1</a>
-    - <a href="#release-summary-2">Release Summary</a>
-- <a href="#v0-8-0">v0\.8\.0</a>
     - <a href="#release-summary-3">Release Summary</a>
+- <a href="#v0-8-0">v0\.8\.0</a>
+    - <a href="#release-summary-4">Release Summary</a>
     - <a href="#major-changes">Major Changes</a>
     - <a href="#minor-changes-2">Minor Changes</a>
 - <a href="#v0-7-0">v0\.7\.0</a>
-    - <a href="#release-summary-4">Release Summary</a>
+    - <a href="#release-summary-5">Release Summary</a>
     - <a href="#minor-changes-3">Minor Changes</a>
     - <a href="#breaking-changes--porting-guide-1">Breaking Changes / Porting Guide</a>
 - <a href="#v0-6-0">v0\.6\.0</a>
-    - <a href="#release-summary-5">Release Summary</a>
+    - <a href="#release-summary-6">Release Summary</a>
     - <a href="#minor-changes-4">Minor Changes</a>
     - <a href="#breaking-changes--porting-guide-2">Breaking Changes / Porting Guide</a>
-    - <a href="#bugfixes">Bugfixes</a>
+    - <a href="#bugfixes-1">Bugfixes</a>
     - <a href="#new-plugins">New Plugins</a>
         - <a href="#filter">Filter</a>
 - <a href="#v0-5-2">v0\.5\.2</a>
-    - <a href="#release-summary-6">Release Summary</a>
-- <a href="#v0-5-1">v0\.5\.1</a>
     - <a href="#release-summary-7">Release Summary</a>
-    - <a href="#bugfixes-1">Bugfixes</a>
-- <a href="#v0-5-0">v0\.5\.0</a>
+- <a href="#v0-5-1">v0\.5\.1</a>
     - <a href="#release-summary-8">Release Summary</a>
+    - <a href="#bugfixes-2">Bugfixes</a>
+- <a href="#v0-5-0">v0\.5\.0</a>
+    - <a href="#release-summary-9">Release Summary</a>
     - <a href="#minor-changes-5">Minor Changes</a>
     - <a href="#breaking-changes--porting-guide-3">Breaking Changes / Porting Guide</a>
 - <a href="#v0-4-0">v0\.4\.0</a>
-    - <a href="#release-summary-9">Release Summary</a>
+    - <a href="#release-summary-10">Release Summary</a>
     - <a href="#minor-changes-6">Minor Changes</a>
 - <a href="#v0-3-1">v0\.3\.1</a>
-    - <a href="#release-summary-10">Release Summary</a>
-    - <a href="#bugfixes-2">Bugfixes</a>
-- <a href="#v0-3-0">v0\.3\.0</a>
     - <a href="#release-summary-11">Release Summary</a>
+    - <a href="#bugfixes-3">Bugfixes</a>
+- <a href="#v0-3-0">v0\.3\.0</a>
+    - <a href="#release-summary-12">Release Summary</a>
     - <a href="#minor-changes-7">Minor Changes</a>
     - <a href="#breaking-changes--porting-guide-4">Breaking Changes / Porting Guide</a>
-    - <a href="#bugfixes-3">Bugfixes</a>
+    - <a href="#bugfixes-4">Bugfixes</a>
 - <a href="#v0-2-0">v0\.2\.0</a>
-    - <a href="#release-summary-12">Release Summary</a>
+    - <a href="#release-summary-13">Release Summary</a>
     - <a href="#minor-changes-8">Minor Changes</a>
 - <a href="#v0-1-0">v0\.1\.0</a>
-    - <a href="#release-summary-13">Release Summary</a>
+    - <a href="#release-summary-14">Release Summary</a>
     - <a href="#new-roles">New Roles</a>
+
+<a id="v0-10-1"></a>
+## v0\.10\.1
+
+<a id="release-summary"></a>
+### Release Summary
+
+Bugfix release\.
+
+<a id="bugfixes"></a>
+### Bugfixes
+
+* Avoid deprecation message with ansible\-core 2\.19 when creating or removing DNS entries \([https\://github\.com/felixfontein/ansible\-acme/pull/100](https\://github\.com/felixfontein/ansible\-acme/pull/100)\)\.
+* acme\_certificate role \- if <code>acme\_certificate\_dns\_provider\=cloudflare</code>\, DNS entries were created on all targets instead of only on localhost \([https\://github\.com/felixfontein/ansible\-acme/pull/97](https\://github\.com/felixfontein/ansible\-acme/pull/97)\)\.
 
 <a id="v0-10-0"></a>
 ## v0\.10\.0
 
-<a id="release-summary"></a>
+<a id="release-summary-1"></a>
 ### Release Summary
 
 Feature release\.
@@ -84,7 +101,7 @@ Feature release\.
 <a id="v0-9-0"></a>
 ## v0\.9\.0
 
-<a id="release-summary-1"></a>
+<a id="release-summary-2"></a>
 ### Release Summary
 
 Feature release\.
@@ -98,7 +115,7 @@ Feature release\.
 <a id="v0-8-1"></a>
 ## v0\.8\.1
 
-<a id="release-summary-2"></a>
+<a id="release-summary-3"></a>
 ### Release Summary
 
 Maintenance release with slightly updated documentation and no functional changes\.
@@ -106,7 +123,7 @@ Maintenance release with slightly updated documentation and no functional change
 <a id="v0-8-0"></a>
 ## v0\.8\.0
 
-<a id="release-summary-3"></a>
+<a id="release-summary-4"></a>
 ### Release Summary
 
 Feature release with improved creation of DNS records for Route53 and Hosttech\.
@@ -125,7 +142,7 @@ Feature release with improved creation of DNS records for Route53 and Hosttech\.
 <a id="v0-7-0"></a>
 ## v0\.7\.0
 
-<a id="release-summary-4"></a>
+<a id="release-summary-5"></a>
 ### Release Summary
 
 New major release dropping compatibility with old Ansible versions\, namely Ansible 2\.9 and ansible\-base 2\.10\.
@@ -143,7 +160,7 @@ New major release dropping compatibility with old Ansible versions\, namely Ansi
 <a id="v0-6-0"></a>
 ## v0\.6\.0
 
-<a id="release-summary-5"></a>
+<a id="release-summary-6"></a>
 ### Release Summary
 
 Collection dependency update with bugfixes and new features\.
@@ -159,7 +176,7 @@ Collection dependency update with bugfixes and new features\.
 
 * The collection no longer depends on community\.aws \>\= 1\.0\.0\, but on amazon\.aws \>\= 5\.0\.0\. The community\.aws\.route53 module was migrated to amazon\.aws\, which allows us to depend on one collection less\. Note that if you use this collection with Ansible\, you need Ansible 7\.0\.0 or newer\; also note that Ansible 6\.x\.0 and before are End of Life by now \([https\://github\.com/felixfontein/ansible\-acme/pull/39](https\://github\.com/felixfontein/ansible\-acme/pull/39)\)\.
 
-<a id="bugfixes"></a>
+<a id="bugfixes-1"></a>
 ### Bugfixes
 
 * Avoid double failure of acme\_certificate rescue task when first task in block fails \([https\://github\.com/felixfontein/ansible\-acme/pull/38](https\://github\.com/felixfontein/ansible\-acme/pull/38)\)\.
@@ -175,7 +192,7 @@ Collection dependency update with bugfixes and new features\.
 <a id="v0-5-2"></a>
 ## v0\.5\.2
 
-<a id="release-summary-6"></a>
+<a id="release-summary-7"></a>
 ### Release Summary
 
 Maintenance release\.
@@ -183,12 +200,12 @@ Maintenance release\.
 <a id="v0-5-1"></a>
 ## v0\.5\.1
 
-<a id="release-summary-7"></a>
+<a id="release-summary-8"></a>
 ### Release Summary
 
 Bugfix release\.
 
-<a id="bugfixes-1"></a>
+<a id="bugfixes-2"></a>
 ### Bugfixes
 
 * When cleaning up after failures in the <code>acme\_certificate</code> role\, make sure that an undefined <code>ansible\_failed\_task</code> does not cause another error \([https\://github\.com/felixfontein/ansible\-acme/pull/32](https\://github\.com/felixfontein/ansible\-acme/pull/32)\)\.
@@ -196,7 +213,7 @@ Bugfix release\.
 <a id="v0-5-0"></a>
 ## v0\.5\.0
 
-<a id="release-summary-8"></a>
+<a id="release-summary-9"></a>
 ### Release Summary
 
 Feature release dropping support for some specific old Ansible/ansible\-base versions\.
@@ -217,7 +234,7 @@ Feature release dropping support for some specific old Ansible/ansible\-base ver
 <a id="v0-4-0"></a>
 ## v0\.4\.0
 
-<a id="release-summary-9"></a>
+<a id="release-summary-10"></a>
 ### Release Summary
 
 This release bumps some requirements and adds some features\.
@@ -233,12 +250,12 @@ This release bumps some requirements and adds some features\.
 <a id="v0-3-1"></a>
 ## v0\.3\.1
 
-<a id="release-summary-10"></a>
+<a id="release-summary-11"></a>
 ### Release Summary
 
 Update dependencies\.
 
-<a id="bugfixes-2"></a>
+<a id="bugfixes-3"></a>
 ### Bugfixes
 
 * Hosttech DNS support\: restrict required version of community\.dns to \< 2\.0\.0\. A later version will bump the requirement to \>\= 2\.0\.0 and switch to the new API\.
@@ -246,7 +263,7 @@ Update dependencies\.
 <a id="v0-3-0"></a>
 ## v0\.3\.0
 
-<a id="release-summary-11"></a>
+<a id="release-summary-12"></a>
 ### Release Summary
 
 Major revamp of the collection with new dependencies\, better documentation\, and several features and bugfixes\.
@@ -266,7 +283,7 @@ Major revamp of the collection with new dependencies\, better documentation\, an
 * Replace <code>felixfontein\.hosttech\_dns</code> and <code>felixfontein\.tools</code> collection dependencies by <code>community\.dns \>\= 1\.0\.0</code> and <code>community\.general \>\= 2\.5\.0</code>\.
 * acme\_certificate role \- remove usage of tags <code>issue\-tls\-certs</code>\, <code>issue\-tls\-certs\-newkey</code> and <code>verify\-tls\-certs</code>\. By default\, new private keys are generated\. This can be disabled by setting <code>acme\_certificate\_regenerate\_private\_keys</code> to <code>false</code> \([https\://github\.com/felixfontein/ansible\-acme/pull/15](https\://github\.com/felixfontein/ansible\-acme/pull/15)\)\.
 
-<a id="bugfixes-3"></a>
+<a id="bugfixes-4"></a>
 ### Bugfixes
 
 * account\_key\_rollover role \- when using sops\-encrypted keys\, <code>community\.sops\.sops\_encrypt</code> was run on the remote node and not the controller node \([https\://github\.com/felixfontein/ansible\-acme/pull/7](https\://github\.com/felixfontein/ansible\-acme/pull/7)\)\.
@@ -274,7 +291,7 @@ Major revamp of the collection with new dependencies\, better documentation\, an
 <a id="v0-2-0"></a>
 ## v0\.2\.0
 
-<a id="release-summary-12"></a>
+<a id="release-summary-13"></a>
 ### Release Summary
 
 Feature and repository maintenance release\.
@@ -287,7 +304,7 @@ Feature and repository maintenance release\.
 <a id="v0-1-0"></a>
 ## v0\.1\.0
 
-<a id="release-summary-13"></a>
+<a id="release-summary-14"></a>
 ### Release Summary
 
 Initial release of my [acme\_certificate](https\://galaxy\.ansible\.com/ui/repo/published/felixfontein/acme\_certificate) role converted to a collection\, with two new roles <em class="title-reference">revoke\_old\_certificates</em> and <em class="title-reference">account\_key\_rollover</em>\.

@@ -253,3 +253,16 @@ releases:
       - 86-new-acme-modules.yml
       - 87-hetzner.yml
     release_date: '2025-01-19'
+  0.10.1:
+    changes:
+      bugfixes:
+        - Avoid deprecation message with ansible-core 2.19 when creating or removing
+          DNS entries (https://github.com/felixfontein/ansible-acme/pull/100).
+        - acme_certificate role - if ``acme_certificate_dns_provider=cloudflare``,
+          DNS entries were created on all targets instead of only on localhost (https://github.com/felixfontein/ansible-acme/pull/97).
+      release_summary: Bugfix release.
+    fragments:
+      - 0.10.1.yml
+      - 100-filter.yml
+      - 97-cloudflare.yml
+    release_date: '2025-05-31'
