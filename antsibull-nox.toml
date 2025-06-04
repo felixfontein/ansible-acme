@@ -53,6 +53,7 @@ validate_collection_refs="all"
 run_no_unwanted_files = true
 no_unwanted_files_module_extensions = [".py"]
 no_unwanted_files_yaml_extensions = [".yml"]
+run_no_trailing_whitespace = true
 
 [sessions.build_import_check]
 run_galaxy_importer = true
