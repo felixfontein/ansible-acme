@@ -13,6 +13,8 @@
 "community.library_inventory_filtering" = "git+https://github.com/ansible-collections/community.library_inventory_filtering.git,stable-1"
 
 [collection_sources_per_ansible.'2.11']
+# Note that community.aws/amazon.aws 5 isn't supported by the collection! Since we don't use these
+# collections in CI (except for ansible-lint, which isn't run with ansible-core 2.11), everything's fine...
 "amazon.aws" = "git+https://github.com/ansible-collections/amazon.aws.git,stable-5"
 "community.aws" = "git+https://github.com/ansible-collections/community.aws.git,stable-5"
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
