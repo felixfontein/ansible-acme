@@ -64,6 +64,7 @@ run_black = false
 run_flake8 = false
 run_pylint = false
 yamllint_config = ".yamllint"
+yamllint_config_extra_docs = ".yamllint-docs"
 run_mypy = false
 
 [sessions.docs_check]

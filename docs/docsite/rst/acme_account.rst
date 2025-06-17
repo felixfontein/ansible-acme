@@ -29,7 +29,7 @@ The following shows how to create an account manually with two contact email add
         contact:
         - "mailto:me@example.com"
         - "mailto:me@example.org"
-        terms_agreed: yes
+        terms_agreed: true
 
 For ACME servers that need External Account Binding, for example for ZeroSSL or Sectigo, you must always use :ansplugin:`community.crypto.acme_account module <community.crypto.acme_account#module>` to set up the account manually. This can look for example like this:
 
