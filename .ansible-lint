@@ -13,6 +13,7 @@ skip_list:
   - galaxy[version-incorrect]  # Seriously, this rule is completely idiotic!
   - meta-runtime[unsupported-version]  # Seriously, this rule is completely idiotic!
   - args[module]  # This rule isn't really useful yet
+  - sanity[cannot-ignore]  # pylint:ansible-bad-import-from is really needed in ignore.txt
 exclude_paths:
   - changelogs/
   - .nox/
