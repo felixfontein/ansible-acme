@@ -56,6 +56,11 @@
 "community.aws" = "git+https://github.com/ansible-collections/community.aws.git,stable-9"
 "community.crypto" = "git+https://github.com/ansible-collections/community.crypto.git,stable-2"
 
+[vcs]
+vcs = "git"
+development_branch = "main"
+stable_branches = [ "stable-*" ]
+
 [sessions]
 
 [sessions.lint]
