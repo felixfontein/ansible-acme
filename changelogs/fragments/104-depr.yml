@@ -1,0 +1,2 @@
+bugfixes:
+  - "Avoid deprecated import (in ansible-core 2.20) in private filter plugin used by the ``acme_certificate`` role (https://github.com/felixfontein/ansible-acme/pull/104)."

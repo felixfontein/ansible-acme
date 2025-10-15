@@ -1,0 +1,2 @@
+plugins/filter/_substitute_dns.py pylint:ansible-bad-import-from
+plugins/filter/_substitute_dns.py pylint:deprecated-class

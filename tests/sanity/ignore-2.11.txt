@@ -1,2 +1,3 @@
 noxfile.py future-import-boilerplate
 noxfile.py metaclass-boilerplate
+plugins/filter/_substitute_dns.py pylint:ansible-bad-import-from
