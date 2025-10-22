@@ -112,3 +112,7 @@ include_devel = true
 "2.19" = ["3.9"]
 
 [sessions.ansible_lint]
+ansible_lint_package = [
+    "ansible-lint",
+    "ansible-compat < 25.8.2",
+]
