@@ -136,9 +136,21 @@ argument_specs:
       acme_certificate_hetzner_token:
         type: str
         description:
-          - When using O(acme_certificate_dns_provider=hetzner) with the Hetzner API, the API token must be passed in this option.
+          - When using O(acme_certificate_dns_provider=hetzner) with the Hetzner API, the API token must be passed in this option
+            if the old Hetzner DNS API is used.
           - When O(acme_certificate_verify_auth=false), this is not required when O(acme_certificate_dns_provider=hetzner) and
             can be provided in other ways, for example with R(module defaults, module_defaults).
+          - This is mutually exclusive with O(acme_certificate_hetzner_api_token).
+      acme_certificate_hetzner_api_token:
+        type: str
+        description:
+          - When using O(acme_certificate_dns_provider=hetzner) with the Hetzner API, the API token must be passed in this option
+            if the new (end of 2025) Hetzner DNS API is used.
+          - When O(acme_certificate_verify_auth=false), this is not required when O(acme_certificate_dns_provider=hetzner) and
+            can be provided in other ways, for example with R(module defaults, module_defaults).
+          - This is mutually exclusive with O(acme_certificate_hetzner_token).
+          - Note that this requires community.dns 3.5.0 or newer.
+        version_added: 0.11.0
       acme_certificate_ns1_secret_key:
         type: str
         description:
