@@ -6,9 +6,17 @@
 - name: DNS sanity checks (1/2)
   ansible.builtin.assert:
     that:
-      - acme_certificate_hetzner_token is defined
+      - >-
+        acme_certificate_hetzner_api_token is defined
+        or acme_certificate_hetzner_token is defined
+      - >-
+        not (
+          acme_certificate_hetzner_api_token is defined
+          and acme_certificate_hetzner_token is defined
+        )
     msg: >-
-      acme_certificate_hetzner_token must be specified for Hetzner DNS
+      acme_certificate_hetzner_api_token must be specified for Hetzner DNS (new API since end of 2025), or alternatively
+      acme_certificate_hetzner_token must be specified (old API)
   run_once: true
   when: acme_certificate_verify_auth
 
@@ -17,6 +25,9 @@
     that:
       - >
         lookup('community.general.collection_version', 'community.dns',
-               result_not_found='0.0.0', result_no_version='2.9.0') is version('2.9.0', '>=')
-    msg: "community.dns 2.9.0 or newer must be installed for Hetzner DNS"
+               result_not_found='0.0.0', result_no_version=min_version) is version(min_version, '>=')
+    msg: "community.dns {{ min_version }} or newer must be installed for Hetzner DNS"
   run_once: true
+  vars:
+    min_version: >-
+      {{ '3.5.0' if acme_certificate_hetzner_api_token is defined else '2.9.0' }}
