@@ -4,6 +4,24 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
+v0.11.0
+=======
+
+Release Summary
+---------------
+
+Feature release.
+
+Minor Changes
+-------------
+
+- Support Hetzner's new DNS API (https://github.com/felixfontein/ansible-acme/pull/109).
+
+Bugfixes
+--------
+
+- Avoid deprecated import (in ansible-core 2.20) in private filter plugin used by the ``acme_certificate`` role (https://github.com/felixfontein/ansible-acme/pull/104).
+
 v0.10.1
 =======
 

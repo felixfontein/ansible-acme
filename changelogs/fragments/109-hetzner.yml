@@ -1,2 +1,0 @@
-minor_changes:
-  - "Support Hetzner's new DNS API (https://github.com/felixfontein/ansible-acme/pull/109)."

@@ -266,3 +266,16 @@ releases:
       - 100-filter.yml
       - 97-cloudflare.yml
     release_date: '2025-05-31'
+  0.11.0:
+    changes:
+      bugfixes:
+        - Avoid deprecated import (in ansible-core 2.20) in private filter plugin
+          used by the ``acme_certificate`` role (https://github.com/felixfontein/ansible-acme/pull/104).
+      minor_changes:
+        - Support Hetzner's new DNS API (https://github.com/felixfontein/ansible-acme/pull/109).
+      release_summary: Feature release.
+    fragments:
+      - 0.11.0.yml
+      - 104-depr.yml
+      - 109-hetzner.yml
+    release_date: '2026-01-03'
