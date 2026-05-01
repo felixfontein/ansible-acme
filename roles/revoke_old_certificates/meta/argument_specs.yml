@@ -19,7 +19,10 @@ argument_specs:
       - This role supports both plaintext private keys and sops-encrypted private keys (see
         O(felixfontein.acme.acme_certificate#role:main:acme_certificate_use_sops_for_key) option of the
         P(felixfontein.acme.acme_certificate#role) role.
-      - Make sure that you first replace all usages of the old certificates by the new ones before revokation!
+      - B(Make sure that you first replace all usages of the old certificates by the new ones before revokation!)
+        After recovation, clients can possibly no longer connect to services using the revoked certificates.
+        Whether this still works or not depends on how and whether clients check revocation, so clients still
+        working is no indication that revocation did not work.
     author:
       - Felix Fontein (@felixfontein)
     options:
