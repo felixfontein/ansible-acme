@@ -56,8 +56,9 @@ _value:
   type: string
 '''
 
+import sys
+
 from ansible.errors import AnsibleFilterError
-from ansible.module_utils.six import string_types
 from ansible.module_utils.common.text.converters import to_text, to_native
 
 try:
@@ -65,6 +66,11 @@ try:
 except ImportError:
     # Python 2.x compat
     from collections import Mapping
+
+if sys.version_info >= (3,):
+    string_types = (str,)
+else:
+    string_types = basestring  # pylint: disable=undefined-variable
 
 
 def substitute_dns(name, substitution_map):
