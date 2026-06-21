@@ -1,2 +1,0 @@
-bugfixes:
-  - "Avoid importing ``ansible.module_utils.six`` (https://github.com/felixfontein/ansible-acme/pull/112)."

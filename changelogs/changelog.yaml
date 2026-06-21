@@ -279,3 +279,15 @@ releases:
       - 104-depr.yml
       - 109-hetzner.yml
     release_date: '2026-01-03'
+  0.11.1:
+    changes:
+      bugfixes:
+        - Avoid importing ``ansible.module_utils.six`` (https://github.com/felixfontein/ansible-acme/pull/112).
+        - Avoid using ``ansible_date_time`` instead of ``ansible_facts.date_time``
+          (https://github.com/felixfontein/ansible-acme/pull/113).
+      release_summary: Maintenance release.
+    fragments:
+      - 0.11.1.yml
+      - 113-facts.yml
+      - six.yml
+    release_date: '2026-06-21'

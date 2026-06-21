@@ -1,2 +1,0 @@
-bugfixes:
-  - "Avoid using ``ansible_date_time`` instead of ``ansible_facts.date_time`` (https://github.com/felixfontein/ansible-acme/pull/113)."

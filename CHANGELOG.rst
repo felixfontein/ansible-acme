@@ -4,6 +4,20 @@ Tools for ACME Release Notes
 
 .. contents:: Topics
 
+v0.11.1
+=======
+
+Release Summary
+---------------
+
+Maintenance release.
+
+Bugfixes
+--------
+
+- Avoid importing ``ansible.module_utils.six`` (https://github.com/felixfontein/ansible-acme/pull/112).
+- Avoid using ``ansible_date_time`` instead of ``ansible_facts.date_time`` (https://github.com/felixfontein/ansible-acme/pull/113).
+
 v0.11.0
 =======
 
