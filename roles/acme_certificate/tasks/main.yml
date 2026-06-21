@@ -40,7 +40,14 @@
       {{ [
         acme_certificate_keys_old_path,
         (
-          (ansible_date_time.date ~ '-' ~ ansible_date_time.hour ~ ansible_date_time.minute ~ ansible_date_time.second ~ '-')
+          (
+            ansible_facts.date_time.date
+            ~ '-'
+            ~ ansible_facts.date_time.hour
+            ~ ansible_facts.date_time.minute
+            ~ ansible_facts.date_time.second
+            ~ '-'
+          )
           if acme_certificate_keys_old_prepend_timestamp else ''
         ) ~ acme_certificate_key_name
       ] | ansible.builtin.path_join }}
