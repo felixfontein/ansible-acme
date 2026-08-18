@@ -216,7 +216,7 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/ssl/private/</span>
 <span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
 <span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
-<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0400&quot;</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"0400"</span>
 <span class="w">  </span><span class="nt">with_items</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com.key</span>
 <span class="w">  </span><span class="nt">notify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reload webserver</span>
@@ -227,7 +227,7 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/ssl/server-certs/</span>
 <span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
 <span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
-<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0444&quot;</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"0444"</span>
 <span class="w">  </span><span class="nt">with_items</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com-rootchain.pem</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com-fullchain.pem</span>
@@ -242,15 +242,15 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">www.example.com</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># Allowing only TLS 1.0 and 1.2, with a very selective amount of ciphers.</span>
-<span class="w">    </span><span class="c1"># According to SSL Lab&#39;s SSL server test, this will block:</span>
+<span class="w">    </span><span class="c1"># According to SSL Lab's SSL server test, this will block:</span>
 <span class="w">    </span><span class="c1">#   - Android 2.3.7</span>
 <span class="w">    </span><span class="c1">#   - IE 6 and 8 under Windows XP</span>
 <span class="w">    </span><span class="c1">#   - Java 6, 7 and 8</span>
-<span class="w">    </span><span class="c1"># If that&#39;s not acceptable for you, choose other cipher lists. Look for</span>
+<span class="w">    </span><span class="c1"># If that's not acceptable for you, choose other cipher lists. Look for</span>
 <span class="w">    </span><span class="c1"># example at https://wiki.mozilla.org/Security/Server_Side_TLS</span>
 <span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">&quot;-ALL</span><span class="w"> </span><span class="s">!ADH</span><span class="w"> </span><span class="s">!aNULL</span><span class="w"> </span><span class="s">!EXP</span><span class="w"> </span><span class="s">!EXPORT40</span><span class="w"> </span><span class="s">!EXPORT56</span><span class="w"> </span><span class="s">!RC4</span><span class="w"> </span><span class="s">!3DES</span><span class="w"> </span><span class="s">!eNULL</span><span class="w"> </span><span class="s">!NULL</span><span class="w"> </span><span class="s">!DES</span><span class="w"> </span><span class="s">!MD5</span><span class="w"> </span><span class="s">!LOW</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">DHE-RSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-SHA384</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-SHA384</span><span class="w"> </span><span class="s">DHE-RSA-AES256-SHA256</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-SHA</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-SHA</span><span class="w"> </span><span class="s">DHE-RSA-AES256-SHA&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">"-ALL</span><span class="w"> </span><span class="s">!ADH</span><span class="w"> </span><span class="s">!aNULL</span><span class="w"> </span><span class="s">!EXP</span><span class="w"> </span><span class="s">!EXPORT40</span><span class="w"> </span><span class="s">!EXPORT56</span><span class="w"> </span><span class="s">!RC4</span><span class="w"> </span><span class="s">!3DES</span><span class="w"> </span><span class="s">!eNULL</span><span class="w"> </span><span class="s">!NULL</span><span class="w"> </span><span class="s">!DES</span><span class="w"> </span><span class="s">!MD5</span><span class="w"> </span><span class="s">!LOW</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">DHE-RSA-AES256-GCM-SHA384</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-SHA384</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-SHA384</span><span class="w"> </span><span class="s">DHE-RSA-AES256-SHA256</span><span class="w"> </span><span class="s">ECDHE-ECDSA-AES256-SHA</span><span class="w"> </span><span class="s">ECDHE-RSA-AES256-SHA</span><span class="w"> </span><span class="s">DHE-RSA-AES256-SHA"</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># The certificate chain sent to the browser, as well as the private key.</span>
 <span class="w">    </span><span class="c1"># Make sure your private key is only accessible by the webserver during</span>
@@ -259,7 +259,7 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/ssl/private/www.example.com.key</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># For OCSP stapling, we need a DNS resolver. Here only public Quad9 and</span>
-<span class="w">    </span><span class="c1"># Google DNS servers are specified; I would prepent them by your hoster&#39;s</span>
+<span class="w">    </span><span class="c1"># Google DNS servers are specified; I would prepent them by your hoster's</span>
 <span class="w">    </span><span class="c1"># DNS servers. You can usually find their IPs in /etc/resolv.conf on your</span>
 <span class="w">    </span><span class="c1"># webserver.</span>
 <span class="w">    </span><span class="kn">resolver</span><span class="w"> </span><span class="mi">9</span><span class="s">.9.9.9</span><span class="w"> </span><span class="mi">8</span><span class="s">.8.8.8</span><span class="w"> </span><span class="mi">8</span><span class="s">.8.4.4</span><span class="w"> </span><span class="s">valid=300s</span><span class="p">;</span>
@@ -272,15 +272,15 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">    </span><span class="kn">ssl_stapling_verify</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">ssl_trusted_certificate</span><span class="w"> </span><span class="s">/etc/ssl/server-certs/www.example.com-rootchain.pem</span><span class="p">;</span>
 
-<span class="w">    </span><span class="c1"># Enables a SSL session cache. Adjust the numbers depending on your site&#39;s usage.</span>
+<span class="w">    </span><span class="c1"># Enables a SSL session cache. Adjust the numbers depending on your site's usage.</span>
 <span class="w">    </span><span class="kn">ssl_session_cache</span><span class="w"> </span><span class="s">shared:SSL:50m</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">ssl_session_timeout</span><span class="w"> </span><span class="mi">30m</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">ssl_session_tickets</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
 
-<span class="w">    </span><span class="c1"># You should only use HSTS with proper certificates; the ones from Let&#39;s Encrypt</span>
+<span class="w">    </span><span class="c1"># You should only use HSTS with proper certificates; the ones from Let's Encrypt</span>
 <span class="w">    </span><span class="c1"># are fine for this, self-signed ones are not. See MozillaWiki for more details:</span>
 <span class="w">    </span><span class="c1"># https://wiki.mozilla.org/Security/Server_Side_TLS#HSTS:_HTTP_Strict_Transport_Security</span>
-<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Strict-Transport-Security</span><span class="w"> </span><span class="s">&quot;max-age=3155760000</span><span class="p">;</span><span class="kn">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Strict-Transport-Security</span><span class="w"> </span><span class="s">"max-age=3155760000</span><span class="p">;</span><span class="kn">"</span><span class="p">;</span>
 
 <span class="w">    </span><span class="kn">charset</span><span class="w"> </span><span class="s">utf-8</span><span class="p">;</span>
 
@@ -302,14 +302,14 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">getting certificates for webserver</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webserver</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">acme_certificate_acme_account</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;keys/acme-account.key&#39;</span>
-<span class="w">    </span><span class="nt">acme_certificate_acme_email</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;mail@example.com&#39;</span>
+<span class="w">    </span><span class="nt">acme_certificate_acme_account</span><span class="p">:</span><span class="w"> </span><span class="s">'keys/acme-account.key'</span>
+<span class="w">    </span><span class="nt">acme_certificate_acme_email</span><span class="p">:</span><span class="w"> </span><span class="s">'mail@example.com'</span>
 <span class="w">    </span><span class="c1"># For HTTP challenges:</span>
-<span class="w">    </span><span class="nt">acme_certificate_server_location</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/var/www/challenges/&#39;</span>
+<span class="w">    </span><span class="nt">acme_certificate_server_location</span><span class="p">:</span><span class="w"> </span><span class="s">'/var/www/challenges/'</span>
 <span class="w">    </span><span class="nt">acme_certificate_http_challenge_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root</span>
 <span class="w">    </span><span class="nt">acme_certificate_http_challenge_group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
-<span class="w">    </span><span class="nt">acme_certificate_http_challenge_folder_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0750&quot;</span>
-<span class="w">    </span><span class="nt">acme_certificate_http_challenge_file_mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0640&quot;</span>
+<span class="w">    </span><span class="nt">acme_certificate_http_challenge_folder_mode</span><span class="p">:</span><span class="w"> </span><span class="s">"0750"</span>
+<span class="w">    </span><span class="nt">acme_certificate_http_challenge_file_mode</span><span class="p">:</span><span class="w"> </span><span class="s">"0640"</span>
 <span class="w">    </span><span class="c1"># For DNS challenges with route53:</span>
 <span class="w">    </span><span class="nt">acme_certificate_dns_provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">route53</span>
 <span class="w">    </span><span class="nt">acme_certificate_aws_access_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">REPLACE_WITH_YOUR_ACCESS_KEY</span>
@@ -324,7 +324,7 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">felixfontein.acme.acme_certificate</span>
-<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;example.com&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;www.example.com&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">'example.com'</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">'www.example.com'</span><span class="p p-Indicator">]</span>
 <span class="w">      </span><span class="c1"># Use DNS challenges:</span>
 <span class="w">      </span><span class="nt">acme_certificate_challenge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dns-01</span>
 <span class="w">      </span><span class="c1"># The certificate files will be stored at:</span>
@@ -336,9 +336,9 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">      </span><span class="c1">#    keys/example.com-rootchain.pem  (intermediate certificate with root certificate)</span>
 
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">felixfontein.acme.acme_certificate</span>
-<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;another.example.com&#39;</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">acme_certificate_ips</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;1.2.3.4&#39;</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">acme_certificate_key_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;another.example.com-rsa&#39;</span>
+<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">'another.example.com'</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">acme_certificate_ips</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">'1.2.3.4'</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">acme_certificate_key_name</span><span class="p">:</span><span class="w"> </span><span class="s">'another.example.com-rsa'</span>
 <span class="w">      </span><span class="nt">acme_certificate_key_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4096</span>
 <span class="w">      </span><span class="c1"># Use HTTP challenges:</span>
 <span class="w">      </span><span class="nt">acme_certificate_challenge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http-01</span>
@@ -351,9 +351,9 @@ Instead, it will only obtain a new certificate if one of the conditions implied 
 <span class="w">      </span><span class="c1">#    keys/another.example.com-rsa-rootchain.pem  (intermediate certificate with root certificate)</span>
 
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">felixfontein.acme.acme_certificate</span>
-<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;another.example.com&#39;</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">acme_certificate_key_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;another.example.com-ecc&#39;</span>
-<span class="w">      </span><span class="nt">acme_certificate_algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;p-256&#39;</span>
+<span class="w">      </span><span class="nt">acme_certificate_domains</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">'another.example.com'</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">acme_certificate_key_name</span><span class="p">:</span><span class="w"> </span><span class="s">'another.example.com-ecc'</span>
+<span class="w">      </span><span class="nt">acme_certificate_algorithm</span><span class="p">:</span><span class="w"> </span><span class="s">'p-256'</span>
 <span class="w">      </span><span class="c1"># Use HTTP challenges (default for challenge is http-01).</span>
 <span class="w">      </span><span class="c1"># The certificate files will be stored at:</span>
 <span class="w">      </span><span class="c1">#    keys/another.example.com-ecc.key  (private key)</span>
