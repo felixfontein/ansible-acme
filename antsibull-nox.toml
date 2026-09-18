@@ -112,6 +112,7 @@ include_devel = true
 "2.19" = ["3.9"]
 "2.20" = ["3.10"]
 "2.21" = ["3.11"]
+"2.22" = ["3.12"]
 
 [sessions.ansible_lint]
 ansible_lint_package = [
