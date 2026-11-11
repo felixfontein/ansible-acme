@@ -17,6 +17,7 @@ description:
   - B(This is an internal tool and must only be used from roles in this collection!)
     If you use it from outside this collection, be warned that its behavior can change
     and it can be removed at any time, even in bugfix releases!
+  - test
 options:
   _input:
     description: A DNS name.
