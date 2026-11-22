@@ -13,6 +13,7 @@
     acme_certificate_acme_directory: https://{{ acme_host }}:14000/dir
     acme_certificate_acme_version: 2
     acme_certificate_validate_certs: "{{ ansible_version.full is version('2.23', '>=') }}"
+    acme_certificate_ca_path: "{{ acme_endpoint_root_ca_certificate_filename | default(omit) }}"
 
 - name: Running tests
   ansible.builtin.import_tasks: impl.yml

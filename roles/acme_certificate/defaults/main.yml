@@ -27,6 +27,7 @@ acme_certificate_root_certificate_for_verification: "{{ acme_certificate_root_ce
 acme_certificate_deactivate_authzs: true
 acme_certificate_modify_account: true
 acme_certificate_validate_certs: true
+acme_certificate_ca_path: "{{ omit }}"
 acme_certificate_verify_certs: true
 acme_certificate_privatekey_mode: '0600'
 acme_certificate_use_sops_for_key: false

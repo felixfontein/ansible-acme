@@ -74,6 +74,7 @@
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      ca_path: "{{ acme_certificate_ca_path }}"
     run_once: true
     delegate_to: localhost
 

@@ -86,6 +86,7 @@
     dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join }}"
     force: true
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   run_once: true
 
@@ -101,6 +102,7 @@
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   when: acme_certificate_modify_account
   delegate_to: localhost
   run_once: true
@@ -123,6 +125,7 @@
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   run_once: true
   register: acme_certificate_INTERNAL_challenge
@@ -156,6 +159,7 @@
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      ca_path: "{{ acme_certificate_ca_path }}"
     delegate_to: localhost
     run_once: true
 
@@ -173,6 +177,7 @@
       acme_version: "{{ acme_certificate_acme_version }}"
       deactivate_authzs: "{{ 'always' if acme_certificate_deactivate_authzs else 'never' }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      ca_path: "{{ acme_certificate_ca_path }}"
       select_chain: "{{ acme_certificate_select_chain | default(omit) }}"
     delegate_to: localhost
     run_once: true
@@ -199,6 +204,7 @@
       acme_directory: "{{ acme_certificate_acme_directory }}"
       acme_version: "{{ acme_certificate_acme_version }}"
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      ca_path: "{{ acme_certificate_ca_path }}"
     when: acme_certificate_deactivate_authzs
     delegate_to: localhost
     run_once: true
@@ -227,6 +233,7 @@
       dest: "{{ acme_certificate_INTERNAL_tempfile.path }}"
       force: true
       validate_certs: "{{ acme_certificate_validate_certs }}"
+      ca_path: "{{ acme_certificate_ca_path }}"
     changed_when: false
     when: acme_certificate_root_certificate != acme_certificate_root_certificate_for_verification
     delegate_to: localhost
