@@ -15,6 +15,7 @@
     certificate: "{{ item[:-4] }}.pem"
     private_key_src: "{{ omit if acme_certificate_revoke_with_acme_account else (item[:-4] ~ '.key') }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   run_once: true
   with_fileglob:
@@ -32,6 +33,7 @@
     certificate: "{{ item[:-9] }}.pem"
     private_key_content: "{{ omit if acme_certificate_revoke_with_acme_account else lookup('community.sops.sops', item) }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   run_once: true
   with_fileglob:

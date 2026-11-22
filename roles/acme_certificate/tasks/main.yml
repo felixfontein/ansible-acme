@@ -28,6 +28,7 @@
     acme_directory: "{{ acme_certificate_acme_directory }}"
     acme_version: "{{ acme_certificate_acme_version }}"
     validate_certs: "{{ acme_certificate_validate_certs }}"
+    ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   register: acme_certificate_INTERNAL_old_certificate_info
   run_once: true
