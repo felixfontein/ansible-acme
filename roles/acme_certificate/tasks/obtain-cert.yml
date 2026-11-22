@@ -86,7 +86,8 @@
     dest: "{{ [acme_certificate_keys_path, acme_certificate_key_name ~ '-root.pem'] | community.general.path_join }}"
     force: true
     validate_certs: "{{ acme_certificate_validate_certs }}"
-    ca_path: "{{ acme_certificate_ca_path }}"
+    # get_url does not support ca_path: https://github.com/ansible/ansible/issues/87961
+    # ca_path: "{{ acme_certificate_ca_path }}"
   delegate_to: localhost
   run_once: true
 
