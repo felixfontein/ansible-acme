@@ -21,3 +21,10 @@
       ACME test container IP is {{ acme_host }};
       OpenSSL version is {{ openssl_version.stdout }};
       cryptography version is {{ cryptography_version.stdout }}
+
+- name: Write CA certificate's root certificate
+  ansible.builtin.copy:
+    content: "{{ acme_endpoint_root_ca_certificate_content }}"
+    dest: "{{ acme_endpoint_root_ca_certificate_filename }}"
+    mode: "0600"
+  when: ansible_version.full is version('2.23', '>=')
